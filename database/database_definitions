@@ -7,9 +7,7 @@ CREATE TABLE Users (
     dateOfBirth DATE,
     dateJoined DATE,
     admin BOOLEAN,
-    banned BOOLEAN,
-
-    PRIMARY userId (ID)
+    banned BOOLEAN
 );
 
 CREATE TABLE Profiles (
@@ -19,7 +17,7 @@ CREATE TABLE Profiles (
     age INT(2),
     description VARCHAR(400),
 
-    FOREIGN KEY userId REFERENCES users(id),
+    FOREIGN KEY (userId) REFERENCES Users(id)
 );
 
 CREATE TABLE Bans (
@@ -30,24 +28,25 @@ CREATE TABLE Bans (
     permanent BOOLEAN,
     endDate DATE,
 
-    FOREIGN KEY (userId) REFERENCES users(id),
+    FOREIGN KEY (userId) REFERENCES users(id)
 );
 
-CREATE TABLE Pictures(
+CREATE TABLE Pictures (
     userId VARCHAR(36) NOT NULL,
-    index INT(1) NOT NULL,
-    data LONGTEXT,
+    imageIndex INT(1),
+    imageData LONGTEXT,
 
-    FOREIGN KEY (userId) REFERENCES users(id),
-    PRIMARY KEY (userId, index)
+    PRIMARY KEY (userId, imageIndex),
+    FOREIGN KEY (userId) REFERENCES Users(id)
 );
+
 
 CREATE TABLE Interests(
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255)
 );
 
-CREATE TABLE userInterests(
+CREATE TABLE UserInterests(
     userId VARCHAR(36) NOT NULL,
     interestId INT NOT NULL,
 
@@ -94,7 +93,7 @@ CREATE TABLE ChatLogs(
     userSent VARCHAR(36) NOT NULL,
     connectionId VARCHAR(36) NOT NULL,
     time TIMESTAMP,
-    content TEXT
+    content TEXT,
 
     FOREIGN KEY (userSent) REFERENCES Users(id),
     FOREIGN KEY (connectionId) REFERENCES Connections(id)
