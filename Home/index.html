@@ -4,21 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <title>Document</title>
 </head>
 <body>
     
-<div class = "container fluid p-5 bg-primary text-black text-center">
+<div class = "container-fluid p-5 bg-primary text-black text-center">
     <h1> PubClub </h1>
 </div>
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-sm-4">
-            <h3> Fancy a Pint?</h3>
-        </div>
+<div id="landing-carousel" class="carousel slide" data-bs-ride="carousel">
 
+    <div class = "carousel-indicators">
+        <button type="button" data-bs-target="#landing-carousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#landing-carousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#landing-carousel" data-bs-slide-to="2"></button>
     </div>
+
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="landing1.png" alt="railed" class="d-block" style="width:100%">
+        </div>
+        <div class="carousel-item">
+            <img src="landing2.png" alt="mendrink" class="d-block" style="width:100%">
+        </div>
+        <div class="carousel-item">
+            <img src="landing3.png" alt="womendrink" class="d-block" style="width:100%">
+        </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#landing-carousel" data-bs-slide-to="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type ="button" data-bs-target="#landing-carousel" data-bs-slide-to="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
 </div>
 
 </body>
