@@ -1,0 +1,101 @@
+CREATE TABLE Users (
+    id VARCHAR(36) DEFAULT UUID() NOT NULL PRIMARY KEY,
+    lastName VARCHAR(255) NOT NULL,
+    firstName VARCHAR(255),
+    email VARCHAR(255),
+    hashedPassword VARCHAR(64),
+    dateOfBirth DATE,
+    dateJoined DATE,
+    admin BOOLEAN,
+    banned BOOLEAN
+);
+
+CREATE TABLE Profiles (
+    userId VARCHAR(36) NOT NULL PRIMARY KEY,
+    gender ENUM('Male', 'Female', 'Other'),
+    seeking ENUM('Male', 'Female', 'Other'),
+    age INT(2),
+    description VARCHAR(400),
+
+    FOREIGN KEY (userId) REFERENCES Users(id)
+);
+
+CREATE TABLE Bans (
+    userId VARCHAR(36) NOT NULL PRIMARY KEY,
+    bannedBy VARCHAR(36) NOT NULL,
+    time TIMESTAMP,
+    reason TEXT,
+    permanent BOOLEAN,
+    endDate DATE,
+
+    FOREIGN KEY (userId) REFERENCES users(id)
+);
+
+CREATE TABLE Pictures (
+    userId VARCHAR(36) NOT NULL,
+    imageIndex INT(1),
+    imageData LONGTEXT,
+
+    PRIMARY KEY (userId, imageIndex),
+    FOREIGN KEY (userId) REFERENCES Users(id)
+);
+
+
+CREATE TABLE Interests(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255)
+);
+
+CREATE TABLE UserInterests(
+    userId VARCHAR(36) NOT NULL,
+    interestId INT NOT NULL,
+
+    FOREIGN KEY (userId) REFERENCES Users(id),
+    FOREIGN KEY (interestId) REFERENCES Interests(id),
+
+    PRIMARY KEY (userId, interestId)
+);
+
+CREATE TABLE Likes(
+    userId VARCHAR(36) NOT NULL,
+    likedUser VARCHAR(36) NOT NULL,
+    time TIMESTAMP,
+
+    FOREIGN KEY (userId) REFERENCES Users(id),
+    FOREIGN KEY (likedUser) REFERENCES Users(id),
+
+    PRIMARY KEY (userId, likedUser)
+);
+
+CREATE TABLE Dislikes(
+    userId VARCHAR(36) NOT NULL,
+    likedUser VARCHAR(36) NOT NULL,
+    time TIMESTAMP,
+
+    FOREIGN KEY (userId) REFERENCES Users(id),
+    FOREIGN KEY (likedUser) REFERENCES Users(id),
+
+    PRIMARY KEY (userId, likedUser)
+);
+
+CREATE TABLE Connections(
+    id VARCHAR(36) DEFAULT UUID() NOT NULL PRIMARY KEY,
+    userId1 VARCHAR(36) NOT NULL,
+    userId2 VARCHAR(36) NOT NULL,
+    time TIMESTAMP,
+
+    FOREIGN KEY (userId1) REFERENCES Users(id),
+    FOREIGN KEY (userId2) REFERENCES Users(id)
+);
+
+CREATE TABLE ChatLogs(
+    messageId VARCHAR(36) DEFAULT UUID() NOT NULL PRIMARY KEY,
+    userSent VARCHAR(36) NOT NULL,
+    connectionId VARCHAR(36) NOT NULL,
+    time TIMESTAMP,
+    content TEXT,
+
+    FOREIGN KEY (userSent) REFERENCES Users(id),
+    FOREIGN KEY (connectionId) REFERENCES Connections(id)
+
+);
