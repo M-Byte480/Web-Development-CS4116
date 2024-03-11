@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <?php require_once(__DIR__."/NavBar/index.php") ?>
+<?php
+header("Location: ./home/");
+exit();
+?>
 </body>
 </html>
