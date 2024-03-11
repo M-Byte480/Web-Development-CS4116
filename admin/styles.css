@@ -5,3 +5,9 @@
 .bg-gray{
     background-color: #dbdbdb;
 }
+
+.row{
+    display: flex;
+    align-items: center;
+}
+

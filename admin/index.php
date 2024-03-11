@@ -6,8 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -21,9 +20,8 @@
     <title>PubClub Admin</title>
 </head>
 <body>
-
+<?php require_once(__DIR__."/../NavBar/index.php") ; ?>
 <!-- Import Nav Bar -->
-<!--TODO: add nav bar and implement functionality-->
 <?php
 
 function action_button()
@@ -38,7 +36,7 @@ function action_button()
                 <i class="bi bi-three-dots-vertical"></i>
             </button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Ban</a></li>
+                <li><a class="dropdown-item" href="#" >Ban</a></li>
                 <li><a class="dropdown-item" href="#">Remove</a></li>
                 <li><a class="dropdown-item" href="#">Place holder</a></li>
             </ul>
@@ -50,7 +48,11 @@ function action_button()
 function get_userPFP()
 {
     ?>
-    <img src="http://placekitten.com/100/100" alt="Profile Picture" class="img-fluid rounded-circle">
+    <img src="./cat.jpeg"
+         alt="Profile Picture"
+         class="img-fluid rounded-circle"
+         style="width: 100px; height: 100px; object-fit: cover;"
+    >
     <?php
 }
 
@@ -59,9 +61,9 @@ function user_information()
     ?>
     <div class="container">
         <div class="row">
-            <div class="col-md-6"><h4>User Name</h4>
+            <div class="col-md-4"><h4>User Name || 21</h4>
             </div>
-            <div class="col-md-6"><p>Reported: 5 times</p>
+            <div class="col-md-6">Reported: 5 times
             </div>
         </div>
     </div>
