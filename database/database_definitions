@@ -1,6 +1,6 @@
 CREATE TABLE Users (
     id VARCHAR(36) DEFAULT UUID() NOT NULL PRIMARY KEY,
-    lastName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255),
     firstName VARCHAR(255),
     email VARCHAR(255),
     hashedPassword VARCHAR(64),
@@ -14,21 +14,26 @@ CREATE TABLE Profiles (
     userId VARCHAR(36) NOT NULL PRIMARY KEY,
     gender ENUM('Male', 'Female', 'Other'),
     seeking ENUM('Male', 'Female', 'Other'),
-    age INT(2),
     description VARCHAR(400),
+    likeCount int(3),
+    dislikeCount int(3),
+    reportCount int(3),
 
     FOREIGN KEY (userId) REFERENCES Users(id)
 );
 
 CREATE TABLE Bans (
-    userId VARCHAR(36) NOT NULL PRIMARY KEY,
+    userId VARCHAR(36) NOT NULL,
     bannedBy VARCHAR(36) NOT NULL,
     time TIMESTAMP,
     reason TEXT,
     permanent BOOLEAN,
     endDate DATE,
 
-    FOREIGN KEY (userId) REFERENCES users(id)
+    FOREIGN KEY (userId) REFERENCES Users(id),
+    FOREIGN KEY (bannedBy) REFERENCES Users(id),
+
+    PRIMARY KEY (userId, time)
 );
 
 CREATE TABLE Pictures (
@@ -36,8 +41,9 @@ CREATE TABLE Pictures (
     imageIndex INT(1),
     imageData LONGTEXT,
 
-    PRIMARY KEY (userId, imageIndex),
-    FOREIGN KEY (userId) REFERENCES Users(id)
+    FOREIGN KEY (userId) REFERENCES Users(id),
+
+    PRIMARY KEY (userId, imageIndex)
 );
 
 
@@ -97,5 +103,19 @@ CREATE TABLE ChatLogs(
 
     FOREIGN KEY (userSent) REFERENCES Users(id),
     FOREIGN KEY (connectionId) REFERENCES Connections(id)
+);
 
+CREATE TABLE Beverages(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255)
+);
+
+CREATE TABLE UserBeverages(
+    userId VARCHAR(36) NOT NULL,
+    beverageId INT NOT NULL,
+
+    FOREIGN KEY (userId) REFERENCES Users(id),
+    FOREIGN KEY (beverageId) REFERENCES Beverages(id),
+
+    PRIMARY KEY (userId, beverageId)
 );

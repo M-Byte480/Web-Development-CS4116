@@ -18,8 +18,36 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <title>PubClub Admin</title>
+
+    <script>
+        function showHint(str) {
+            if (str.length == 0) {
+                document.getElementById("txtHint").innerHTML = "";
+                return;
+            } else {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("txtHint").innerHTML = this.responseText;
+                    }
+                };
+                xmlhttp.open("GET", "admin_backend.php?q=" + str, true);
+                xmlhttp.send();
+            }
+        }
+
+
+    </script>
 </head>
 <body>
+
+<form action="">
+    <label for="fname">First name:</label>
+    <input type="text" id="fname" name="fname" onkeyup="showHint(this.value)">
+</form>
+<p>Suggestions: <span id="txtHint"></span></p>
+
+
 <?php require_once(__DIR__."/../NavBar/index.php") ; ?>
 <!-- Import Nav Bar -->
 <?php
@@ -36,7 +64,12 @@ function action_button()
                 <i class="bi bi-three-dots-vertical"></i>
             </button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#" >Ban</a></li>
+
+                <li class="dropdown-item">
+                    <form method="post" action="admin_backend.php">
+                        <input type="submit" name="execute_script" value="Ban">
+                    </form>
+                </li>
                 <li><a class="dropdown-item" href="#">Remove</a></li>
                 <li><a class="dropdown-item" href="#">Place holder</a></li>
             </ul>

@@ -1,0 +1,12 @@
+DROP TABLE UserBeverages;
+DROP TABLE Beverages;
+DROP TABLE ChatLogs;
+DROP TABLE Connections;
+DROP TABLE Dislikes;
+DROP TABLE Likes;
+DROP TABLE UserInterests;
+DROP TABLE Interests;
+DROP TABLE Pictures;
+DROP TABLE Bans;
+DROP TABLE Profiles;
+DROP TABLE Users;
