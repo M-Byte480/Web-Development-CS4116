@@ -5,7 +5,7 @@ function validate_admin($id)
         echo 'Invalid ID';
         exit();
     }
-    global $con;
+
     $retrieved_user = getUserById($id);
 
     if (array_key_exists('admin', $retrieved_user)) {
