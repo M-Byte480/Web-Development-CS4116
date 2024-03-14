@@ -16,6 +16,11 @@ function validate_uuid($uuid)
     return preg_match($uuid, $regex);
 }
 
+function validate_user_id($uuid)
+{
+    return validate_uuid($uuid);
+}
+
 function validate_hashed_password($hashed_password)
 {
     return validate_uuid($hashed_password);

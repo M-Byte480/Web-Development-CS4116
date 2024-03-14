@@ -44,5 +44,10 @@
     </div>
 </div>
 
+
+<?php
+
+setcookie('user_id', '408b4d33-e211-11ee-ac66-80fa5b8f4456', time() + 60 * 60 * 24 * 7, '/');
+?>
 </body>
 </html>

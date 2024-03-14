@@ -1,11 +1,15 @@
 <?php
-function validateAdmin($id)
+function validate_admin($id)
 {
+    if (!validate_user_id($id)) {
+        echo 'Invalid ID';
+        exit();
+    }
     global $con;
-    $retrieved_user = getUserById($con, $id);
+    $retrieved_user = getUserById($id);
 
-    if(array_key_exists('admin', $retrieved_user)){
-        if($retrieved_user['admin'] === 1){
+    if (array_key_exists('admin', $retrieved_user)) {
+        if ($retrieved_user['admin'] === 1) {
             return true;
         }
     }
@@ -14,18 +18,17 @@ function validateAdmin($id)
 
 // Validation
 
-if(!isset($_COOKIE['email']) || !isset($_COOKIE['password'])){
+if (!isset($_COOKIE['email']) || !isset($_COOKIE['password'])) {
     header("Location: ../login/index.php");
     exit();
 }
 
 $user = getUserById($_COOKIE['user_id']);
 
-if(validateAdmin($user) != 1){
+if (validate_admin($user) != 1) {
     echo 'Unauthorised';
     exit();
 }
-
 
 
 ?>
