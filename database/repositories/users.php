@@ -1,5 +1,9 @@
 <?php
-require_once('../../validators.php');
+require_once(__DIR__ . '/../../validators.php');
+
+global $db_host, $db_username, $db_password, $db_database, $con;
+require_once(__DIR__ . '/../../secrets.settings.php');
+
 
 function getUserById($id) // SQL Array
 {
@@ -8,20 +12,44 @@ function getUserById($id) // SQL Array
         exit();
     }
 
-    global $con;
-    $query = "SELECT * FROM user WHERE id = '{$id}'";
-    return mysqli_query($con, $query);
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+
+    $query = "SELECT * FROM users WHERE id = '{$id}'";
+    $result = mysqli_query($con, $query);
+
+    mysqli_close($con);
+
+    return $result->fetch_assoc();
 }
 
 function getAllUsers() // SQL Array
 {
-    global $con;
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+
     $query = "SELECT * FROM user";
-    return mysqli_query($con, $query);
+
+    $result = mysqli_query($con, $query);
+
+    mysqli_close($con);
+
+    return $result;
 }
 
 function getUserByCredentials($email, $hashed_password) // SQL Array
 {
+    global $db_host, $db_username, $db_password, $db_database;
     if (!validate_email($email)) {
         echo 'invalid email';
         exit();
@@ -30,10 +58,19 @@ function getUserByCredentials($email, $hashed_password) // SQL Array
         echo 'invalid password';
         exit();
     }
-    global $con;
-    $query = "SELECT * FROM user WHERE email = '{$email}' AND password = '{$hashed_password}'";
 
-    return mysqli_query($con, $query);
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    $query = "SELECT * FROM users WHERE email = '{$email}' AND hashedPassword = '{$hashed_password}'";
+
+    $result = mysqli_query($con, $query);
+
+    mysqli_close($con);
+    return $result;
 }
 
 

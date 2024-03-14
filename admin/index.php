@@ -6,7 +6,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -26,7 +27,7 @@
                 return;
             } else {
                 var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
+                xmlhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
                         document.getElementById("txtHint").innerHTML = this.responseText;
                     }
@@ -48,11 +49,28 @@
 <!--<p>Suggestions: <span id="txtHint"></span></p>-->
 
 <?php
-require_once (__DIR__."/admin_backend.php");
+// Validation
 
+if (!isset($_COOKIE['email']) || !isset($_COOKIE['hashed_password'])) {
+    header("Location: ../login/index.php");
+    exit();
+}
+
+require_once(__DIR__ . "/admin_backend.php");
+require_once(__DIR__ . "/../database/repositories/users.php");
+
+$result = getUserByCredentials($_COOKIE['email'], $_COOKIE['hashed_password']);
+
+$user = $result->fetch_assoc();
+
+if (!validate_admin($user['id'])) {
+    echo 'Unauthorised';
+    exit();
+}
+mysqli_free_result($result);
 ?>
 
-<?php require_once(__DIR__."/../NavBar/index.php") ; ?>
+<?php require_once(__DIR__ . "/../NavBar/index.php"); ?>
 <!-- Import Nav Bar -->
 <?php
 

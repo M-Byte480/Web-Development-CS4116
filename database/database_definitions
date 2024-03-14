@@ -7,7 +7,9 @@ CREATE TABLE Users (
     dateOfBirth DATE,
     dateJoined DATE,
     admin BOOLEAN,
-    banned BOOLEAN
+    banned BOOLEAN,
+
+    UNIQUE(email)
 );
 
 CREATE TABLE Profiles (
