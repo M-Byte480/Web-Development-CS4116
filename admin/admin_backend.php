@@ -1,6 +1,6 @@
 <?php
 global $host, $user, $pass, $db;
-require_once("../database/users/users.php");
+require_once("../database/repositories/users.php");
 require_once("../secrets.settings.php");
 
 $con = mysqli_connect($host, $user, $pass, $db);
