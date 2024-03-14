@@ -1,19 +1,26 @@
 <?php
+require_once('../../validators.php');
 
-function getUserById($con, $id)
+function getUserById($id) // SQL Array
 {
-    $sql = "SELECT * FROM user WHERE id = '{$id}'" ;
-    $result = mysqli_query($con,$sql);
-
-    return $result;
+    global $con;
+    $query = "SELECT * FROM user WHERE id = '{$id}'";
+    return mysqli_query($con, $query);
 }
 
-function getAllUsers($con)
+function getAllUsers() // SQL Array
 {
-    $sql = "SELECT * FROM user" ;
-    $result = mysqli_query($con,$sql);
+    global $con;
+    $query = "SELECT * FROM user";
+    return mysqli_query($con, $query);
+}
 
-    return $result;
+function getUserByCredentials($email, $hashed_password) // SQL Array
+{
+    global $con;
+    $query = "SELECT * FROM user";
+
+    return mysqli_query($con, $query);
 }
 
 

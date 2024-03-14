@@ -41,12 +41,16 @@
 </head>
 <body>
 
-<form action="">
-    <label for="fname">First name:</label>
-    <input type="text" id="fname" name="fname" onkeyup="showHint(this.value)">
-</form>
-<p>Suggestions: <span id="txtHint"></span></p>
+<!--<form action="">-->
+<!--    <label for="fname">First name:</label>-->
+<!--    <input type="text" id="fname" name="fname" onkeyup="showHint(this.value)">-->
+<!--</form>-->
+<!--<p>Suggestions: <span id="txtHint"></span></p>-->
 
+<?php
+require_once (__DIR__."/admin_backend.php");
+
+?>
 
 <?php require_once(__DIR__."/../NavBar/index.php") ; ?>
 <!-- Import Nav Bar -->
