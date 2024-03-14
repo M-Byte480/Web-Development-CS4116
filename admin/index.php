@@ -56,7 +56,7 @@ if (!isset($_COOKIE['email']) || !isset($_COOKIE['hashed_password'])) {
     exit();
 }
 
-require_once(__DIR__ . "/admin_backend.php");
+//require_once(__DIR__ . "/admin_backend.php");
 require_once(__DIR__ . "/../database/repositories/users.php");
 
 $result = getUserByCredentials($_COOKIE['email'], $_COOKIE['hashed_password']);
