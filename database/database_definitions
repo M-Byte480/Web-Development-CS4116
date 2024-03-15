@@ -8,6 +8,7 @@ CREATE TABLE Users (
     dateJoined DATE,
     admin BOOLEAN,
     banned BOOLEAN,
+    reportCount int(3),
 
     UNIQUE(email)
 );
@@ -19,7 +20,6 @@ CREATE TABLE Profiles (
     description VARCHAR(400),
     likeCount int(3),
     dislikeCount int(3),
-    reportCount int(3),
 
     FOREIGN KEY (userId) REFERENCES Users(id)
 );
@@ -121,3 +121,12 @@ CREATE TABLE UserBeverages(
 
     PRIMARY KEY (userId, beverageId)
 );
+
+CREATE TABLE ProfilePictures(
+    userId VARCHAR(36) NOT NULL,
+    pfp LONGTEXT,
+
+    FOREIGN KEY (userId) REFERENCES Users(id),
+
+    PRIMARY KEY (userId)
+)

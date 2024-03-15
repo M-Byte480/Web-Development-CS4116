@@ -1,28 +1,13 @@
 <?php
-global $db_host, $db_username, $db_password, $db_database;
-include_once(__DIR__ . "/../database/repositories/users.php");
-require_once("../secrets.settings.php");
+if (isset($_POST['user_id']) && $_POST['user_id']) {
+    echo json_encode(array('success' => 1));
+}
 
+//if (isset($_POST['username']) && $_POST['username'] && isset($_POST['password']) && $_POST['password']) {
+//
+////    echo json_encode(array('success' => 1));
+//} else {
+//    echo json_encode(array('success' => 0));
+//}
 
-//// Get user id from cookies
-//$id = $_COOKIE["user_id"];
-//
-//$con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
-//
-//if (!$con) {
-//    die('Could not connect: ' . mysqli_error($con));
-//}
-//
-//global $return_values;
-//
-//
-//if (isset($_GET['request_type'])) {
-//    switch ($_GET['request_type']) {
-//        case 'getAllUsers':
-//            $return_values = getAllUsers();
-//    }
-//}
-//mysqli_close($con);
-//
-//echo $return_values;
 ?>

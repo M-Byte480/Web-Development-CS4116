@@ -28,7 +28,7 @@ function getUserById($id) // SQL Array
     return $result->fetch_assoc();
 }
 
-function getAllUsers() // SQL Array
+function get_all_users() // SQL Array
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
@@ -38,7 +38,7 @@ function getAllUsers() // SQL Array
     }
 
 
-    $query = "SELECT * FROM user";
+    $query = "SELECT * FROM users";
 
     $result = mysqli_query($con, $query);
 
