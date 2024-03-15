@@ -140,35 +140,6 @@ foreach ($usersInDb as $user) {
     <?php
 }
 ?>
-<!--<form id="loginform" method="post">-->
-<!--    <div>-->
-<!--        Username:-->
-<!--        <input type="text" name="username" id="username"/>-->
-<!--        Password:-->
-<!--        <input type="password" name="password" id="password"/>-->
-<!--        <input type="submit" name="loginBtn" id="loginBtn" value="Login"/>-->
-<!--    </div>-->
-<!--</form>-->
-<script>
-    // function banUser() {
-    //     var form = document
-    //         .getElementById("banForm");
-    //     var formData = new FormData(form);
-    //
-    //     var xmlhttp = new XMLHttpRequest();
-    //
-    //     xmlhttp.open("POST", "admin_backend.php", true);
-    //
-    //     xmlhttp.setRequestHeader('Cookie', document.cookie);
-    //
-    //     xmlhttp.onreadystatechange = function () {
-    //         if (this.readyState == 4 && this.status == 200) {
-    //             console.log('Banned user');
-    //         }
-    //     };
-    //     xmlhttp.send();
-    // }
-</script>
 
 <script type="text/javascript">
     // Ban User
