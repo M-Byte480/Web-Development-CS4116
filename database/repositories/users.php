@@ -5,7 +5,7 @@ global $db_host, $db_username, $db_password, $db_database, $con;
 require_once(__DIR__ . '/../../secrets.settings.php');
 
 
-function getUserById($id) // SQL Array
+function get_user_by_id($id) // SQL Array
 {
     if (!validate_user_id($id)) {
         echo 'invalid ID';
@@ -47,7 +47,7 @@ function get_all_users() // SQL Array
     return $result;
 }
 
-function getUserByCredentials($email, $hashed_password) // SQL Array
+function get_user_by_credentials($email, $hashed_password) // SQL Array
 {
     global $db_host, $db_username, $db_password, $db_database;
     if (!validate_email($email)) {
@@ -71,6 +71,59 @@ function getUserByCredentials($email, $hashed_password) // SQL Array
 
     mysqli_close($con);
     return $result;
+}
+
+function ban_user_by_id($user_id)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    $query = "UPDATE users SET banned = true WHERE id = '{$user_id}' ";
+
+    mysqli_query($con, $query);
+
+    mysqli_close($con);
+}
+
+function delete_user_by_id($user_id)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    // USER BEVERAGES
+    $query = "DELETE FROM users WHERE id = '{$user_id}'";
+    mysqli_query($con, $query);
+
+
+    mysqli_close($con);
+}
+
+function update_user_bio($user_id, $bio)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    // USER BEVERAGES
+    $query = "UPDATE users set description = {$bio} WHERE id = '{$user_id}'";
+    mysqli_query($con, $query);
+
+
+    mysqli_close($con);
 }
 
 

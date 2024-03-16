@@ -9,4 +9,5 @@ DROP TABLE Interests;
 DROP TABLE Pictures;
 DROP TABLE Bans;
 DROP TABLE Profiles;
+DROP TABLE ProfilePictures;
 DROP TABLE Users;

@@ -32,4 +32,23 @@ function get_user_pfp($user) // base64
     return $pfp;
 }
 
+function update_user_pfp($user_id, $pfp)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+    // Todo: Sanitize both the pfp and the bio;
+
+    // USER BEVERAGES
+    $query = "UPDATE profilepictures set pfp = '{$pfp}' WHERE userid = '{$user_id}'";
+    mysqli_query($con, $query);
+
+
+    mysqli_close($con);
+}
+
 ?>

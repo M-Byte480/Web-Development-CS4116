@@ -39,10 +39,11 @@ if (!isset($_COOKIE['email']) || !isset($_COOKIE['hashed_password'])) {
 require_once(__DIR__ . "/../database/repositories/users.php");
 require_once(__DIR__ . "/../database/repositories/profilePictures.php");
 
-$result = getUserByCredentials($_COOKIE['email'], $_COOKIE['hashed_password']);
+$result = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password']);
 $user = $result->fetch_assoc();
 
-if (!validate_admin($user['id'])) {
+// Both these need to be true
+if ($user == null || !validate_admin($user['id'])) {
     echo 'Unauthorised';
     exit();
 }
@@ -72,7 +73,28 @@ function action_button($user)
                         <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
                         <input type="hidden" name="banned_by_email" value="<?= $_COOKIE['email'] ?>">
                         <input type="hidden" name="action" value="ban">
-                        <input type="submit" name="banBtn" id="banBtn" value="Ban"/>
+                        <input type="submit" name="banBtn" id="banBtn" value="Ban User"/>
+                    </form>
+                </li>
+                <li class="dropdown-item">
+                    <form id="removeBio" method="post" action="admin_backend.php">
+                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                        <input type="hidden" name="action" value="remove_id">
+                        <input type="submit" name="banBtn" id="removeBioBtn" value="Remove Bio"/>
+                    </form>
+                </li>
+                <li class="dropdown-item">
+                    <form id="removePfp" method="post" action="admin_backend.php">
+                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                        <input type="hidden" name="action" value="remove_pfp">
+                        <input type="submit" name="banBtn" id="banBtn" value="Remove PFP"/>
+                    </form>
+                </li>
+                <li class="dropdown-item">
+                    <form id="removeAllImages" method="post" action="admin_backend.php">
+                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                        <input type="hidden" name="action" value="remove_all_images">
+                        <input type="submit" name="banBtn" id="banBtn" value="Remove All images"/>
                     </form>
                 </li>
                 <li>
@@ -81,11 +103,10 @@ function action_button($user)
                             <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
                             <input type="hidden" name="banned_by_email" value="<?= $_COOKIE['email'] ?>">
                             <input type="hidden" name="action" value="delete">
-                            <input type="submit" name="removeBtn" id="removeBtn" value="Remove"/>
+                            <input type="submit" name="removeBtn" id="removeBtn" value="Delete"/>
                         </form>
                     </a>
                 </li>
-                <li><a class="dropdown-item" href="#">Place holder</a></li>
             </ul>
         </div>
     </div>
@@ -124,8 +145,8 @@ $usersInDb = get_all_users();
 
 foreach ($usersInDb as $user) {
     ?>
-    <div class="container">
-        <div class=" row align-items-center  mt-3 border curve-100 bg-gray">
+    <div class="container ">
+        <div class=" row align-items-center height-100px mt-3 border curve-100 bg-gray ">
             <div class="col-2 col-sm-2 col-md-2 p-1">
                 <?php pfp($user) ?>
             </div>
@@ -137,6 +158,7 @@ foreach ($usersInDb as $user) {
             </div>
         </div>
     </div>
+
     <?php
 }
 ?>
