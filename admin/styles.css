@@ -1,13 +1,20 @@
-.curve-100{
+.curve-100 {
     border-radius: 12px;
 }
 
-.bg-gray{
+.bg-gray {
     background-color: #dbdbdb;
 }
 
-.row{
+.row {
     display: flex;
     align-items: center;
 }
 
+.height-100px {
+    min-height: 100px;
+}
+
+.width-100px{
+    min-width: 100px;
+}

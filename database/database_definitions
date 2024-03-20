@@ -1,34 +1,44 @@
 CREATE TABLE Users (
     id VARCHAR(36) DEFAULT UUID() NOT NULL PRIMARY KEY,
-    lastName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255),
     firstName VARCHAR(255),
     email VARCHAR(255),
     hashedPassword VARCHAR(64),
     dateOfBirth DATE,
     dateJoined DATE,
     admin BOOLEAN,
-    banned BOOLEAN
+    banned BOOLEAN,
+    reportCount int(3),
+
+    UNIQUE(email)
 );
 
 CREATE TABLE Profiles (
     userId VARCHAR(36) NOT NULL PRIMARY KEY,
     gender ENUM('Male', 'Female', 'Other'),
     seeking ENUM('Male', 'Female', 'Other'),
-    age INT(2),
     description VARCHAR(400),
+    likeCount int(3),
+    dislikeCount int(3),
 
     FOREIGN KEY (userId) REFERENCES Users(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE Bans (
-    userId VARCHAR(36) NOT NULL PRIMARY KEY,
+    userId VARCHAR(36) NOT NULL,
     bannedBy VARCHAR(36) NOT NULL,
     time TIMESTAMP,
     reason TEXT,
     permanent BOOLEAN,
     endDate DATE,
 
-    FOREIGN KEY (userId) REFERENCES users(id)
+    FOREIGN KEY (userId) REFERENCES Users(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (bannedBy) REFERENCES Users(id)
+    ON DELETE CASCADE,
+
+    PRIMARY KEY (userId, time)
 );
 
 CREATE TABLE Pictures (
@@ -36,8 +46,10 @@ CREATE TABLE Pictures (
     imageIndex INT(1),
     imageData LONGTEXT,
 
-    PRIMARY KEY (userId, imageIndex),
     FOREIGN KEY (userId) REFERENCES Users(id)
+    ON DELETE CASCADE,
+
+    PRIMARY KEY (userId, imageIndex)
 );
 
 
@@ -50,8 +62,10 @@ CREATE TABLE UserInterests(
     userId VARCHAR(36) NOT NULL,
     interestId INT NOT NULL,
 
-    FOREIGN KEY (userId) REFERENCES Users(id),
-    FOREIGN KEY (interestId) REFERENCES Interests(id),
+    FOREIGN KEY (userId) REFERENCES Users(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (interestId) REFERENCES Interests(id)
+    ON DELETE CASCADE,
 
     PRIMARY KEY (userId, interestId)
 );
@@ -61,8 +75,10 @@ CREATE TABLE Likes(
     likedUser VARCHAR(36) NOT NULL,
     time TIMESTAMP,
 
-    FOREIGN KEY (userId) REFERENCES Users(id),
-    FOREIGN KEY (likedUser) REFERENCES Users(id),
+    FOREIGN KEY (userId) REFERENCES Users(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (likedUser) REFERENCES Users(id)
+    ON DELETE CASCADE,
 
     PRIMARY KEY (userId, likedUser)
 );
@@ -72,8 +88,10 @@ CREATE TABLE Dislikes(
     likedUser VARCHAR(36) NOT NULL,
     time TIMESTAMP,
 
-    FOREIGN KEY (userId) REFERENCES Users(id),
-    FOREIGN KEY (likedUser) REFERENCES Users(id),
+    FOREIGN KEY (userId) REFERENCES Users(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (likedUser) REFERENCES Users(id)
+    ON DELETE CASCADE,
 
     PRIMARY KEY (userId, likedUser)
 );
@@ -84,8 +102,10 @@ CREATE TABLE Connections(
     userId2 VARCHAR(36) NOT NULL,
     time TIMESTAMP,
 
-    FOREIGN KEY (userId1) REFERENCES Users(id),
+    FOREIGN KEY (userId1) REFERENCES Users(id)
+    ON DELETE CASCADE,
     FOREIGN KEY (userId2) REFERENCES Users(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE ChatLogs(
@@ -95,7 +115,35 @@ CREATE TABLE ChatLogs(
     time TIMESTAMP,
     content TEXT,
 
-    FOREIGN KEY (userSent) REFERENCES Users(id),
+    FOREIGN KEY (userSent) REFERENCES Users(id)
+    ON DELETE CASCADE,
     FOREIGN KEY (connectionId) REFERENCES Connections(id)
-
+    ON DELETE CASCADE
 );
+
+CREATE TABLE Beverages(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255)
+);
+
+CREATE TABLE UserBeverages(
+    userId VARCHAR(36) NOT NULL,
+    beverageId INT NOT NULL,
+
+    FOREIGN KEY (userId) REFERENCES Users(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (beverageId) REFERENCES Beverages(id)
+    ON DELETE CASCADE,
+
+    PRIMARY KEY (userId, beverageId)
+);
+
+CREATE TABLE ProfilePictures(
+    userId VARCHAR(36) NOT NULL,
+    pfp LONGTEXT,
+
+    FOREIGN KEY (userId) REFERENCES Users(id)
+    ON DELETE CASCADE,
+
+    PRIMARY KEY (userId)
+)
