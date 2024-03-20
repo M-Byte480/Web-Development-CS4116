@@ -23,6 +23,7 @@
     <div class="row background-gray">
         <div class="col-12 ">
             <h1>SIGNUP</h1>
+            <a href="<?=__DIR__.'/../Login/index.phtml'?>"><button type="login" class="btn btn-primary" >Already have an account?</button></a>
         </div>
         <div class="col-12">
             <form class="form">
