@@ -13,7 +13,7 @@ class ValidationException extends Exception
     }
 
     // custom string representation of object
-    public function __toString()
+    #[ReturnTypeWillChange] public function __toString()
     {
         return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
     }

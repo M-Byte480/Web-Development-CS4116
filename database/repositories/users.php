@@ -1,11 +1,11 @@
 <?php
 require_once(__DIR__ . '/../../validators.php');
 
-global $db_host, $db_username, $db_password, $db_database, $con;
+global $db_host, $db_username, $db_password, $db_database;
 require_once(__DIR__ . '/../../secrets.settings.php');
 
 
-function get_user_by_id($id) // SQL Array
+function get_user_by_id($id): array
 {
     if (!validate_user_id($id)) {
         echo 'invalid ID';
@@ -28,7 +28,7 @@ function get_user_by_id($id) // SQL Array
     return $result->fetch_assoc();
 }
 
-function get_all_users() // SQL Array
+function get_all_users(): mysqli_result
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
@@ -47,7 +47,7 @@ function get_all_users() // SQL Array
     return $result;
 }
 
-function get_user_by_credentials($email, $hashed_password) // SQL Array
+function get_user_by_credentials($email, $hashed_password): mysqli_result
 {
     global $db_host, $db_username, $db_password, $db_database;
     if (!validate_email($email)) {
@@ -73,7 +73,7 @@ function get_user_by_credentials($email, $hashed_password) // SQL Array
     return $result;
 }
 
-function ban_user_by_id($user_id)
+function ban_user_by_id($user_id): void
 {
     global $db_host, $db_username, $db_password, $db_database;
 
@@ -90,7 +90,7 @@ function ban_user_by_id($user_id)
     mysqli_close($con);
 }
 
-function delete_user_by_id($user_id)
+function delete_user_by_id($user_id): void
 {
     global $db_host, $db_username, $db_password, $db_database;
 
@@ -108,7 +108,7 @@ function delete_user_by_id($user_id)
     mysqli_close($con);
 }
 
-function update_user_bio($user_id, $bio)
+function update_user_bio($user_id, $bio): void
 {
     global $db_host, $db_username, $db_password, $db_database;
 

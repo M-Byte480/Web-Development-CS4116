@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Added Validation Exception class, implemented functionality to remove user, remove pfp, etc. Updated the DB to have Cascading attributes. Updated PHP 8 -&gt; adds method signatures" />
+    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Added Validation Exception class, implemented functionality to remove user, remove pfp, etc. Updated the DB to have Cascading attributes. Updated PHP 8 -&gt; adds method signatures">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/repositories/users.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/users.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exceptions/ValidationException.php" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions/ValidationException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/search/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validators.php" beforeDir="false" afterPath="$PROJECT_DIR$/validators.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,7 +50,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "milan/search__page",
-    "last_opened_file_path": "C:/xampp/htdocs/Project/admin",
+    "last_opened_file_path": "C:/xampp/htdocs/Project",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -57,9 +63,9 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\Project" />
       <recent name="C:\xampp\htdocs\Project\admin" />
       <recent name="C:\xampp\htdocs\Project\NavBar" />
-      <recent name="C:\xampp\htdocs\Project" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\Project\database\users" />
@@ -95,6 +101,7 @@
       <workItem from="1710800291038" duration="101000" />
       <workItem from="1710870482734" duration="55000" />
       <workItem from="1710870545565" duration="668000" />
+      <workItem from="1710941025729" duration="8012000" />
     </task>
     <task id="LOCAL-00001" summary="[Milan] Added a redirect to the Home page upon connecting to the site">
       <option name="closed" value="true" />
@@ -222,7 +229,8 @@
     <MESSAGE value="[Milan] Setup AJAX communication between backend and frontend" />
     <MESSAGE value="[Milan] Removed unused code" />
     <MESSAGE value="[Milan] Added Validation Exception class, implemented functionality to remove user, remove pfp, etc. Updated the DB to have Cascading attributes. Updated PHP 8 -&gt; adds method signatures" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Added Validation Exception class, implemented functionality to remove user, remove pfp, etc. Updated the DB to have Cascading attributes. Updated PHP 8 -&gt; adds method signatures" />
+    <MESSAGE value="[Milan] Removed cookies from home page" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Removed cookies from home page" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

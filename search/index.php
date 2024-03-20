@@ -1,5 +1,11 @@
 <?php
 // Validate is user logged in
+require_once(__DIR__ . '/../validators.php');
+try {
+    validate_user_logged_in();
+} catch (ValidationException $e) {
+    echo 'User Credentials have expired';
+}
 
 ?>
 
@@ -26,30 +32,88 @@
     <title>PubClub Admin</title>
 </head>
 <body>
-<?php require_once(__DIR__ . '/../NavBar/index.php') ?>
+<?php
+require_once(__DIR__ . '/../NavBar/index.php');
+?>
 
-<div class="container">
-    <div class="row">
+<form action="search-results.php" method="post">
+    <div class="container">
+        <div class="row">
 
-        <div class="col-sm-12 col-md-4 bg-light p-3 border">
-            <div class="gender">
-                Here is the gender box
+            <div class="col-sm-12 col-md-4 bg-light p-3 border">
+                <div class="drink-frequency">
+                    Here is the drink-Frequency box
+                </div>
             </div>
-            <div class="age">
-                Here is the age box
+            <div class="col-sm-12 col-md-4 bg-light p-3 border">
+                <div class="age">
+                    <input type="range" class="form-range width-100" min="18" max="99" step="1" value="18"
+                           id="customRange3 lower">
+                    <input type="range" class="form-range width-100" min="18" max="99" step="1" value="99"
+                           id="customRange3 upper">
+
+                    <label for="age">Age Range:</label>
+                    <input type="text" id="age" class="form-control" disabled>
+                    <script>
+                        $('#lower').mdbRange({
+                            single: {
+                                active: true,
+                                counting: true,
+                                countingTarget: '#ex'
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class=" col-sm-12 col-md-4 bg-light p-3 border">
+                <div class="gender">
+                    <?php
+                    require_once(__DIR__ . '/../enums/gender.php');
+                    $refl = new ReflectionClass(Gender::class);
+
+                    foreach ($refl->getConstants() as $gender => $value) {
+                        ?>
+                        <input type="checkbox" name="<?= $gender ?>" value="true">
+                        <?php
+                        echo $gender;
+                        echo '<br>';
+                    }
+                    ?>
+                </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-4 bg-light p-3 border">
-            .col-3: width of 25%
-        </div>
-        <div class=" col-sm-12 col-md-4 bg-light p-3 border">
-            <div class="hobbies">
-                Here is the hobbies
+        <div class="row">
+
+            <div class="col-sm-12 col-md-4 bg-light p-3 border">
+                <div class="go-to-beverages ">
+                    <?php
+                    require_once(__DIR__ . '/../database/repositories/beverages.php');
+                    $beverages_from_db = get_all_beverages();
+                    foreach ($beverages_from_db as $beverage) {
+                        ?>
+                        <input type="checkbox" name="<?= $beverage ?>" value="true">
+                        <?php
+                        echo $beverage;
+                        echo '<br>';
+                    }
+                    ?>
+                </div>
             </div>
+            <div class="col-sm-12 col-md-4 bg-light p-3 border">
+                <div class="interests">
+                    Here is the gender box
+                </div>
+            </div>
+            <!--        <div class=" col-sm-12 col-md-4 bg-light p-3 border">-->
+            <!--            <div class="hobbies">-->
+            <!--                Here is the hobbies-->
+            <!--            </div>-->
+            <!--        </div>-->
         </div>
     </div>
 
-</div>
+    <input type="submit" name="formSubmit" value="Submit"/>
 
+</form>
 </body>
 </html>
