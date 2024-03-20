@@ -24,7 +24,7 @@ function validate_user_id($uuid): false|int
 function validate_hashed_password($hashed_password): false|int
 {
     // 64 alphanumeric characters
-    $regex = '/^[a-z0-9]{64}$/';
+    $regex = '/^[a-fA-F0-9]{64}$/';
     return preg_match($regex, $hashed_password);
 }
 
