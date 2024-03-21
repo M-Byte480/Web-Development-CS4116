@@ -4,12 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Added Validation Exception class, implemented functionality to remove user, remove pfp, etc. Updated the DB to have Cascading attributes. Updated PHP 8 -&gt; adds method signatures">
+    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Begun creating the search page">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/repositories/users.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exceptions/ValidationException.php" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions/ValidationException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/database_definitions" beforeDir="false" afterPath="$PROJECT_DIR$/database/database_definitions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/repositories/interests.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/interests.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/search/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/search/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/validators.php" beforeDir="false" afterPath="$PROJECT_DIR$/validators.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/search-results.php" beforeDir="false" afterPath="$PROJECT_DIR$/search/search-results.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/search/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +53,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "milan/search__page",
+    "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/xampp/htdocs/Project",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -57,7 +61,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "rearrange.code.on.save": "true",
-    "settings.editor.selected.configurable": "actions.on.save",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -101,7 +105,8 @@
       <workItem from="1710800291038" duration="101000" />
       <workItem from="1710870482734" duration="55000" />
       <workItem from="1710870545565" duration="668000" />
-      <workItem from="1710941025729" duration="8012000" />
+      <workItem from="1710941025729" duration="9081000" />
+      <workItem from="1711024729178" duration="10113000" />
     </task>
     <task id="LOCAL-00001" summary="[Milan] Added a redirect to the Home page upon connecting to the site">
       <option name="closed" value="true" />
@@ -199,7 +204,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710551852803</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="[Milan] Begun creating the search page">
+      <option name="closed" value="true" />
+      <created>1710953510490</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1710953510490</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -230,7 +243,8 @@
     <MESSAGE value="[Milan] Removed unused code" />
     <MESSAGE value="[Milan] Added Validation Exception class, implemented functionality to remove user, remove pfp, etc. Updated the DB to have Cascading attributes. Updated PHP 8 -&gt; adds method signatures" />
     <MESSAGE value="[Milan] Removed cookies from home page" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Removed cookies from home page" />
+    <MESSAGE value="[Milan] Begun creating the search page" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Begun creating the search page" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

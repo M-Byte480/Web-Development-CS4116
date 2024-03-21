@@ -1,3 +1,25 @@
 .width-100 {
     width: 100%;
 }
+
+input[type="checkbox"] {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.increased-font {
+    font-size: 1.25rem;
+}
+
+.static {
+    position: fixed;
+}
+
+.bottom-left {
+    right: 7.5%;
+    bottom: 5%;
+}
+
+.text-align-center {
+    text-align: center;
+}

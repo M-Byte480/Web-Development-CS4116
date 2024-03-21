@@ -5,6 +5,7 @@ try {
     validate_user_logged_in();
 } catch (ValidationException $e) {
     echo 'User Credentials have expired';
+    exit();
 }
 
 ?>
@@ -16,25 +17,14 @@ try {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Custom CSS-->
-    <link rel="stylesheet" href="styles.css">
-    <!-- jQuery -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Bootstrap JavaScript -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <?php require_once(__DIR__ . '/../css_binding.php'); ?>
 
     <title>PubClub Admin</title>
 </head>
 <body>
-<?php
-require_once(__DIR__ . '/../NavBar/index.php');
-?>
+
+<?php require_once(__DIR__ . '/../NavBar/index.php'); ?>
 
 <form action="search-results.php" method="post">
     <div class="container">
@@ -47,25 +37,19 @@ require_once(__DIR__ . '/../NavBar/index.php');
             </div>
             <div class="col-sm-12 col-md-4 bg-light p-3 border">
                 <div class="age">
-                    <input type="range" class="form-range width-100" min="18" max="99" step="1" value="18"
-                           id="customRange3 lower">
-                    <input type="range" class="form-range width-100" min="18" max="99" step="1" value="99"
-                           id="customRange3 upper">
-
                     <label for="age">Age Range:</label>
-                    <input type="text" id="age" class="form-control" disabled>
-                    <script>
-                        $('#lower').mdbRange({
-                            single: {
-                                active: true,
-                                counting: true,
-                                countingTarget: '#ex'
-                            }
-                        });
-                    </script>
+                    <input type="range" class="form-range width-100" min="18" max="99" step="1" value="18"
+                           id="lower" onchange="updateAgeRange()">
+                    <input type="range" class="form-range width-100" min="18" max="99" step="1" value="99"
+                           id="upper" onchange="updateAgeRange()">
+
+                    <output id="output1"></output>
+                    <= AGE <=
+                    <output id="output2"></output>
+
                 </div>
             </div>
-            <div class=" col-sm-12 col-md-4 bg-light p-3 border">
+            <div class=" col-sm-12 col-md-4 bg-light p-3 border bg-blue">
                 <div class="gender">
                     <?php
                     require_once(__DIR__ . '/../enums/gender.php');
@@ -73,10 +57,15 @@ require_once(__DIR__ . '/../NavBar/index.php');
 
                     foreach ($refl->getConstants() as $gender => $value) {
                         ?>
-                        <input type="checkbox" name="<?= $gender ?>" value="true">
+                        <div class="d-flex justify-content-center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="<?= $gender ?>"
+                                       name="<?= $gender ?>" value="true">
+                                <label class="form-check-label increased-font"
+                                       for="<?= $gender ?>"><?= $gender ?></label>
+                            </div>
+                        </div>
                         <?php
-                        echo $gender;
-                        echo '<br>';
                     }
                     ?>
                 </div>
@@ -91,29 +80,66 @@ require_once(__DIR__ . '/../NavBar/index.php');
                     $beverages_from_db = get_all_beverages();
                     foreach ($beverages_from_db as $beverage) {
                         ?>
-                        <input type="checkbox" name="<?= $beverage ?>" value="true">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="<?= $beverage ?>"
+                                   name="<?= $beverage ?>" value="true">
+                            <label class="form-check-label increased-font"
+                                   for="<?= $beverage ?>"><?= $beverage ?></label>
+                        </div>
                         <?php
-                        echo $beverage;
-                        echo '<br>';
                     }
                     ?>
                 </div>
             </div>
+
             <div class="col-sm-12 col-md-4 bg-light p-3 border">
                 <div class="interests">
-                    Here is the gender box
+                    <?php
+                    require_once(__DIR__ . '/../database/repositories/interests.php');
+                    $interests_from_db = get_all_interests();
+
+                    foreach ($interests_from_db as $interest) {
+                        ?>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="<?= $interest ?>"
+                                   name="<?= $interest ?>" value="true">
+                            <label class="form-check-label increased-font"
+                                   for="<?= $interest ?>"><?= $interest ?></label>
+                        </div>
+                        <?php
+                    }
+                    ?>
                 </div>
             </div>
-            <!--        <div class=" col-sm-12 col-md-4 bg-light p-3 border">-->
-            <!--            <div class="hobbies">-->
-            <!--                Here is the hobbies-->
-            <!--            </div>-->
-            <!--        </div>-->
         </div>
     </div>
-
-    <input type="submit" name="formSubmit" value="Submit"/>
-
+    <button type="submit" class="btn btn-primary mt-3 static bottom-left">SEARCH 🔍</button>
 </form>
+
+<script>
+    // Help from : https://www.impressivewebs.com/onchange-vs-oninput-for-range-sliders/
+    let lowerAge = document.getElementById('lower'), lowerOutput = document.querySelector('#output1');
+    let upperAge = document.getElementById('upper'), upperOutput = document.querySelector('#output2');
+
+    lowerOutput.innerHTML = lowerAge.value;
+    upperOutput.innerHTML = upperAge.value;
+
+    lowerAge.addEventListener('input', function () {
+        lowerOutput.innerHTML = lowerAge.value;
+        flipAgesIfLowerIsGreater();
+    }, false);
+
+    upperAge.addEventListener('input', function () {
+        upperOutput.innerHTML = upperAge.value;
+        flipAgesIfLowerIsGreater();
+    }, false);
+
+    function flipAgesIfLowerIsGreater() {
+        if (parseInt(lowerAge.value) >= parseInt(upperAge.value)) {
+            lowerOutput.innerHTML = upperAge.value;
+            upperOutput.innerHTML = lowerAge.value;
+        }
+    }
+</script>
 </body>
 </html>

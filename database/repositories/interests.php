@@ -18,7 +18,7 @@ function get_all_interests(): array
 
     mysqli_close($con);
 
-    return $result->fetch_assoc();
+    return array_column($result->fetch_all(), 0);
 }
 
 ?>
