@@ -37,14 +37,18 @@ try {
             </div>
             <div class="col-sm-12 col-md-4 bg-light p-3 border">
                 <div class="age">
-                    <label for="age">Age Range:</label>
-                    <input type="range" class="form-range width-100" min="18" max="99" step="1" value="18"
-                           id="lower" onchange="updateAgeRange()">
-                    <input type="range" class="form-range width-100" min="18" max="99" step="1" value="99"
-                           id="upper" onchange="updateAgeRange()">
+                    <label for="lower">Minimum Age:</label>
+                    <input type="range" class="form-range width-100" min="18" max="99"
+                           step="1" value="18" name="age1"
+                           id="lower">
+                    <label for="upper">Maximum Age:</label>
+                    <input type="range" class="form-range width-100" min="18"
+                           max="99" step="1" value="99" name="age2"
+                           id="upper">
 
+                    Min:
                     <output id="output1"></output>
-                    <= AGE <=
+                    Max:
                     <output id="output2"></output>
 
                 </div>

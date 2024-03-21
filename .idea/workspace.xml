@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Begun creating the search page">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/database_definitions" beforeDir="false" afterPath="$PROJECT_DIR$/database/database_definitions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/repositories/interests.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/interests.php" afterDir="false" />
+    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Skeleton functionality is created">
       <change beforePath="$PROJECT_DIR$/search/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/search/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/search/search-results.php" beforeDir="false" afterPath="$PROJECT_DIR$/search/search-results.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/search/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/search/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +99,7 @@
       <workItem from="1710870482734" duration="55000" />
       <workItem from="1710870545565" duration="668000" />
       <workItem from="1710941025729" duration="9081000" />
-      <workItem from="1711024729178" duration="10113000" />
+      <workItem from="1711024729178" duration="10459000" />
     </task>
     <task id="LOCAL-00001" summary="[Milan] Added a redirect to the Home page upon connecting to the site">
       <option name="closed" value="true" />
@@ -212,7 +205,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710953510490</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="[Milan] Skeleton functionality is created">
+      <option name="closed" value="true" />
+      <created>1711039701263</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1711039701263</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,7 +245,8 @@
     <MESSAGE value="[Milan] Added Validation Exception class, implemented functionality to remove user, remove pfp, etc. Updated the DB to have Cascading attributes. Updated PHP 8 -&gt; adds method signatures" />
     <MESSAGE value="[Milan] Removed cookies from home page" />
     <MESSAGE value="[Milan] Begun creating the search page" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Begun creating the search page" />
+    <MESSAGE value="[Milan] Skeleton functionality is created" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Skeleton functionality is created" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
