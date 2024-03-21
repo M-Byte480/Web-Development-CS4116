@@ -8,27 +8,22 @@
 
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- jQuery -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Bootstrap JavaScript -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="styles.css">
     <title>Document</title>
 </head>
 <body >
 <div class="container">
     <div class="row background-gray">
-        <div class="col-12 ">
+        <div class="col">
             <h1>SIGNUP</h1>
+            <p><span class="error">* required field</span></p>
         </div>
         <div class="col-12">
             <form class="form">
                 <!-- Input Email -->
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Email Address:</label>
+                    <label for="exampleInputEmail1">Email Address</label>
+                    <span class="error">*</span>
                     <input type="email" class="form-control" id="exampleInputEmail1"
                            aria-describedby="emailHelp" placeholder="Enter email">
                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with
@@ -37,7 +32,8 @@
 
                 <!-- Input Name -->
                 <div class="form-group">
-                    <label for="exampleInputName">Full Name:</label>
+                    <label for="exampleInputName">Full Name</label>
+                    <span class="error">*</span>
                     <input type="text" class="form-control" id="exampleInputName"
                            placeholder="Enter your full name">
                     <small id="nameHelp" class="form-text text-muted">Please enter your full name.</small>
@@ -46,25 +42,27 @@
                 <!-- Input Password-->
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
+                    <span class="error">*</span>
                     <input type="password" class="form-control" id="exampleInputPassword1"
                            placeholder="Password">
+                    <small id="passwordHelp" class="form-text text-muted">Password may not contain special characters.</small>
                 </div>
                 <!-- Input Date of Birth -->
                 <label class="form-group">
-                    Enter your birthday:
-                    <input type="date" name="bday" required pattern="\d{4}-\d{2}-\d{2}"/>
+                    <p>Enter your birthday<span class="error"> *</span></p>
+                    <input type="date" name="day" required pattern="\d{4}-\d{2}-\d{2}"/>
                     <span class="validity"></span>
                 </label>
                 <!-- Input  -->
                 <div class="form-group">
-                    <p>Sex:</p>
-                    <input type="radio" id="html" name="fav_language" value="HTML">
-                    <label for="html">Male</label>
-                    <input type="radio" id="css" name="fav_language" value="CSS">
-                    <label for="css">Female</label>
-                    <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-                    <label for="javascript">Other</label><br>
-                    <button type="submit" class="btn btn-primary" ;>Submit</button>
+                    <p>Sex<span class="error"> *</span></p>
+                    <input type="radio" id="male" name="gender" value="Male">
+                    <label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="Female">
+                    <label for="female">Female</label>
+                    <input type="radio" id="other" name="gender" value="Other">
+                    <label for="other">Other</label>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
@@ -72,3 +70,4 @@
 </div>
 </body>
 </html>
+
