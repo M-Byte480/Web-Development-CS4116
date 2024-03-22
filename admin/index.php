@@ -1,3 +1,18 @@
+<?php
+// Validate is user logged in
+require_once(__DIR__ . '/../validators.php');
+try {
+    validate_user_logged_in();
+    validate_user_is_admin();
+} catch (ValidationException $e) {
+    echo 'User Credentials have expired';
+    exit();
+}
+
+require_once(__DIR__ . "/../database/repositories/profilePictures.php");
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,33 +31,11 @@
 
 <?php
 
-// Validation
-if (!isset($_COOKIE['email']) || !isset($_COOKIE['hashed_password'])) {
-    header("Location: ../login/index.php");
-    exit();
-}
-
-// Import users, pfp accessor
-require_once(__DIR__ . "/../database/repositories/users.php");
-require_once(__DIR__ . "/../database/repositories/profilePictures.php");
-
-$result = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password']);
-$user = $result->fetch_assoc();
-
-// Both these need to be true
-if ($user == null || !validate_admin($user['id'])) {
-    echo 'Unauthorised';
-    exit();
-}
-
-// Free the buffer/memory
-mysqli_free_result($result);
-
 // Import navigation bar
 require_once(__DIR__ . "/../NavBar/index.php");
 
 
-function action_button($user)
+function action_button($user): void
 {
     ?>
     <div class="dropdown">
@@ -100,7 +93,7 @@ function action_button($user)
     <?php
 }
 
-function pfp($user)
+function pfp($user): void
 {
     ?>
     <img src="<?= get_user_pfp($user) ?>"
@@ -113,7 +106,7 @@ function pfp($user)
 
 include_once(__DIR__ . '/admin_functions.php');
 
-function user_information($user)
+function user_information($user): void
 {
     ?>
     <div class="container">

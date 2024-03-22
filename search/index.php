@@ -29,30 +29,6 @@ try {
 <form action="search-results.php" method="post">
     <div class="container">
         <div class="row">
-
-            <div class="col-sm-12 col-md-4 bg-light p-3 border">
-                <div class="drink-frequency">
-                    Here is the drink-Frequency box
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-4 bg-light p-3 border">
-                <div class="age">
-                    <label for="lower">Minimum Age:</label>
-                    <input type="range" class="form-range width-100" min="18" max="99"
-                           step="1" value="18" name="age1"
-                           id="lower">
-                    <label for="upper">Maximum Age:</label>
-                    <input type="range" class="form-range width-100" min="18"
-                           max="99" step="1" value="99" name="age2"
-                           id="upper">
-
-                    Min:
-                    <output id="output1"></output>
-                    Max:
-                    <output id="output2"></output>
-
-                </div>
-            </div>
             <div class=" col-sm-12 col-md-4 bg-light p-3 border bg-blue">
                 <div class="gender">
                     <?php
@@ -61,7 +37,7 @@ try {
 
                     foreach ($refl->getConstants() as $gender => $value) {
                         ?>
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex ">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="<?= $gender ?>"
                                        name="<?= $gender ?>" value="true">
@@ -74,9 +50,24 @@ try {
                     ?>
                 </div>
             </div>
-        </div>
-        <div class="row">
+            <div class="col-sm-12 col-md-4 bg-light p-3 border">
+                <div class="age">
+                    <label id="output3" for="lower">Minimum Age:</label>
+                    <input type="range" class="form-range width-100" min="18" max="99"
+                           step="1" value="18" name="age1"
+                           id="lower">
+                    <label id="output4" for="upper">Maximum Age:</label>
+                    <input type="range" class="form-range width-100" min="18"
+                           max="99" step="1" value="99" name="age2"
+                           id="upper">
 
+                    Min:
+                    <output id="output1"></output>
+                    Max:
+                    <output id="output2"></output>
+
+                </div>
+            </div>
             <div class="col-sm-12 col-md-4 bg-light p-3 border">
                 <div class="go-to-beverages ">
                     <?php
@@ -95,13 +86,20 @@ try {
                     ?>
                 </div>
             </div>
+        </div>
+        <div class="row">
 
+            <?php
+            require_once(__DIR__ . '/../database/repositories/interests.php');
+            $interests_from_db = get_all_interests();
+
+            $len = count($interests_from_db);
+            $first_half = array_slice($interests_from_db, 0, $len / 2);
+            $second_half = array_slice($interests_from_db, $len / 2);
+            ?>
             <div class="col-sm-12 col-md-4 bg-light p-3 border">
                 <div class="interests">
                     <?php
-                    require_once(__DIR__ . '/../database/repositories/interests.php');
-                    $interests_from_db = get_all_interests();
-
                     foreach ($interests_from_db as $interest) {
                         ?>
                         <div class="form-check">
@@ -128,6 +126,9 @@ try {
     lowerOutput.innerHTML = lowerAge.value;
     upperOutput.innerHTML = upperAge.value;
 
+    let minimumAgeTag = document.querySelector('#output3');
+    let maximumAgeTag = document.querySelector('#output4');
+
     lowerAge.addEventListener('input', function () {
         lowerOutput.innerHTML = lowerAge.value;
         flipAgesIfLowerIsGreater();
@@ -142,6 +143,12 @@ try {
         if (parseInt(lowerAge.value) >= parseInt(upperAge.value)) {
             lowerOutput.innerHTML = upperAge.value;
             upperOutput.innerHTML = lowerAge.value;
+
+            maximumAgeTag.innerHTML = 'Minimum Age:';
+            minimumAgeTag.innerHTML = 'Maximum Age:';
+        } else {
+            minimumAgeTag.innerHTML = 'Minimum Age:';
+            maximumAgeTag.innerHTML = 'Maximum Age:';
         }
     }
 </script>

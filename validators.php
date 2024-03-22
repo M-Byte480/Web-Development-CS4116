@@ -110,4 +110,31 @@ function validate_user_logged_in(): void
     validate_unique_result($query_result);
 }
 
+
+function validate_user_is_admin(): void
+{
+
+
+    // Validation
+    if (!isset($_COOKIE['email']) || !isset($_COOKIE['hashed_password'])) {
+        header("Location: ../login/index.php");
+        exit();
+    }
+
+    // Import users, pfp accessor
+    require_once(__DIR__ . "/database/repositories/users.php");
+
+    $result = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password']);
+    $user = $result->fetch_assoc();
+
+    // Both these need to be true
+    if ($user == null || !validate_admin($user['id'])) {
+        echo 'Unauthorised';
+        exit();
+    }
+
+    // Free the buffer/memory
+    mysqli_free_result($result);
+}
+
 ?>
