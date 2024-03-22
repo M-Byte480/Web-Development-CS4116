@@ -1,0 +1,35 @@
+*{
+    font-family: Bahnschrift;
+}
+
+.modal-body{
+    padding: 0;
+}
+.myform{
+    max-width: 100%;
+    background-image: url("3D_animated_beer_background.gif");
+    padding: 2em;
+    max-width: 100%;
+}
+
+.form-label{
+
+    font-size:20px;
+    font-weight: bold;
+}
+.form-label:after{
+    content: ": ";
+}
+a button{
+    position: absolute;
+    left:0;
+    right:0;
+    bottom:0;
+
+}
+
+p{
+    text-align: center;
+}
+
+
