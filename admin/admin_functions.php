@@ -1,7 +1,7 @@
 <?php
 function get_user_name($user)
 {
-    return $user['firstName'] . ' ' . $user['lastName'];
+    return $user['lastName'] . ' ' . $user['firstName'];
 }
 
 /**

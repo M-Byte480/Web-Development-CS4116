@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Skeleton of the search page is implemented">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/admin_functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/admin_functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/populate_database" beforeDir="false" afterPath="$PROJECT_DIR$/database/populate_database" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="milan/admin-backend" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\php-sdk\php.exe" />
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2dXckR5snOcrkvVhr5Pb6IT0NaI" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;milan/search__page&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Project&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\Project" />
+      <recent name="C:\xampp\htdocs\Project\admin" />
+      <recent name="C:\xampp\htdocs\Project\NavBar" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\Project\database\users" />
+      <recent name="C:\xampp\htdocs\Project\resources\home" />
+      <recent name="C:\xampp\htdocs\Project" />
+      <recent name="C:\xampp\htdocs\Project\NavBar" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.14475.35" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="" />
+      <created>1710158005486</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1710158005486</updated>
+      <workItem from="1710158007350" duration="6263000" />
+      <workItem from="1710167357314" duration="10459000" />
+      <workItem from="1710252135016" duration="3016000" />
+      <workItem from="1710270226755" duration="1620000" />
+      <workItem from="1710328116340" duration="420000" />
+      <workItem from="1710345606057" duration="2355000" />
+      <workItem from="1710427100638" duration="18866000" />
+      <workItem from="1710464961955" duration="2801000" />
+      <workItem from="1710541636951" duration="9159000" />
+      <workItem from="1710800291038" duration="101000" />
+      <workItem from="1710870482734" duration="55000" />
+      <workItem from="1710870545565" duration="668000" />
+      <workItem from="1710941025729" duration="9081000" />
+      <workItem from="1711024729178" duration="10586000" />
+      <workItem from="1711041312279" duration="475000" />
+      <workItem from="1711108493746" duration="3127000" />
+      <workItem from="1711124730404" duration="158000" />
+      <workItem from="1711135347407" duration="1196000" />
+      <workItem from="1711488216559" duration="1004000" />
+    </task>
+    <task id="LOCAL-00001" summary="[Milan] Added a redirect to the Home page upon connecting to the site">
+      <option name="closed" value="true" />
+      <created>1710159363569</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1710159363569</updated>
+    </task>
+    <task id="LOCAL-00002" summary="[Milan] Updated the routing, added refactored the names">
+      <option name="closed" value="true" />
+      <created>1710173669530</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1710173669530</updated>
+    </task>
+    <task id="LOCAL-00003" summary="[Milan] Added GitIgnore, updated the database definitions, added drop file, created Secrets ignored by the">
+      <option name="closed" value="true" />
+      <created>1710347347082</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1710347347082</updated>
+    </task>
+    <task id="LOCAL-00004" summary="[Milan] Added Populate database with sample data">
+      <option name="closed" value="true" />
+      <created>1710428880095</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1710428880095</updated>
+    </task>
+    <task id="LOCAL-00005" summary="[Milan] Added Prettier, created validators">
+      <option name="closed" value="true" />
+      <created>1710442491878</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1710442491878</updated>
+    </task>
+    <task id="LOCAL-00006" summary="[Milan] Updated the queries to have validators">
+      <option name="closed" value="true" />
+      <created>1710443264106</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1710443264106</updated>
+    </task>
+    <task id="LOCAL-00007" summary="[Milan] Removed unused global variable">
+      <option name="closed" value="true" />
+      <created>1710443398046</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1710443398046</updated>
+    </task>
+    <task id="LOCAL-00008" summary="[Milan] Added uniqueness to the User table, updated the logic and flow of the admin validation">
+      <option name="closed" value="true" />
+      <created>1710455942576</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1710455942576</updated>
+    </task>
+    <task id="LOCAL-00009" summary="[Milan] Simplified the logic">
+      <option name="closed" value="true" />
+      <created>1710456161490</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1710456161490</updated>
+    </task>
+    <task id="LOCAL-00010" summary="[Milan] Setup AJAX communication between backend and frontend">
+      <option name="closed" value="true" />
+      <created>1710467592383</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1710467592383</updated>
+    </task>
+    <task id="LOCAL-00011" summary="[Milan] Removed unused code">
+      <option name="closed" value="true" />
+      <created>1710467617883</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1710467617883</updated>
+    </task>
+    <task id="LOCAL-00012" summary="[Milan] Added Validation Exception class, implemented functionality to remove user, remove pfp, etc. Updated the DB to have Cascading attributes. Updated PHP 8 -&gt; adds method signatures">
+      <option name="closed" value="true" />
+      <created>1710551852802</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1710551852803</updated>
+    </task>
+    <task id="LOCAL-00013" summary="[Milan] Begun creating the search page">
+      <option name="closed" value="true" />
+      <created>1710953510490</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1710953510490</updated>
+    </task>
+    <task id="LOCAL-00014" summary="[Milan] Skeleton functionality is created">
+      <option name="closed" value="true" />
+      <created>1711039701263</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1711039701263</updated>
+    </task>
+    <task id="LOCAL-00015" summary="[Milan] Added age POST values">
+      <option name="closed" value="true" />
+      <created>1711039886525</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1711039886525</updated>
+    </task>
+    <task id="LOCAL-00016" summary="[Milan] Skeleton of the search page is implemented">
+      <option name="closed" value="true" />
+      <created>1711110821741</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1711110821741</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="[Milan] Added a redirect to the Home page upon connecting to the site" />
+    <MESSAGE value="[Milan] Updated the routing, added refactored the names" />
+    <MESSAGE value="[Milan] Added GitIgnore, updated the database definitions, added drop file, created Secrets ignored by the" />
+    <MESSAGE value="[Milan] Added Populate database with sample data" />
+    <MESSAGE value="[Milan] Added Prettier, created validators" />
+    <MESSAGE value="[Milan] Updated the queries to have validators" />
+    <MESSAGE value="[Milan] Removed unused global variable" />
+    <MESSAGE value="[Milan] Added uniqueness to the User table, updated the logic and flow of the admin validation" />
+    <MESSAGE value="[Milan] Simplified the logic" />
+    <MESSAGE value="[Milan] Setup AJAX communication between backend and frontend" />
+    <MESSAGE value="[Milan] Removed unused code" />
+    <MESSAGE value="[Milan] Added Validation Exception class, implemented functionality to remove user, remove pfp, etc. Updated the DB to have Cascading attributes. Updated PHP 8 -&gt; adds method signatures" />
+    <MESSAGE value="[Milan] Removed cookies from home page" />
+    <MESSAGE value="[Milan] Begun creating the search page" />
+    <MESSAGE value="[Milan] Skeleton functionality is created" />
+    <MESSAGE value="[Milan] Added age POST values" />
+    <MESSAGE value="[Milan] Skeleton of the search page is implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Skeleton of the search page is implemented" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
