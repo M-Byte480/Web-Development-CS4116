@@ -19,7 +19,7 @@
 
 <nav class="navbar navbar-expand-sm navbar-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="../Home/index.php">
+        <a class="navbar-brand" href="../home/">
             <img class="nav-brand" src="../resources/logo.png" alt="Logo">
         </a>
         <button class="navbar-toggler"
