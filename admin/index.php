@@ -20,6 +20,8 @@ require_once(__DIR__ . "/../database/repositories/profilePictures.php");
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="content-type" content="no-cache, must-revalidate">
+
     <?php
     require_once(__DIR__ . "/../css_binding.php");
     ?>

@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Added age POST values">
+    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Skeleton of the search page is implemented">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/cat.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/admin_functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/admin_functions.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/search/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/search/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/validators.php" beforeDir="false" afterPath="$PROJECT_DIR$/validators.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/populate_database" beforeDir="false" afterPath="$PROJECT_DIR$/database/populate_database" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +104,10 @@
       <workItem from="1710941025729" duration="9081000" />
       <workItem from="1711024729178" duration="10586000" />
       <workItem from="1711041312279" duration="475000" />
-      <workItem from="1711108493746" duration="1699000" />
+      <workItem from="1711108493746" duration="3127000" />
+      <workItem from="1711124730404" duration="158000" />
+      <workItem from="1711135347407" duration="1196000" />
+      <workItem from="1711488216559" duration="1004000" />
     </task>
     <task id="LOCAL-00001" summary="[Milan] Added a redirect to the Home page upon connecting to the site">
       <option name="closed" value="true" />
@@ -227,7 +229,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711039886525</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="[Milan] Skeleton of the search page is implemented">
+      <option name="closed" value="true" />
+      <created>1711110821741</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1711110821741</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -261,7 +271,8 @@
     <MESSAGE value="[Milan] Begun creating the search page" />
     <MESSAGE value="[Milan] Skeleton functionality is created" />
     <MESSAGE value="[Milan] Added age POST values" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Added age POST values" />
+    <MESSAGE value="[Milan] Skeleton of the search page is implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Skeleton of the search page is implemented" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

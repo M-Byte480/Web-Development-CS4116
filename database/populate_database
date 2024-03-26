@@ -1,6 +1,19 @@
 INSERT INTO Users (id, lastName, firstName, email, hashedPassword, dateOfBirth, dateJoined, admin, banned, reportcount)
 VALUES
-('408b4d33-e211-11ee-ac66-80fa5b8f4456', 'Milan', 'Kovacs', 'milan.test@example.com', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', '1990-05-15', '2020-01-01', TRUE, FALSE, 0);
+('408b4d33-e211-11ee-ac66-80fa5b8f4456', 'Kovacs', 'Milan', 'milan.test@example.com', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', '2002-05-15', '2024-01-01', TRUE, FALSE, 0);
+
+INSERT INTO Users (id, lastName, firstName, email, hashedPassword, dateOfBirth, dateJoined, admin, banned, reportcount)
+VALUES
+('408b4d33-e211-11ee-ac66-80fb5b8f4456', 'Brendan', 'Quinn', 'brendan.test@example.com', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', '2003-05-15', '2024-01-01', TRUE, FALSE, 0);
+
+INSERT INTO Users (id, lastName, firstName, email, hashedPassword, dateOfBirth, dateJoined, admin, banned, reportcount)
+VALUES
+('408b4d33-e211-11ee-ac66-80fc5b8f4456', 'Tadhg', 'Ryan', 'tadhg.test@example.com', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', '2001-05-15', '2024-01-01', TRUE, FALSE, 0);
+
+INSERT INTO Users (id, lastName, firstName, email, hashedPassword, dateOfBirth, dateJoined, admin, banned, reportcount)
+VALUES
+('408b4d33-e211-11ee-ac66-80fd5b8f4456', 'Kevin', 'Hawk', 'caoimhin.test@example.com', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', '2013-05-15', '2024-01-01', TRUE, FALSE, 0);
+
 
 INSERT INTO beverages (name) VALUES ('Heineken');
 INSERT INTO beverages (name) VALUES ('Bulmers');
