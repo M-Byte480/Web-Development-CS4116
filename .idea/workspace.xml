@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Skeleton of the search page is implemented">
+    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Changed navbar reference">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/admin_functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/admin_functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/populate_database" beforeDir="false" afterPath="$PROJECT_DIR$/database/populate_database" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NavBar/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/NavBar/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/discovery/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,23 +43,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;milan/search__page&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Project&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "milan/discovery__page",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/xampp/htdocs/Project",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "rearrange.code.on.save": "true",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\Project" />
@@ -272,7 +271,8 @@
     <MESSAGE value="[Milan] Skeleton functionality is created" />
     <MESSAGE value="[Milan] Added age POST values" />
     <MESSAGE value="[Milan] Skeleton of the search page is implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Skeleton of the search page is implemented" />
+    <MESSAGE value="[Milan] Changed navbar reference" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Changed navbar reference" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
