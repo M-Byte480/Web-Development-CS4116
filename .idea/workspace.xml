@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Changed navbar reference">
+    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Got the page layout working. Navbar routing added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NavBar/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/NavBar/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/repositories/interests.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/interests.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/repositories/users.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/users.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/discovery/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/discovery/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/discovery/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +51,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "milan/discovery__page",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/xampp/htdocs/Project",
+    "last_opened_file_path": "C:/xampp/htdocs/Project/discovery/resources",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -62,6 +64,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\Project\discovery\resources" />
       <recent name="C:\xampp\htdocs\Project" />
       <recent name="C:\xampp\htdocs\Project\admin" />
       <recent name="C:\xampp\htdocs\Project\NavBar" />
@@ -107,6 +110,7 @@
       <workItem from="1711124730404" duration="158000" />
       <workItem from="1711135347407" duration="1196000" />
       <workItem from="1711488216559" duration="1004000" />
+      <workItem from="1711549186771" duration="11480000" />
     </task>
     <task id="LOCAL-00001" summary="[Milan] Added a redirect to the Home page upon connecting to the site">
       <option name="closed" value="true" />
@@ -236,7 +240,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711110821741</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="[Milan] Got the page layout working. Navbar routing added">
+      <option name="closed" value="true" />
+      <created>1711498645439</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1711498645440</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -272,7 +284,8 @@
     <MESSAGE value="[Milan] Added age POST values" />
     <MESSAGE value="[Milan] Skeleton of the search page is implemented" />
     <MESSAGE value="[Milan] Changed navbar reference" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Changed navbar reference" />
+    <MESSAGE value="[Milan] Got the page layout working. Navbar routing added" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Got the page layout working. Navbar routing added" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
