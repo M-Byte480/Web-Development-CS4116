@@ -26,7 +26,7 @@ try {
 
 <?php require_once(__DIR__ . '/../NavBar/index.php'); ?>
 
-<form action="search-results.php" method="post">
+<form action="results.php" method="get">
     <div class="container">
         <div class="row">
             <div class=" col-sm-12 col-md-4 bg-light p-3 border bg-blue">
@@ -152,5 +152,7 @@ try {
         }
     }
 </script>
+
+
 </body>
 </html>
