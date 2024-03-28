@@ -45,7 +45,7 @@
                     </a>
                 </li>
                 <li class="nav-item p-2">
-                    <a class="nav-link float-end" href="#" >
+                    <a class="nav-link float-end" href="../profile_page/index.php">
                         <h2 class="collapse" id="collapsibleNavbar">Profile</h2>
                         <i class="bi bi-person-circle"></i>
                     </a>

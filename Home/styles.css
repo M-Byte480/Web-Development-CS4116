@@ -1,13 +1,13 @@
 .bg-img-1{
-        background-image: url('landing1.png')
+        background-image: url('../resources/landing1.png')
 }
 
 .bg-img-2{
-    background-image: url('landing2.png')
+    background-image: url('../resources/landing2.png')
 }
 
 .bg-img-3{
-    background-image: url('landing3.png')
+    background-image: url('../resources/landing3.png')
 }
 
 .carousel-image {

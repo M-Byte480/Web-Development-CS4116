@@ -1,6 +1,6 @@
 <?php
 // Validate is user logged in
-require_once(__DIR__ . '/../validators.php');
+require_once(__DIR__ . '/../validator_functions.php');
 try {
     validate_user_logged_in();
     validate_user_is_admin();
@@ -9,7 +9,7 @@ try {
     exit();
 }
 
-require_once(__DIR__ . "/../database/repositories/profilePictures.php");
+require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 
 ?>
 

@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . '/../../validators.php');
+require_once(__DIR__ . '/../../validator_functions.php');
 
 global $db_host, $db_username, $db_password, $db_database;
 require_once(__DIR__ . '/../../secrets.settings.php');
@@ -13,6 +13,7 @@ function get_user_by_id($id): array
     }
 
     global $db_host, $db_username, $db_password, $db_database;
+
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 
     if (!$con) {

@@ -17,9 +17,9 @@ if (isset($_POST['action']) && $_POST['action']) {
     exit();
 }
 
-require_once(__DIR__ . '/../validators.php');
+require_once(__DIR__ . '/../validator_functions.php');
 require_once(__DIR__ . '/../database/repositories/users.php');
-require_once(__DIR__ . '/../database/repositories/profilePictures.php');
+require_once(__DIR__ . '/../database/repositories/profile_pictures.php');
 try {
     switch ($action) {
         case 'ban':
