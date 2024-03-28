@@ -24,7 +24,7 @@ try {
 </head>
 <body>
 
-<?php require_once(__DIR__ . '/../NavBar/index.php'); ?>
+<?php require_once(__DIR__ . '/../nav_bar/index.php'); ?>
 
 <form action="search-results.php" method="post">
     <div class="container">

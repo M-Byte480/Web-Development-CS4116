@@ -1,7 +1,5 @@
 
 <?php
-
-require_once("../database/repositories/users.php");
 // Validate is user logged in
 require_once(__DIR__ . '/../validate_user.php');
 
@@ -10,7 +8,7 @@ require_once(__DIR__ . "/../database/repositories/interests.php");
 require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 require_once(__DIR__ . "/../database/repositories/users.php");
 
-$userID = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password'])->fetch_assoc()['id'];
+$user_ID = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password'])->fetch_assoc()['id'];
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +29,7 @@ $userID = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password']
     </style>
 </head>
 <body>
-    <?php require_once("../NavBar/index.php"); ?>
+    <?php require_once("../nav_bar/index.php"); ?>
     <div class="row p-3 m-3">
         <div class="col-4">
             <div>

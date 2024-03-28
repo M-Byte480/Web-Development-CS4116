@@ -5,7 +5,7 @@
     <title>Landing Page</title>
 </head>
 <body>
-<?php require_once("../NavBar/index.php") ?>
+<?php require_once("../nav_bar/index.php") ?>
 <div id="landing-carousel" class="carousel slide" data-bs-ride="carousel" data-interval="3000">
 
     <div class = "carousel-indicators">

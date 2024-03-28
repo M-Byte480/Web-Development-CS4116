@@ -34,7 +34,7 @@ require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 <?php
 
 // Import navigation bar
-require_once(__DIR__ . "/../NavBar/index.php");
+require_once(__DIR__ . "/../nav_bar/index.php");
 
 
 function action_button($user): void
