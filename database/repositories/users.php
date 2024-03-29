@@ -45,7 +45,7 @@ function get_all_users(): array
 
     mysqli_close($con);
 
-    return $result->fetch_all();
+    return $result->fetch_all(MYSQLI_ASSOC);
 }
 
 function get_user_by_credentials($email, $hashed_password): mysqli_result
