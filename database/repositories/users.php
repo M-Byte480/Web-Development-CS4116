@@ -29,7 +29,7 @@ function get_user_by_id($id): array
     return $result->fetch_assoc();
 }
 
-function get_all_users(): mysqli_result
+function get_all_users(): array
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
@@ -45,7 +45,7 @@ function get_all_users(): mysqli_result
 
     mysqli_close($con);
 
-    return $result;
+    return $result->fetch_all();
 }
 
 function get_user_by_credentials($email, $hashed_password): mysqli_result

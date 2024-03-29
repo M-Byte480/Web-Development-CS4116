@@ -6,9 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Skeleton of the search page is implemented">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/admin_functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/admin_functions.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/populate_database" beforeDir="false" afterPath="$PROJECT_DIR$/database/populate_database" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/repositories/beverages.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/beverages.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/repositories/interests.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/interests.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/repositories/profile_pictures.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/profile_pictures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/repositories/users.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/users.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imports.php" beforeDir="false" afterPath="$PROJECT_DIR$/imports.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile_page/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/profile_page/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="milan/admin-backend" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -32,7 +37,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\php-sdk\php.exe" />
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -48,16 +53,16 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;milan/search__page&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Tadhg/profile__page__backend&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Project&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Web-Development-CS4116&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.webide.settings.project.settings.php&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -77,7 +82,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.14475.35" />
+        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.15026.12" />
       </set>
     </attachedChunks>
   </component>
@@ -108,6 +113,11 @@
       <workItem from="1711124730404" duration="158000" />
       <workItem from="1711135347407" duration="1196000" />
       <workItem from="1711488216559" duration="1004000" />
+      <workItem from="1711643527029" duration="2213000" />
+      <workItem from="1711652107698" duration="21000" />
+      <workItem from="1711652133265" duration="557000" />
+      <workItem from="1711652817317" duration="5850000" />
+      <workItem from="1711731713486" duration="13932000" />
     </task>
     <task id="LOCAL-00001" summary="[Milan] Added a redirect to the Home page upon connecting to the site">
       <option name="closed" value="true" />
