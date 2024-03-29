@@ -27,14 +27,11 @@ try {
 <?php require_once(__DIR__ . '/../NavBar/index.php'); ?>
 
 <?php
+require_once(__DIR__ . '/search_functions.php');
 
-$searched_users = array(1, 2, 3, 4, 5, 6, 89, 1, 1, 1, 1, 1, 1, 1, 1, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+$searched_profiles = get_user_by_matches($_GET);
 
-$user_count = sizeof($searched_users);
-
-$iterations = (int)($user_count / 4);
-$modulo = $user_count % 4;
-
+$user_count = mysqli_num_rows($searched_profiles);
 
 ?>
 
@@ -42,27 +39,10 @@ $modulo = $user_count % 4;
     <div class="row">
         <?php
         require_once(__DIR__ . '/profile_card.php');
-        for ($i = 0; $i < $iterations; $i++) {
+        while ($row = mysqli_fetch_assoc($searched_profiles)) {
             ?>
-            <div class="col-6 col-md-3">
-                User 1
-            </div>
-            <div class="col-6 col-md-3">
-                User 2
-            </div>
-            <div class="col-6 col-md-3">
-                User
-            </div>
-            <div class="col-6 col-md-3">
-                User 4
-            </div>
-            <?php
-        }
-
-        for ($i = 0; $i < $modulo; $i++) {
-            ?>
-            <div class="col-6 col-md-3">
-                User 1
+            <div class="col-12 col-md-3">
+                <?php get_profile_card($row) ?>
             </div>
             <?php
         }

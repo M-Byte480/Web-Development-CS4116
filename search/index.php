@@ -40,7 +40,7 @@ try {
                         <div class="d-flex ">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="<?= $gender ?>"
-                                       name="<?= $gender ?>" value="true">
+                                       name="genders[]" value="<?= $gender ?>">
                                 <label class="form-check-label increased-font"
                                        for="<?= $gender ?>"><?= $gender ?></label>
                             </div>
@@ -70,14 +70,20 @@ try {
             </div>
             <div class="col-sm-12 col-md-4 bg-light p-3 border">
                 <div class="go-to-beverages ">
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="none"
+                               name="beverage" value="None" checked>
+                        <label class="form-check-label increased-font"
+                               for="none">None</label>
+                    </div>
                     <?php
                     require_once(__DIR__ . '/../database/repositories/beverages.php');
                     $beverages_from_db = get_all_beverages();
                     foreach ($beverages_from_db as $beverage) {
                         ?>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="<?= $beverage ?>"
-                                   name="<?= $beverage ?>" value="true">
+                            <input type="radio" class="form-check-input" id="<?= $beverage ?>"
+                                   name="beverage" value="<?= $beverage ?>">
                             <label class="form-check-label increased-font"
                                    for="<?= $beverage ?>"><?= $beverage ?></label>
                         </div>
@@ -104,7 +110,7 @@ try {
                         ?>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="<?= $interest ?>"
-                                   name="<?= $interest ?>" value="true">
+                                   name="interests[]" value="<?= $interest ?>">
                             <label class="form-check-label increased-font"
                                    for="<?= $interest ?>"><?= $interest ?></label>
                         </div>

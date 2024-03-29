@@ -23,3 +23,17 @@ input[type="checkbox"] {
 .text-align-center {
     text-align: center;
 }
+
+.name {
+    position: absolute;
+    bottom: 0;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.no-padding-top {
+    padding-top: 0;
+    margin-bottom: 12px;
+}
