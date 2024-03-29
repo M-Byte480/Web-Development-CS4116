@@ -2,7 +2,7 @@
 global $db_host, $db_username, $db_password, $db_database, $con;
 require_once(__DIR__ . '/../../secrets.settings.php');
 
-function get_user_pfp($user) // base64
+function get_user_pfp($user)
 {
 
     if (!validate_user_id($user['id'])) {
