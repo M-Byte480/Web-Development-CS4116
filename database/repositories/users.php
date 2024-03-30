@@ -1,18 +1,19 @@
 <?php
-require_once(__DIR__ . '/../../validators.php');
+require_once(__DIR__ . '/../../validator_functions.php');
 
 global $db_host, $db_username, $db_password, $db_database;
 require_once(__DIR__ . '/../../secrets.settings.php');
 
 
-function get_user_by_id($id): array
+function get_user_from_user_ID($user_ID): array
 {
-    if (!validate_user_id($id)) {
+    if (!validate_user_id($user_ID)) {
         echo 'invalid ID';
         exit();
     }
 
     global $db_host, $db_username, $db_password, $db_database;
+
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 
     if (!$con) {
@@ -20,7 +21,7 @@ function get_user_by_id($id): array
     }
 
 
-    $query = "SELECT * FROM users WHERE id = '{$id}'";
+    $query = "SELECT * FROM users WHERE id = '{$user_ID}'";
     $result = mysqli_query($con, $query);
 
     mysqli_close($con);
@@ -28,7 +29,7 @@ function get_user_by_id($id): array
     return $result->fetch_assoc();
 }
 
-function get_all_users(): mysqli_result
+function get_all_users(): array
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
@@ -44,7 +45,7 @@ function get_all_users(): mysqli_result
 
     mysqli_close($con);
 
-    return $result;
+    return $result->fetch_all(MYSQLI_ASSOC);
 }
 
 function get_user_by_credentials($email, $hashed_password): mysqli_result
@@ -73,7 +74,7 @@ function get_user_by_credentials($email, $hashed_password): mysqli_result
     return $result;
 }
 
-function ban_user_by_id($user_id): void
+function ban_user_from_user_ID($user_ID): void
 {
     global $db_host, $db_username, $db_password, $db_database;
 
@@ -83,14 +84,14 @@ function ban_user_by_id($user_id): void
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "UPDATE users SET banned = true WHERE id = '{$user_id}' ";
+    $query = "UPDATE users SET banned = true WHERE id = '{$user_ID}' ";
 
     mysqli_query($con, $query);
 
     mysqli_close($con);
 }
 
-function delete_user_by_id($user_id): void
+function delete_user_from_user_ID($user_ID): void
 {
     global $db_host, $db_username, $db_password, $db_database;
 
@@ -101,14 +102,14 @@ function delete_user_by_id($user_id): void
     }
 
     // USER BEVERAGES
-    $query = "DELETE FROM users WHERE id = '{$user_id}'";
+    $query = "DELETE FROM users WHERE id = '{$user_ID}'";
     mysqli_query($con, $query);
 
 
     mysqli_close($con);
 }
 
-function update_user_bio($user_id, $bio): void
+function update_user_bio_from_user_ID($user_ID, $bio): void
 {
     global $db_host, $db_username, $db_password, $db_database;
 
@@ -119,7 +120,7 @@ function update_user_bio($user_id, $bio): void
     }
 
     // USER BEVERAGES
-    $query = "UPDATE users set description = {$bio} WHERE id = '{$user_id}'";
+    $query = "UPDATE users set description = {$bio} WHERE id = '{$user_ID}'";
     mysqli_query($con, $query);
 
 

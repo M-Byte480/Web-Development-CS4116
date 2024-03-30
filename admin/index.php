@@ -1,30 +1,18 @@
 <?php
 // Validate is user logged in
-require_once(__DIR__ . '/../validators.php');
-try {
-    validate_user_logged_in();
-    validate_user_is_admin();
-} catch (ValidationException $e) {
-    echo 'User Credentials have expired';
-    exit();
-}
+require_once(__DIR__ . '/../validate_user.php');
 
-require_once(__DIR__ . "/../database/repositories/profilePictures.php");
+require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 
 ?>
 
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <?php require_once("../imports.php"); ?>
     <meta http-equiv="content-type" content="no-cache, must-revalidate">
-
-    <?php
-    require_once(__DIR__ . "/../css_binding.php");
-    ?>
+    <!-- Custom CSS-->
+    <link rel="stylesheet" href="styles.css">
     <title>PubClub Admin</title>
 
 </head>
@@ -34,7 +22,7 @@ require_once(__DIR__ . "/../database/repositories/profilePictures.php");
 <?php
 
 // Import navigation bar
-require_once(__DIR__ . "/../NavBar/index.php");
+require_once(__DIR__ . "/../nav_bar/index.php");
 
 
 function action_button($user): void
@@ -98,7 +86,7 @@ function action_button($user): void
 function pfp($user): void
 {
     ?>
-    <img src="<?= get_user_pfp($user) ?>"
+    <img src="<?= get_user_pfp_from_user_ID($user['id']) ?>"
          alt="Profile Picture"
          class="img-fluid rounded-circle"
          style="width: 100px; height: 100px; object-fit: cover;"
