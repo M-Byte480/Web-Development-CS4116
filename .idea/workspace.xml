@@ -4,9 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Tadhg] Backend functionality for profile page done, missing photos.">
+    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/admin_backend.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/admin_backend.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css_binding.php" beforeDir="false" afterPath="$PROJECT_DIR$/css_binding.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/repositories/beverages.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/beverages.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/repositories/interests.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/interests.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/repositories/profile_pictures.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/profile_pictures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/repositories/profiles.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/profiles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/repositories/users.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/users.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/home/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/home/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nav_bar/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/nav_bar/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile_page/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/profile/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validate_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/validate_user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validator_functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/validator_functions.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +49,6 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -47,23 +61,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Tadhg/profile__page__backend&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Web-Development-CS4116&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.webide.settings.project.settings.php&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Tadhg/profile__page__backend",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/xampp/htdocs/Web-Development-CS4116",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "rearrange.code.on.save": "true",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\Project" />
@@ -116,6 +130,9 @@
       <workItem from="1711652133265" duration="557000" />
       <workItem from="1711652817317" duration="5850000" />
       <workItem from="1711731713486" duration="13932000" />
+      <workItem from="1711819122112" duration="31000" />
+      <workItem from="1711819159519" duration="2865000" />
+      <workItem from="1711822042558" duration="733000" />
     </task>
     <task id="LOCAL-00001" summary="[Milan] Added a redirect to the Home page upon connecting to the site">
       <option name="closed" value="true" />

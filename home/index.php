@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <?php require_once("../imports.php"); ?>
+    <!-- Custom CSS-->
+    <link rel="stylesheet" href="styles.css">
     <title>Landing Page</title>
 </head>
 <body>
@@ -16,19 +18,19 @@
     </div>
 
     <div class="carousel-inner">
-        <div class="carousel-item carousel-image bg-img-1 active">
+        <div class="carousel-item carousel-image active">
             <img src="../resources/landing1.png" alt="railed" class="d-block w-100">
             <div class="carousel-caption">
                 <h1>Fancy a Pint?</h1>
             </div>
         </div>
-        <div class="carousel-item carousel-image bg-img-2">
+        <div class="carousel-item carousel-image">
             <img src="../resources/landing2.png" alt="mendrink" class="d-block w-100">
             <div class="carousel-caption">
                 <h1>Fancy a Pint?</h1>
             </div>
         </div>
-        <div class="carousel-item carousel-image bg-img-3">
+        <div class="carousel-item carousel-image">
             <img src="../resources/landing3.png" alt="womendrink" class="d-block w-100">
             <div class="carousel-caption">
                 <h1>Fancy a Pint?</h1>

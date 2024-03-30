@@ -24,19 +24,19 @@ try {
     switch ($action) {
         case 'ban':
             validate_ban_parameters($_POST);
-            ban_user_by_id($_POST['user_id']);
+            ban_user_from_user_ID($_POST['user_id']);
             break;
         case 'remove_bio':
-            update_user_bio($_POST['user_id'], '');
+            update_user_bio_from_user_ID($_POST['user_id'], '');
             break;
         case 'remove_pfp':
-            update_user_pfp($_POST['user_id'], '');
+            update_user_pfp_from_user_ID($_POST['user_id'], '');
             break;
         case 'remove_all_images':
             break;
         case 'delete':
             validate_delete_parameters($_POST);
-            delete_user_by_id($_POST['user_id']);
+            delete_user_from_user_ID($_POST['user_id']);
             break;
     }
 } catch (ValidationException $e) {

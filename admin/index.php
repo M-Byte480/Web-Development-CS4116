@@ -11,10 +11,8 @@ require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 <head>
     <?php require_once("../imports.php"); ?>
     <meta http-equiv="content-type" content="no-cache, must-revalidate">
-
-    <?php
-    require_once(__DIR__ . "/../css_binding.php");
-    ?>
+    <!-- Custom CSS-->
+    <link rel="stylesheet" href="styles.css">
     <title>PubClub Admin</title>
 
 </head>
@@ -88,7 +86,7 @@ function action_button($user): void
 function pfp($user): void
 {
     ?>
-    <img src="<?= get_user_pfp($user['id']) ?>"
+    <img src="<?= get_user_pfp_from_user_ID($user['id']) ?>"
          alt="Profile Picture"
          class="img-fluid rounded-circle"
          style="width: 100px; height: 100px; object-fit: cover;"

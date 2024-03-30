@@ -13,7 +13,7 @@ $user_ID = (string)get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_p
 function display_interests(): void
 {
     global $user_ID;
-    $interests = get_user_interests($user_ID);
+    $interests = get_user_interests_from_user_ID($user_ID);
 
     if (is_null($interests)) {
         echo("No interests :(");
@@ -38,36 +38,42 @@ function display_interests(): void
             list-style-type: none;
             padding-left: 1em
         }
+
+        img.img-fluid {
+            object-fit: cover;
+            border: 2px black solid;
+            height: 200px;
+            width: 200px;
+        }
     </style>
 </head>
 <body>
 <?php require_once("../nav_bar/index.php"); ?>
-<div class="row row-cols-2 m-3 p-3">
-    <div class="col-4 p-3">
+<div class="row m-3 p-3 text-center text-sm-start">
+    <div class="col-md-4 col-sm-12 p-3 d-flex align-items-center justify-content-center">
         <div>
-            <img src="<?= get_user_pfp($user_ID) ?>" alt="Profile Picture" class="rounded-circle img-fluid">
+            <img src="<?= get_user_pfp_from_user_ID($user_ID) ?>" alt="Profile Picture"
+                 class="rounded-circle img-fluid">
         </div>
     </div>
-    <div class="col-8 p-1">
+    <div class="col-md-8 col-sm-12 p-1">
         <div class="bg-secondary rounded-3 p-3 h-100">
             <h2>About Me</h2>
             <p>
-                <?php echo get_user_description($user_ID) ?? "No bio :("; ?>
+                <?php echo get_user_description_from_user_ID($user_ID) ?? "No bio :("; ?>
             </p>
         </div>
     </div>
-</div>
-<div class="row m-3 p-3">
-    <div class="col p-1">
+    <div class="col-md-4 col-sm-12 p-1">
         <div class="bg-secondary rounded-3 p-3 h-100">
             <h2>My Pictures</h2>
         </div>
     </div>
-    <div class="col p-1">
+    <div class="col-md-4 col-sm-12 p-1">
         <div class="bg-secondary rounded-3 p-3 h-100">
             <h2>Go To Drink</h2>
             <ul>
-                <li><?= get_users_beverage($user_ID) ?? "Water (boo)" ?></li>
+                <li><?= get_users_beverage_from_user_ID($user_ID) ?? "Water (boo)" ?></li>
             </ul>
             <h2>My Interests</h2>
             <ul>
@@ -75,10 +81,10 @@ function display_interests(): void
             </ul>
         </div>
     </div>
-    <div class="col p-1">
+    <div class="col-md-4 col-sm-12 p-1">
         <div class="bg-secondary rounded-3 p-3 h-100">
             <h2>Looking For</h2>
-            <ul> <?= get_user_seeking($user_ID) ?? "Seeking help" ?>
+            <ul> <?= get_user_seeking_from_user_ID($user_ID) ?? "Seeking help" ?>
             </ul>
         </div>
     </div>

@@ -2,9 +2,9 @@
 global $db_host, $db_username, $db_password, $db_database, $con;
 require_once(__DIR__ . '/../../secrets.settings.php');
 
-function get_user_pfp(string $user): string|null // base64
+function get_user_pfp_from_user_ID(string $user_ID): string|null // base64
 {
-    if (!validate_user_id($user)) {
+    if (!validate_user_id($user_ID)) {
         echo 'invalid ID';
         exit();
     }
@@ -16,7 +16,7 @@ function get_user_pfp(string $user): string|null // base64
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "SELECT pfp FROM profilepictures WHERE userid = '{$user}'";
+    $query = "SELECT pfp FROM profilepictures WHERE userid = '{$user_ID}'";
     $result = mysqli_query($con, $query)->fetch_assoc();
 
     mysqli_close($con);
@@ -26,7 +26,7 @@ function get_user_pfp(string $user): string|null // base64
     return null;
 }
 
-function update_user_pfp($user_id, $pfp)
+function update_user_pfp_from_user_ID($user_ID, $pfp)
 {
     global $db_host, $db_username, $db_password, $db_database;
 
@@ -38,7 +38,7 @@ function update_user_pfp($user_id, $pfp)
     // Todo: Sanitize both the pfp and the bio;
 
     // USER BEVERAGES
-    $query = "UPDATE profilepictures set pfp = '{$pfp}' WHERE userid = '{$user_id}'";
+    $query = "UPDATE profilepictures set pfp = '{$pfp}' WHERE userid = '{$user_ID}'";
     mysqli_query($con, $query);
 
 
