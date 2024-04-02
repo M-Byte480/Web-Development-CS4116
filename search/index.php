@@ -19,7 +19,7 @@ try {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <?php require_once(__DIR__ . '/../css_binding.php'); ?>
-
+    <link rel="stylesheet" href="styles.css">
     <title>PubClub Admin</title>
 </head>
 <body>
@@ -31,6 +31,7 @@ try {
         <div class="row">
             <div class=" col-sm-12 col-md-4 bg-light p-3 border bg-blue">
                 <div class="gender">
+                    <h5>Gender</h5>
                     <?php
                     require_once(__DIR__ . '/../enums/gender.php');
                     $refl = new ReflectionClass(Gender::class);
@@ -51,6 +52,7 @@ try {
                 </div>
             </div>
             <div class="col-sm-12 col-md-4 bg-light p-3 border">
+                <h5>Age Range</h5>
                 <div class="age">
                     <label id="output3" for="lower">Minimum Age:</label>
                     <input type="range" class="form-range width-100" min="18" max="99"
@@ -69,6 +71,7 @@ try {
                 </div>
             </div>
             <div class="col-sm-12 col-md-4 bg-light p-3 border">
+                <h5>Beverage</h5>
                 <div class="go-to-beverages ">
                     <div class="form-check">
                         <input type="radio" class="form-check-input" id="none"
@@ -104,6 +107,7 @@ try {
             $second_half = array_slice($interests_from_db, $len / 2);
             ?>
             <div class="col-sm-12 col-md-4 bg-light p-3 border">
+                <h5>Interests</h5>
                 <div class="interests">
                     <?php
                     foreach ($interests_from_db as $interest) {

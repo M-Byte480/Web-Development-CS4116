@@ -17,6 +17,7 @@ function get_profile_card(array $user, int $interest_flag): void
             window.open("view_profile.php" + getRequest, "_blank");
         }
     </script>
+    
     <div onclick="onCardClicked('<?= $user['id'] ?>')"
          class="bg-dark text-white m-1 my-card border border-2 border-dark rounded-4">
         <?php
@@ -25,7 +26,7 @@ function get_profile_card(array $user, int $interest_flag): void
 
         $cover_image = get_images_by_user_id($user['id']);
 
-        if (sizeof($cover_image) < 1) {
+        if (sizeof($cover_image) < 1 || strlen($cover_image[0]['image']) < 4) {
             $cover_image = 'default_image.jpg';
         } else {
             $cover_image = $cover_image[0]['image'];
