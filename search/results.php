@@ -1,6 +1,6 @@
 <?php
 // Validate is user logged in
-require_once(__DIR__ . '/../validators.php');
+require_once(__DIR__ . '/../validator_functions.php');
 try {
     validate_user_logged_in();
 } catch (ValidationException $e) {
@@ -26,7 +26,7 @@ $interest_flag = isset($_GET['interests']);
 </head>
 <body>
 
-<?php require_once(__DIR__ . '/../NavBar/index.php'); ?>
+<?php require_once(__DIR__ . '/../nav_bar/index.php'); ?>
 
 <?php
 require_once(__DIR__ . '/search_functions.php');
