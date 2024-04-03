@@ -116,8 +116,6 @@ function validate_user_logged_in(): void
 
 function validate_user_is_admin(): void
 {
-
-
     // Validation
     if (!isset($_COOKIE['email']) || !isset($_COOKIE['hashed_password'])) {
         header("Location: ../login/index.php");
