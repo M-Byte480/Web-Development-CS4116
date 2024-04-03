@@ -19,4 +19,12 @@ if (isset($_POST['db_username']) && isset($_POST['db_password'])) {
         return $data;
     }
 }
+
+$e = validate_email($_POST['email']);
+
+$pass = validate($_POST['db_password']);
+
+if (empty($e)) {
+    header("location");
+}
 ?>
