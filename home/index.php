@@ -37,6 +37,28 @@
             </div>
         </div>
     </div>
+    <button type="button" class="buttonM btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Sign up / Log in
+    </button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form">
+                        <form>
+                            <p style="align-content: center"> Welcome! </p>
+                            <a class="px-0" href=" ../signup/">
+                                <button type="button" class="btn btn-dark">Sign-Up</button>
+                            </a>
+                            <a class="mx-5" href="../login/">
+                                <button type="button" class="btn btn-dark">Log-In</button>
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>

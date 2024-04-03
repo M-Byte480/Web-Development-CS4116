@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Card is created. Now we need to add an onclick listener">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Kevin] Added modal to landing page for an option of going to login or sign-up, changed the login to a separate page, also got rid of profile page that I was working on">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/repositories/profilePictures.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/profilePictures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/search/profile_card.php" beforeDir="false" afterPath="$PROJECT_DIR$/search/profile_card.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/search/results.php" beforeDir="false" afterPath="$PROJECT_DIR$/search/results.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/search/search_functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/search/search_functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/search/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/search/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/home/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/home/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,22 +21,50 @@
     <option name="myRunOnSave" value="true" />
   </component>
   <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="main" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="milan/discovery_page" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;CaoimhinHawk1&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="de325277-18b2-42dc-9999-f55aaeef3480" />
+        <option name="url" value="https://github.com/M-Byte480/Web-Development-CS4116.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\php-sdk\php.exe" />
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2dXckR5snOcrkvVhr5Pb6IT0NaI" />
   <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -51,37 +75,37 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "milan/search__result__page",
+    "git-widget-placeholder": "Kevin__login__Conlfict-Fix",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/xampp/htdocs/Project/search",
+    "last_opened_file_path": "C:/xampp/htdocs/Project",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "rearrange.code.on.save": "true",
-    "settings.editor.selected.configurable": "Errors",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\Project\search" />
       <recent name="C:\xampp\htdocs\Project" />
       <recent name="C:\xampp\htdocs\Project\admin" />
       <recent name="C:\xampp\htdocs\Project\NavBar" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Kevin\PhpstormProjects\Web-Development-CS4116\resources\login" />
+      <recent name="C:\Users\Kevin\PhpstormProjects\Web-Development-CS4116\resources\Login" />
       <recent name="C:\xampp\htdocs\Project\database\users" />
       <recent name="C:\xampp\htdocs\Project\resources\home" />
       <recent name="C:\xampp\htdocs\Project" />
-      <recent name="C:\xampp\htdocs\Project\NavBar" />
     </key>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.14475.35" />
+        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.14808.18" />
       </set>
     </attachedChunks>
   </component>
@@ -112,10 +136,14 @@
       <workItem from="1711124730404" duration="158000" />
       <workItem from="1711135347407" duration="1196000" />
       <workItem from="1711488216559" duration="1004000" />
-      <workItem from="1711657336809" duration="51000" />
-      <workItem from="1711657637183" duration="2153000" />
-      <workItem from="1711663464976" duration="10057000" />
-      <workItem from="1711724676778" duration="8491000" />
+      <workItem from="1711642825551" duration="3969000" />
+      <workItem from="1711744449131" duration="1968000" />
+      <workItem from="1711891818678" duration="6723000" />
+      <workItem from="1711904471012" duration="6114000" />
+      <workItem from="1711976494998" duration="5243000" />
+      <workItem from="1711989326819" duration="3126000" />
+      <workItem from="1712073134561" duration="2856000" />
+      <workItem from="1712085997034" duration="2416000" />
     </task>
     <task id="LOCAL-00001" summary="[Milan] Added a redirect to the Home page upon connecting to the site">
       <option name="closed" value="true" />
@@ -245,15 +273,23 @@
       <option name="project" value="LOCAL" />
       <updated>1711110821741</updated>
     </task>
-    <task id="LOCAL-00017" summary="[Milan] Card is created. Now we need to add an onclick listener">
+    <task id="LOCAL-00017" summary="[Kevin] Button to go to login page from sign up">
       <option name="closed" value="true" />
-      <created>1711679144870</created>
+      <created>1711642785701</created>
       <option name="number" value="00017" />
       <option name="presentableId" value="LOCAL-00017" />
       <option name="project" value="LOCAL" />
-      <updated>1711679144870</updated>
+      <updated>1711642785701</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="[Kevin] Button to go to login page from sign up">
+      <option name="closed" value="true" />
+      <created>1711642965637</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1711642965637</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -288,8 +324,8 @@
     <MESSAGE value="[Milan] Skeleton functionality is created" />
     <MESSAGE value="[Milan] Added age POST values" />
     <MESSAGE value="[Milan] Skeleton of the search page is implemented" />
-    <MESSAGE value="[Milan] Card is created. Now we need to add an onclick listener" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Card is created. Now we need to add an onclick listener" />
+    <MESSAGE value="[Kevin] Button to go to login page from sign up" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Kevin] Button to go to login page from sign up" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
