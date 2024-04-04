@@ -19,37 +19,42 @@ def fill_uuids():
 def write_bevs():
     return_string = ""
     for bev in bevs:
-        return_string += f"INSERT INTO beverages (name) VALUES ('{bev}');\n"
+        return_string += f"INSERT INTO beverages (name) VALUES (\"{bev}\");\n"
     return return_string
 
 def write_interests():
     return_string = ""
     for interest in interests:
-        return_string += f"INSERT INTO Interests (name) VALUES ('{interest}');\n"
+        return_string += f"INSERT INTO Interests (name) VALUES (\"{interest}\");\n"
     return return_string
 
 def write_users(id):
     birth_date = f"{random.randint(1969, 2005)}-{random.randint(1, 12)}-{random.randint(1, 28)}"
     first_name = random.choice(first_names)
     email_name = f"{first_name}{((int) (random.random() * 1000))}"
-    return f"INSERT INTO Users (id, lastName, firstName, email, hashedPassword, dateOfBirth, dateJoined, admin, banned, reportcount) VALUES ('{id}', '{first_name}', '{random.choice(second_names)}', '{email_name}.test@example.com', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', '{birth_date}', '2024-01-01', FALSE, FALSE, 0);\n" 
+    return f"INSERT INTO Users (id, firstName, lastName, email, hashedPassword, dateOfBirth, dateJoined, admin, banned, reportcount) VALUES (\"{id}\", \"{first_name}\", \"{random.choice(second_names)}\", \"{email_name}.test@example.com\", \"ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb\", \"{birth_date}\", \"2024-01-01\", FALSE, FALSE, 0);\n" 
 
 def write_profiles(id):
     sex = random.random() > 0.5 if "Male" else "Female"
     seeking = random.random() > 0.5 if "Male" else "Female"
     bio = random.choice(bios)
-    return f"INSERT INTO Profiles (userId, gender, seeking, description, likeCount, dislikeCount) VALUES('{id}', '{sex}', '{seeking}', '{bio}', 0, 0);\n"
+    return f"INSERT INTO Profiles (userId, gender, seeking, description, likeCount, dislikeCount) VALUES(\"{id}\", \"{sex}\", \"{seeking}\", \"{bio}\", 0, 0);\n"
 
 def write_userInterests(id):
+    num_of_interests = random.randint(1, 5)
+    interest_ids = []
     i=0
     return_string = ""
-    while i < random.randint(1, 5):
-        return_string += f"INSERT INTO UserInterests (userid, interestid) VALUES('{id}', {random.randint(0, interests.__len__())});\n"
-        i += 1
+    while i < num_of_interests:
+        rand_num = random.randint(1, interests.__len__())
+        if (not interest_ids.__contains__(rand_num)):
+            interest_ids.append(rand_num)
+            return_string += f"INSERT INTO UserInterests (userid, interestid) VALUES(\"{id}\", {rand_num});\n"
+            i += 1
     return return_string
 
 def write_userBev(id):
-    return f"INSERT INTO UserBeverages (userid, beverageid) VALUES('{id}', {random.randint(0, bevs.__len__())});\n"
+    return f"INSERT INTO UserBeverages (userid, beverageid) VALUES(\"{id}\", {random.randint(1, bevs.__len__())});\n"
 
 with open('output.txt', 'a') as f:
     fill_uuids()
