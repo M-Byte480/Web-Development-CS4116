@@ -54,11 +54,13 @@ $usersInDb = get_all_users();
 
                     // Check for what the backend returned value is
                     if (jsonData.success == "1") {
-                        let toastHTML = getToast("Successfully Banned User!");
+                        let toastHTML = getToast(jsonData.msg);
                         $(document.body).append(toastHTML);
                         $('.toast').toast('show');
                     } else {
-                        alert('Failed To Ban!');
+                        let toastHTML = getToast('Failed To Ban User!');
+                        $(document.body).append(toastHTML);
+                        $('.toast').toast('show');
                     }
                 }
             });
@@ -78,9 +80,13 @@ $usersInDb = get_all_users();
 
                     // Check for what the backend returned value is
                     if (jsonData.success == "1") {
-                        alert('User PFP has been removed!');
+                        let toastHTML = getToast(jsonData.msg);
+                        $(document.body).append(toastHTML);
+                        $('.toast').toast('show');
                     } else {
-                        alert('Failed To Remove User!');
+                        let toastHTML = getToast('Failed To Remove User!');
+                        $(document.body).append(toastHTML);
+                        $('.toast').toast('show');
                     }
                 }
             });
@@ -100,9 +106,13 @@ $usersInDb = get_all_users();
 
                     // Check for what the backend returned value is
                     if (jsonData.success == "1") {
-                        alert('Successfully removed all user images!');
+                        let toastHTML = getToast(jsonData.msg);
+                        $(document.body).append(toastHTML);
+                        $('.toast').toast('show');
                     } else {
-                        alert('Failed To Ban!');
+                        let toastHTML = getToast('Failed to remove images');
+                        $(document.body).append(toastHTML);
+                        $('.toast').toast('show');
                     }
                 }
             });
@@ -122,9 +132,13 @@ $usersInDb = get_all_users();
 
                     // Check for what the backend returned value is
                     if (jsonData.success == "1") {
-                        alert('User has been Banned!');
+                        let toastHTML = getToast(jsonData.msg);
+                        $(document.body).append(toastHTML);
+                        $('.toast').toast('show');
                     } else {
-                        alert('Failed To Ban!');
+                        let toastHTML = getToast('Failed to remove bio');
+                        $(document.body).append(toastHTML);
+                        $('.toast').toast('show');
                     }
                 }
             });
@@ -223,8 +237,7 @@ function action_button($user): void
                     <a class="dropdown-item" href="#">
                         <form id="removeForm" method="post" action="admin_backend.php">
                             <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                            <input type="hidden" name="banned_by_email" value="
-<?= $_COOKIE['email'] ?>">
+                            <input type="hidden" name="banned_by_email" value="<?= $_COOKIE['email'] ?>">
                             <input type="hidden" name="action" value="delete">
                             <input type="submit" name="removeBtn" id="removeBtn" value="Delete"
                                    onclick="return confirm('Are you sure? This action cannot be undone')"/>
@@ -235,54 +248,6 @@ function action_button($user): void
 
         </div>
     </div>
-
-    <form id="<?= 'banForm-' . $user['id'] ?>" method="post" action="admin_backend.php" class="banForm">
-        <!-- BAN MODAL -->
-        <div class="modal fade" id="<?= 'banModal-' . $user['id'] ?>" tabindex="-1" aria-labelledby="banModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="banModalLabel">Ban Menu</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Banning:</label>
-                            <input class="form-control" type="text"
-                                   value="<?= $user['firstName'] . " " . $user['lastName'] ?>"
-                                   aria-label="Disabled input example" disabled readonly>
-
-                        </div>
-                        <div class="mb-3">
-                            <label for="banReasonTextBox" class="form-label">Ban Reason:</label>
-                            <textarea class="form-control" id="banReasonTextBox" rows="3"></textarea>
-                        </div>
-                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                        <input type="hidden" name="banned_by_email" value="<?= $_COOKIE['email'] ?>">
-                        <input type="hidden" name="action" value="ban">
-                        <label class="form-group" for="banExpirationDate">
-                            Temporary ban expiration:
-                        </label>
-                        <input id="banExpirationDate" type="date" name="unbanDate" pattern="\d{4}-\d{2}-\d{2}"/>
-                        <span class="validity"></span>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" name="submit" value="permanent" class="btn btn-primary"
-                        > Permanently Ban
-                        </button>
-                        <button type="submit" name="submit" value="temporary" class="btn btn-primary"
-                        >Temporary Ban
-                        </button>
-                        <button type="submit" name="submit" value="unban" class="btn btn-primary"
-                        >Unban user
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
 
     <form id="<?= 'banForm-' . $user['id'] ?>" method="post" action="admin_backend.php" class="banForm">
         <!-- BAN MODAL -->

@@ -20,11 +20,15 @@ if (isset($_POST['action']) && $_POST['action']) {
 require_once(__DIR__ . '/../validator_functions.php');
 require_once(__DIR__ . '/../database/repositories/users.php');
 require_once(__DIR__ . '/../database/repositories/profile_pictures.php');
+
+$return_array = array();
+
 try {
     switch ($action) {
         case 'ban':
             validate_ban_parameters($_POST);
             ban_user_from_user_ID($_POST['user_id']);
+            $return_array['msg'] = "Successfully banned user!";
             break;
         case 'remove_bio':
             update_user_bio_from_user_ID($_POST['user_id'], '');
@@ -40,11 +44,12 @@ try {
             break;
     }
 } catch (ValidationException $e) {
-    echo json_encode(array('success' => ERROR));
+    $return_array['success'] = ERROR;
+    echo json_encode($return_array);
     exit();
 }
 
-
-echo json_encode(array('success' => SUCCESS));
+$return_array['success'] = SUCCESS;
+echo json_encode($return_array);
 
 ?>
