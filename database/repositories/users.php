@@ -127,5 +127,46 @@ function update_user_bio_from_user_ID($user_ID, $bio): void
     mysqli_close($con);
 }
 
+function get_first_name_from_user_ID(string $user_ID): string
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+
+    $query = "SELECT firstName FROM users";
+    $result = mysqli_query($con, $query);
+
+    mysqli_close($con);
+
+    if ($result->num_rows > 0)
+        return $result->fetch_array()[0];
+    return "";
+}
+
+function get_age_from_user_ID(string $user_ID): string
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+    
+    $query = "SELECT dateOfBirth FROM users";
+    $result = mysqli_query($con, $query);
+
+    mysqli_close($con);
+
+    if ($result->num_rows > 0) {
+        $birthDate = explode("-", $result->fetch_array()[0]);
+        return (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[2], $birthDate[0]))) > date("md")
+            ? ((date("Y") - $birthDate[0]) - 1)
+            : (date("Y") - $birthDate[0]));
+    }
+    return "";
+}
+
 
 ?>
