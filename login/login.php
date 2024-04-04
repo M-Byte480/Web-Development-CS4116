@@ -14,6 +14,12 @@ if (!(isset($_POST['email']) && isset($_POST['password']))) {
     exit();
 }
 
+if (!function_exists('mysqli_init') && !extension_loaded('mysqli')) {
+    echo 'We don\'t have mysqli!!!';
+} else {
+    echo 'Phew we have it!';
+}
+
 $email = $_POST['email'];
 
 $password = $_POST['password'];
@@ -22,6 +28,12 @@ if (empty($email) || empty($password)) {
     echo "Please fill in all text fields";
     var_dump(function_exists('mysqli_connect'));
     exit();
+}
+
+$mysqli = new mysqli($db_host, $db_username, $db_password, $db_database);
+
+if ($mysqli->connect_errno) {
+    die("Error connecting to sql: " . $mysqli->connect_errno);
 }
 
 $query = "SELECT * FROM users where email = ?";
