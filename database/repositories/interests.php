@@ -12,7 +12,7 @@ function get_all_interests(): array
     }
 
 
-    $query = "SELECT name FROM interests";
+    $query = "SELECT name FROM Interests";
 
     $result = mysqli_query($con, $query);
 
@@ -34,7 +34,7 @@ function get_user_interests_from_user_ID(string $user_ID): array|null // base64
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "SELECT name FROM interests INNER JOIN userinterests ON interests.id = userinterests.interestId WHERE userinterests.userId ='{$user_ID}'";
+    $query = "SELECT name FROM Interests INNER JOIN UserInterests ON interests.id = UserInterests.interestId WHERE UserInterests.userId ='{$user_ID}'";
     $result = mysqli_query($con, $query);
     mysqli_close($con);
 

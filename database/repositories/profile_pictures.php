@@ -16,7 +16,7 @@ function get_user_pfp_from_user_ID(string $user_ID): string|null // base64
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "SELECT pfp FROM profilepictures WHERE userid = '{$user_ID}'";
+    $query = "SELECT pfp FROM ProfilePictures WHERE userid = '{$user_ID}'";
     $result = mysqli_query($con, $query)->fetch_assoc();
 
     mysqli_close($con);
@@ -38,7 +38,7 @@ function update_user_pfp_from_user_ID($user_ID, $pfp)
     // Todo: Sanitize both the pfp and the bio;
 
     // USER BEVERAGES
-    $query = "UPDATE profilepictures set pfp = '{$pfp}' WHERE userid = '{$user_ID}'";
+    $query = "UPDATE ProfilePictures set pfp = '{$pfp}' WHERE userid = '{$user_ID}'";
     mysqli_query($con, $query);
 
 
