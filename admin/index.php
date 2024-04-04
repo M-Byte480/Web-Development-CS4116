@@ -14,16 +14,187 @@ require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
     <!-- Custom CSS-->
     <link rel="stylesheet" href="styles.css">
     <title>PubClub Admin</title>
-
 </head>
 <body>
 
+<?php
+// Query Database
+$usersInDb = get_all_users();
+
+
+?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    // Ban User
+    $(document).ready(function () { // On DOM ready
+        $('.banForm').submit(function (e) {
+            e.preventDefault(); // Overrides the default Form Submission
+            $.ajax({ // Send this asynchronously
+                type: "POST",
+                url: 'admin_backend.php',
+                data: $(this).serialize(),
+                success: function (response) {
+                    var jsonData = JSON.parse(response);
+
+                    // Check for what the backend returned value is
+                    if (jsonData.success == "1") {
+                        let toastHTML = `
+                        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                          <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header">
+                              <strong class="me-auto">Ban Notification</strong>
+                              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                            <div class="toast-body">
+                              Successfully Banned User!
+                            </div>
+                          </div>
+                        </div>
+                        `;
+                        $(document.body).append(toastHTML);
+                        $('.toast').toast('show');
+                    } else {
+                        alert('Failed To Ban!');
+                    }
+                }
+            });
+        });
+    });
+
+    // Remove PFP
+    $(document).ready(function () { // On DOM ready
+        $('#removePfp').submit(function (e) {
+            e.preventDefault(); // Overrides the default Form Submission
+            $.ajax({ // Send this asynchronously
+                type: "POST",
+                url: 'admin_backend.php',
+                data: $(this).serialize(),
+                success: function (response) {
+                    var jsonData = JSON.parse(response);
+
+                    // Check for what the backend returned value is
+                    if (jsonData.success == "1") {
+                        alert('User PFP has been removed!');
+                    } else {
+                        alert('Failed To Remove User!');
+                    }
+                }
+            });
+        });
+    });
+
+    // Remove all images
+    $(document).ready(function () { // On DOM ready
+        $('#removeAllImages').submit(function (e) {
+            e.preventDefault(); // Overrides the default Form Submission
+            $.ajax({ // Send this asynchronously
+                type: "POST",
+                url: 'admin_backend.php',
+                data: $(this).serialize(),
+                success: function (response) {
+                    var jsonData = JSON.parse(response);
+
+                    // Check for what the backend returned value is
+                    if (jsonData.success == "1") {
+                        alert('Successfully removed all user images!');
+                    } else {
+                        alert('Failed To Ban!');
+                    }
+                }
+            });
+        });
+    });
+
+    // Remove Bio
+    $(document).ready(function () { // On DOM ready
+        $('#removeBio').submit(function (e) {
+            e.preventDefault(); // Overrides the default Form Submission
+            $.ajax({ // Send this asynchronously
+                type: "POST",
+                url: 'admin_backend.php',
+                data: $(this).serialize(),
+                success: function (response) {
+                    var jsonData = JSON.parse(response);
+
+                    // Check for what the backend returned value is
+                    if (jsonData.success == "1") {
+                        alert('User has been Banned!');
+                    } else {
+                        alert('Failed To Ban!');
+                    }
+                }
+            });
+        });
+    });
+    // Ban User
+    $(document).ready(function () { // On DOM ready
+        $('#removeForm').submit(function (e) {
+            e.preventDefault(); // Overrides the default Form Submission
+            $.ajax({ // Send this asynchronously
+                type: "POST",
+                url: 'admin_backend.php',
+                data: $(this).serialize(),
+                success: function (response) {
+                    var jsonData = JSON.parse(response);
+
+
+                    // Check for what the backend returned value is
+                    if (jsonData.success == "1") {
+                        let toastHTML = `
+                        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                          <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header">
+                              <strong class="me-auto">Ban Notification</strong>
+                              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                            <div class="toast-body">
+                              User Successfully Been Removed!
+                            </div>
+                          </div>
+                        </div>
+                        `;
+                        $(document.body).append(toastHTML);
+                        $('.toast').toast('show');
+
+                        $(document).getElementById('')
+                    } else {
+                        let toastHTML = `
+                        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                          <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header">
+                              <strong class="me-auto">Ban Notification</strong>
+                              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                            <div class="toast-body">
+                              Failed to remove user!
+                            </div>
+                          </div>
+                        </div>
+                        `;
+                        $(document.body).append(toastHTML);
+                        $('.toast').toast('show');
+                    }
+                }
+            });
+        });
+    });
+
+</script>
 
 <?php
 
 // Import navigation bar
 require_once(__DIR__ . "/../nav_bar/index.php");
+?>
 
+<div class="search-bar-container">
+    <input id="searchBar" type="text" class="search-bar" placeholder="Search...">
+
+</div>
+
+
+<?php
 
 function action_button($user): void
 {
@@ -37,14 +208,17 @@ function action_button($user): void
                 <i class="bi bi-three-dots-vertical"></i>
             </button>
             <ul class="dropdown-menu">
-
-                <li class="dropdown-item">
-                    <form id="banForm" method="post" action="admin_backend.php">
-                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                        <input type="hidden" name="banned_by_email" value="<?= $_COOKIE['email'] ?>">
-                        <input type="hidden" name="action" value="ban">
-                        <input type="submit" name="banBtn" id="banBtn" value="Ban User"/>
-                    </form>
+                <li>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#<?= 'banModal-' . $user['id'] ?>">
+                        Ban Options
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#<?= 'editUser-' . $user['id'] ?>">
+                        User Options
+                    </button>
                 </li>
                 <li class="dropdown-item">
                     <form id="removeBio" method="post" action="admin_backend.php">
@@ -71,15 +245,120 @@ function action_button($user): void
                     <a class="dropdown-item" href="#">
                         <form id="removeForm" method="post" action="admin_backend.php">
                             <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                            <input type="hidden" name="banned_by_email" value="<?= $_COOKIE['email'] ?>">
+                            <input type="hidden" name="banned_by_email" value="
+<?= $_COOKIE['email'] ?>">
                             <input type="hidden" name="action" value="delete">
-                            <input type="submit" name="removeBtn" id="removeBtn" value="Delete"/>
+                            <input type="submit" name="removeBtn" id="removeBtn" value="Delete"
+                                   onclick="return confirm('Are you sure? This action cannot be undone')"/>
                         </form>
                     </a>
                 </li>
             </ul>
+
         </div>
     </div>
+
+    <form id="
+<?= 'banForm-' . $user['id'] ?>" method="post" action="admin_backend.php" class="banForm">
+        <!-- BAN MODAL -->
+        <div class="modal fade" id="
+<?= 'banModal-' . $user['id'] ?>" tabindex="-1" aria-labelledby="banModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="banModalLabel">Ban Menu</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Banning:</label>
+                            <input class="form-control" type="text"
+                                   value="<?= $user['firstName'] . " " . $user['lastName'] ?>"
+                                   aria-label="Disabled input example" disabled readonly>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="banReasonTextBox" class="form-label">Ban Reason:</label>
+                            <textarea class="form-control" id="banReasonTextBox" rows="3"></textarea>
+                        </div>
+                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                        <input type="hidden" name="banned_by_email" value="
+<?= $_COOKIE['email'] ?>">
+                        <input type="hidden" name="action" value="ban">
+                        <label class="form-group" for="banExpirationDate">
+                            Temporary ban expiration:
+                        </label>
+                        <input id="banExpirationDate" type="date" name="unbanDate" pattern="\d{4}-\d{2}-\d{2}"/>
+                        <span class="validity"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="submit" value="permanent" class="btn btn-primary"
+                        > Permanently Ban
+                        </button>
+                        <button type="submit" name="submit" value="temporary" class="btn btn-primary"
+                        >Temporary Ban
+                        </button>
+                        <button type="submit" name="submit" value="unban" class="btn btn-primary"
+                        >Unban user
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form id="
+<?= 'banForm-' . $user['id'] ?>" method="post" action="admin_backend.php" class="banForm">
+        <!-- BAN MODAL -->
+        <div class="modal fade" id="
+<?= 'banModal-' . $user['id'] ?>" tabindex="-1" aria-labelledby="banModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="banModalLabel">Ban Menu</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Banning:</label>
+                            <input class="form-control" type="text"
+                                   value="<?= $user['firstName'] . " " . $user['lastName'] ?>"
+                                   aria-label="Disabled input example" disabled readonly>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="banReasonTextBox" class="form-label">Ban Reason:</label>
+                            <textarea class="form-control" id="banReasonTextBox" rows="3"></textarea>
+                        </div>
+                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                        <input type="hidden" name="banned_by_email" value="
+<?= $_COOKIE['email'] ?>">
+                        <input type="hidden" name="action" value="ban">
+                        <label class="form-group" for="banExpirationDate">
+                            Temporary ban expiration:
+                        </label>
+                        <input id="banExpirationDate" type="date" name="unbanDate" pattern="\d{4}-\d{2}-\d{2}"/>
+                        <span class="validity"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="submit" value="permanent" class="btn btn-primary"
+                        > Permanently Ban
+                        </button>
+                        <button type="submit" name="submit" value="temporary" class="btn btn-primary"
+                        >Temporary Ban
+                        </button>
+                        <button type="submit" name="submit" value="unban" class="btn btn-primary"
+                        >Unban user
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
     <?php
 }
 
@@ -101,7 +380,8 @@ function user_information($user): void
     ?>
     <div class="container">
         <div class="row">
-            <div class="col-md-4"><h4><?= get_user_name($user) ?> | <?= get_user_age($user) ?></h4>
+            <div class="col-md-4"><h4><?= get_user_name($user) ?> |
+                    <?= get_user_age($user) ?></h4>
             </div>
             <div class="col-md-6">Reports: <?= $user['reportCount'] ?>
             </div>
@@ -110,12 +390,13 @@ function user_information($user): void
     <?php
 }
 
-// Query Database
-$usersInDb = get_all_users();
 
 foreach ($usersInDb as $user) {
     ?>
-    <div class="container ">
+    <div class="container list-item" id="<?= $user['id'] ?>">
+        <div style="display: none;" class="list-flag">
+            <?= get_user_name($user) . ' ' . get_user_age($user) ?></div>
+        <div style="display: none;" class="list-id"><?= $user['id'] ?></div>
         <div class=" row align-items-center height-100px mt-3 border curve-100 bg-gray ">
             <div class="col-2 col-sm-2 col-md-2 p-1 width-100px">
                 <?php pfp($user) ?>
@@ -129,50 +410,34 @@ foreach ($usersInDb as $user) {
         </div>
     </div>
 
+
     <?php
 }
 ?>
 
-<script type="text/javascript">
-    // Ban User
+<script>
     $(document).ready(function () {
-        $('#banForm').submit(function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: "POST",
-                url: 'admin_backend.php',
-                data: $(this).serialize(),
-                success: function (response) {
-                    var jsonData = JSON.parse(response);
-
-                    if (jsonData.success == "1") {
-                        alert('User has been Banned!');
+        $('#searchBar').on('input', function () {
+            let searchText = $(this).val().toLowerCase();
+            if (searchText.length === 36) {
+                $('.list-item').each(function () {
+                    var uuid = $(this).find('.list-id').text();
+                    if (searchText.includes(uuid)) {
+                        $(this).show();
                     } else {
-                        alert('Failed To Ban!');
+                        $(this).hide();
                     }
-                }
-            });
-        });
-    });
-
-    // Remove User
-    $(document).ready(function () {
-        $('#removeForm').submit(function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: "POST",
-                url: 'admin_backend.php',
-                data: $(this).serialize(),
-                success: function (response) {
-                    var jsonData = JSON.parse(response);
-
-                    if (jsonData.success == "1") {
-                        alert('User has been Removed!');
+                });
+            } else {
+                $('.list-item').each(function () {
+                    var userName = $(this).find('.list-flag').text().toLowerCase();
+                    if (userName.includes(searchText)) {
+                        $(this).show();
                     } else {
-                        alert('Failed To Remove!');
+                        $(this).hide();
                     }
-                }
-            });
+                });
+            }
         });
     });
 </script>
