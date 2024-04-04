@@ -136,7 +136,7 @@ function get_first_name_from_user_ID(string $user_ID): string
     }
 
 
-    $query = "SELECT firstName FROM users";
+    $query = "SELECT firstName FROM users where id = '{$user_ID}'";
     $result = mysqli_query($con, $query);
 
     mysqli_close($con);
@@ -153,8 +153,8 @@ function get_age_from_user_ID(string $user_ID): string
     if (!$con) {
         die('Could not connect: ' . mysqli_error($con));
     }
-    
-    $query = "SELECT dateOfBirth FROM users";
+
+    $query = "SELECT dateOfBirth FROM users where id = '{$user_ID}'";
     $result = mysqli_query($con, $query);
 
     mysqli_close($con);
