@@ -35,8 +35,8 @@ def write_users(id):
     return f"INSERT INTO Users (id, firstName, lastName, email, hashedPassword, dateOfBirth, dateJoined, admin, banned, reportcount) VALUES (\"{id}\", \"{first_name}\", \"{random.choice(second_names)}\", \"{email_name}.test@example.com\", \"ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb\", \"{birth_date}\", \"2024-01-01\", FALSE, FALSE, 0);\n" 
 
 def write_profiles(id):
-    sex = random.random() > 0.5 if "Male" else "Female"
-    seeking = random.random() > 0.5 if "Male" else "Female"
+    sex = "Male" if random.random() > 0.5 else "Female"
+    seeking = "Male" if random.random() > 0.5 else "Female"
     bio = random.choice(bios)
     return f"INSERT INTO Profiles (userId, gender, seeking, description, likeCount, dislikeCount) VALUES(\"{id}\", \"{sex}\", \"{seeking}\", \"{bio}\", 0, 0);\n"
 
@@ -67,4 +67,5 @@ with open('output.txt', 'a') as f:
         f.write(write_users(id))
         f.write(write_profiles(id))
         f.write(write_userInterests(id))
+        f.write(write_userBev(id))
         f.write("\n")
