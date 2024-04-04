@@ -26,6 +26,21 @@ $usersInDb = get_all_users();
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+
+    function getToast(msg) {
+        return `<div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Ban Notification</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    ${msg}
+                </div>
+            </div>
+        </div>`
+    }
+
     // Ban User
     $(document).ready(function () { // On DOM ready
         $('.banForm').submit(function (e) {
@@ -39,19 +54,7 @@ $usersInDb = get_all_users();
 
                     // Check for what the backend returned value is
                     if (jsonData.success == "1") {
-                        let toastHTML = `
-                        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                          <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                            <div class="toast-header">
-                              <strong class="me-auto">Ban Notification</strong>
-                              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                            </div>
-                            <div class="toast-body">
-                              Successfully Banned User!
-                            </div>
-                          </div>
-                        </div>
-                        `;
+                        let toastHTML = getToast("Successfully Banned User!");
                         $(document.body).append(toastHTML);
                         $('.toast').toast('show');
                     } else {
@@ -141,37 +144,12 @@ $usersInDb = get_all_users();
 
                     // Check for what the backend returned value is
                     if (jsonData.success == "1") {
-                        let toastHTML = `
-                        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                          <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                            <div class="toast-header">
-                              <strong class="me-auto">Ban Notification</strong>
-                              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                            </div>
-                            <div class="toast-body">
-                              User Successfully Been Removed!
-                            </div>
-                          </div>
-                        </div>
-                        `;
+                        let toastHTML = getToast("User Successfully Been Removed!");
                         $(document.body).append(toastHTML);
                         $('.toast').toast('show');
-
                         $(document).getElementById('')
                     } else {
-                        let toastHTML = `
-                        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                          <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                            <div class="toast-header">
-                              <strong class="me-auto">Ban Notification</strong>
-                              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                            </div>
-                            <div class="toast-body">
-                              Failed to remove user!
-                            </div>
-                          </div>
-                        </div>
-                        `;
+                        let toastHTML = getToast("Failed to remove user!");
                         $(document.body).append(toastHTML);
                         $('.toast').toast('show');
                     }
@@ -258,11 +236,9 @@ function action_button($user): void
         </div>
     </div>
 
-    <form id="
-<?= 'banForm-' . $user['id'] ?>" method="post" action="admin_backend.php" class="banForm">
+    <form id="<?= 'banForm-' . $user['id'] ?>" method="post" action="admin_backend.php" class="banForm">
         <!-- BAN MODAL -->
-        <div class="modal fade" id="
-<?= 'banModal-' . $user['id'] ?>" tabindex="-1" aria-labelledby="banModalLabel"
+        <div class="modal fade" id="<?= 'banModal-' . $user['id'] ?>" tabindex="-1" aria-labelledby="banModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -284,8 +260,7 @@ function action_button($user): void
                             <textarea class="form-control" id="banReasonTextBox" rows="3"></textarea>
                         </div>
                         <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                        <input type="hidden" name="banned_by_email" value="
-<?= $_COOKIE['email'] ?>">
+                        <input type="hidden" name="banned_by_email" value="<?= $_COOKIE['email'] ?>">
                         <input type="hidden" name="action" value="ban">
                         <label class="form-group" for="banExpirationDate">
                             Temporary ban expiration:
@@ -309,11 +284,9 @@ function action_button($user): void
         </div>
     </form>
 
-    <form id="
-<?= 'banForm-' . $user['id'] ?>" method="post" action="admin_backend.php" class="banForm">
+    <form id="<?= 'banForm-' . $user['id'] ?>" method="post" action="admin_backend.php" class="banForm">
         <!-- BAN MODAL -->
-        <div class="modal fade" id="
-<?= 'banModal-' . $user['id'] ?>" tabindex="-1" aria-labelledby="banModalLabel"
+        <div class="modal fade" id="<?= 'banModal-' . $user['id'] ?>" tabindex="-1" aria-labelledby="banModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -335,8 +308,7 @@ function action_button($user): void
                             <textarea class="form-control" id="banReasonTextBox" rows="3"></textarea>
                         </div>
                         <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                        <input type="hidden" name="banned_by_email" value="
-<?= $_COOKIE['email'] ?>">
+                        <input type="hidden" name="banned_by_email" value="<?= $_COOKIE['email'] ?>">
                         <input type="hidden" name="action" value="ban">
                         <label class="form-group" for="banExpirationDate">
                             Temporary ban expiration:
