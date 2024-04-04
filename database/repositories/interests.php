@@ -34,7 +34,7 @@ function get_user_interests_from_user_ID(string $user_ID): array|null // base64
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "SELECT name FROM Interests INNER JOIN UserInterests ON interests.id = UserInterests.interestId WHERE UserInterests.userId ='{$user_ID}'";
+    $query = "SELECT name FROM Interests INNER JOIN UserInterests ON Interests.id = UserInterests.interestId WHERE UserInterests.userId ='{$user_ID}'";
     $result = mysqli_query($con, $query);
     mysqli_close($con);
 
@@ -57,10 +57,10 @@ function update_users_interests_from_user_ID(string $user_ID, array $interest_id
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "DELETE FROM userinterests WHERE userId = '{$user_ID}'";
+    $query = "DELETE FROM UserInterests WHERE userId = '{$user_ID}'";
     mysqli_query($con, $query);
     foreach ($interest_ids as $interest_id) {
-        $query = "INSERT INTO userinterests (userId, interestId) VALUES ('{$user_ID}', '{$interest_id}')";
+        $query = "INSERT INTO UserInterests (userId, interestId) VALUES ('{$user_ID}', '{$interest_id}')";
         mysqli_query($con, $query);
     }
     mysqli_close($con);
