@@ -1,14 +1,7 @@
 <?php
 
-require_once (__DIR__ . '/../validators.php');
-
-$host = 'localhost';
-$dbname = 'pub_club';
-$username = 'root';
-$password = '';
-
-$gender = '';
-;
+require_once (__DIR__ . '/../validators_functions.php');
+global $host,$user, $db, $pass ;
 
 $errors = [];
 
@@ -40,7 +33,7 @@ if ($_POST["user_password"] !== $_POST["password_confirmation"]) {
 }
 
 $radioVal = $_POST["gender"];
-
+$gender = '';
 if($radioVal === "Male")
 {
     $gender = "Male";
@@ -69,7 +62,8 @@ $hashed_user_password = password_hash($_POST["user_password"], PASSWORD_DEFAULT)
 $time_now = date('Y-m-d');
 $date = date('Y-m-d', strtotime($_POST["user_dob"]));
 
-$mysqli = new mysqli($host,$username,$password,$dbname);
+
+$mysqli = new mysqli($host,$user,$pass,$db);
 
 if($mysqli->connect_errno){
     die("Connection Error: " . $mysqli->connect_error);
@@ -77,8 +71,8 @@ if($mysqli->connect_errno){
 
 $stmt = $mysqli->stmt_init();
 
-$sql = "INSERT INTO users (id, email, hashedpassword, firstname, lastname, dateofbirth, datejoined, gender)
-VALUES (?,?,?,?,?,?,?,?)";
+$sql = "INSERT INTO Users (id, email, hashedpassword, firstname, lastname, dateofbirth, datejoined)
+VALUES (?,?,?,?,?,?,?)";
 
 if(!$stmt->prepare($sql)){
     die("SQL ERROR : " . $mysqli->error);
@@ -92,19 +86,37 @@ $stmt->bind_param("ssssssss",
                 $_POST["user_second_name"],
                 $date,
                 $time_now,
-                $gender
               );
 
 
-if($stmt->execute()) {
+if(!$stmt->execute()) {
+    if ($mysqli->errno === 1062) {
+        die("An account with this email currently exists");
+    } else {
+        die($mysqli->error . " " . $mysqli->errno);
+    }
+}
+
+
+    $sql = "INSERT INTO Profiles (userId,gender)
+    VALUES (?,?)";
+
+    if (!$stmt->prepare($sql)) {
+        die("SQL ERROR : " . $mysqli->error);
+    }
+
+    try {
+        $stmt->bind_param("ss",
+            $id,
+            $gender
+        );
+    } catch (Exception $e) {
+        print_r($e);
+        mysqli_close($mysqli);
+        exit();
+    };
+
     mysqli_close($mysqli);
     echo json_encode(array('success' => 1));
     exit();
-    } else {
-        if ($mysqli->errno === 1062) {
-            die("An account with this email currently exists");
-        } else {
-            die($mysqli->error . " " . $mysqli->errno);
-        }
-}
 ?>
