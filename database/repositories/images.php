@@ -12,7 +12,7 @@ function get_images_by_user_id($user_id): array
     }
 
 
-    $query = "SELECT imageIndex as position, imageData as image FROM pictures WHERE userId = '{$user_id}' ORDER BY position ASC";
+    $query = "SELECT imageIndex as position, imageData as image FROM Pictures WHERE userId = '{$user_id}' ORDER BY position ASC";
 
     $result = mysqli_query($con, $query);
 

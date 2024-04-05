@@ -21,7 +21,7 @@ function get_user_from_user_ID($user_ID): array
     }
 
 
-    $query = "SELECT * FROM users WHERE id = '{$user_ID}'";
+    $query = "SELECT * FROM Users WHERE id = '{$user_ID}'";
     $result = mysqli_query($con, $query);
 
     mysqli_close($con);
@@ -39,7 +39,7 @@ function get_all_users(): array
     }
 
 
-    $query = "SELECT * FROM users";
+    $query = "SELECT * FROM Users";
 
     $result = mysqli_query($con, $query);
 
@@ -66,7 +66,7 @@ function get_user_by_credentials($email, $hashed_password): mysqli_result
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "SELECT * FROM users WHERE email = '{$email}' AND hashedPassword = '{$hashed_password}'";
+    $query = "SELECT * FROM Users WHERE email = '{$email}' AND hashedPassword = '{$hashed_password}'";
 
     $result = mysqli_query($con, $query);
 
@@ -84,7 +84,7 @@ function ban_user_from_user_ID($user_ID): void
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "UPDATE users SET banned = true WHERE id = '{$user_ID}' ";
+    $query = "UPDATE Users SET banned = true WHERE id = '{$user_ID}' ";
 
     mysqli_query($con, $query);
 
@@ -102,7 +102,7 @@ function delete_user_from_user_ID($user_ID): void
     }
 
     // USER BEVERAGES
-    $query = "DELETE FROM users WHERE id = '{$user_ID}'";
+    $query = "DELETE FROM Users WHERE id = '{$user_ID}'";
     mysqli_query($con, $query);
 
 
@@ -120,7 +120,7 @@ function update_user_bio_from_user_ID($user_ID, $bio): void
     }
 
     // USER BEVERAGES
-    $query = "UPDATE users set description = {$bio} WHERE id = '{$user_ID}'";
+    $query = "UPDATE Users set description = {$bio} WHERE id = '{$user_ID}'";
     mysqli_query($con, $query);
 
 
@@ -136,7 +136,7 @@ function get_first_name_from_user_ID(string $user_ID): string
     }
 
 
-    $query = "SELECT firstName FROM users";
+    $query = "SELECT firstName FROM Users where id = '{$user_ID}'";
     $result = mysqli_query($con, $query);
 
     mysqli_close($con);
@@ -153,8 +153,8 @@ function get_age_from_user_ID(string $user_ID): string
     if (!$con) {
         die('Could not connect: ' . mysqli_error($con));
     }
-    
-    $query = "SELECT dateOfBirth FROM users";
+
+    $query = "SELECT dateOfBirth FROM Users where id = '{$user_ID}'";
     $result = mysqli_query($con, $query);
 
     mysqli_close($con);

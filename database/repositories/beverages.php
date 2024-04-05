@@ -12,7 +12,7 @@ function get_all_beverages(): array
     }
 
 
-    $query = "SELECT * FROM beverages ";
+    $query = "SELECT * FROM Beverages ";
 
     $result = mysqli_query($con, $query);
 
@@ -35,7 +35,7 @@ function get_users_beverage_from_user_ID(string $user_ID): string|null
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "SELECT name FROM beverages INNER JOIN userbeverages ON beverages.id = userbeverages.beverageId WHERE userbeverages.userId = '{$user_ID}'";
+    $query = "SELECT name FROM Beverages INNER JOIN UserBeverages ON Beverages.id = UserBeverages.beverageId WHERE UserBeverages.userId = '{$user_ID}'";
     $result = mysqli_query($con, $query);
     mysqli_close($con);
 

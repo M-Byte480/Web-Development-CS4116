@@ -16,7 +16,7 @@ function get_user_description_from_user_ID(string $user_ID): string|null // base
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "SELECT description FROM profiles WHERE userid = '{$user_ID}'";
+    $query = "SELECT description FROM Profiles WHERE userid = '{$user_ID}'";
     $result = mysqli_query($con, $query);
     mysqli_close($con);
 
@@ -58,7 +58,7 @@ function get_user_seeking_from_user_ID(string $user_ID): string|null // base64
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "SELECT seeking FROM profiles WHERE userid = '{$user_ID}'";
+    $query = "SELECT seeking FROM Profiles WHERE userid = '{$user_ID}'";
     $result = mysqli_query($con, $query);
     mysqli_close($con);
 
