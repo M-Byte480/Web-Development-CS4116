@@ -75,7 +75,7 @@ if (($row['hashedPassword'] === hash("sha256", $password))) {
     setcookie('hashed_password', $row['hashedPassword'], time() + 60 * 60 * 24 * 7, '/');
     setcookie('email', $row['email'], time() + 60 * 60 * 24 * 7, '/');
     echo "Login Successful";
-    header("Location: /../profile/index.php");
+    header("Location: ./../profile/index.php");
 } else {
     echo "Invalid Login";
 }
