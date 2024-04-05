@@ -50,16 +50,16 @@ function get_user_by_matches($get): bool|mysqli_result|null
     $max_date = $max_date->format('Y-m-d');
 
     $query = "SELECT u.id, u.firstName as firstname, 
-                u.dateOfBirth, profiles.gender, 
-                profiles.seeking, profiles.description, 
+                u.dateOfBirth, Profiles.gender, 
+                Profiles.seeking, Profiles.description, 
                 COUNT(u.id) as matching_interests,
                 bev.name as beverage
-                FROM users as u
-                JOIN profiles ON u.id = profiles.userId
-                JOIN userinterests as ui on ui.userId = u.id 
-                JOIN interests as i on i.id = ui.interestId
-                JOIN userbeverages as userbev on userbev.userId = u.id
-                JOIN beverages as bev on bev.id = userbev.beverageId
+                FROM Users as u
+                JOIN Profiles ON u.id = Profiles.userId
+                JOIN UserInterests as ui on ui.userId = u.id 
+                JOIN Interests as i on i.id = ui.interestId
+                LEFT JOIN UserBeverages as userbev on userbev.userId = u.id
+                LEFT JOIN Beverages as bev on bev.id = userbev.beverageId
                 WHERE dateOFBirth >= '{$min_date}' AND 
                 dateOfBirth <= '{$max_date}'  
                 ";

@@ -81,7 +81,7 @@ try {
                     </div>
                     <?php
                     require_once(__DIR__ . '/../database/repositories/beverages.php');
-                    $beverages_from_db = get_all_beverages();
+                    $beverages_from_db = array_column(get_all_beverages(), 1);
                     foreach ($beverages_from_db as $beverage) {
                         ?>
                         <div class="form-check">
@@ -100,7 +100,7 @@ try {
 
             <?php
             require_once(__DIR__ . '/../database/repositories/interests.php');
-            $interests_from_db = get_all_interests();
+            $interests_from_db = array_column(get_all_interests(), 1);
 
             $len = count($interests_from_db);
             $first_half = array_slice($interests_from_db, 0, $len / 2);

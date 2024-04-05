@@ -14,7 +14,7 @@ function get_profile_card(array $user, int $interest_flag): void
         function onCardClicked(user_id) {
             // Open page with get request
             let getRequest = "?user_id=" + user_id;
-            window.open("view_profile.php" + getRequest, "_blank");
+            window.open("../profile/" + getRequest, "_parent");
         }
     </script>
 
