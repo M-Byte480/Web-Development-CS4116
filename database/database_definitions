@@ -55,7 +55,10 @@ CREATE TABLE Pictures (
 
 CREATE TABLE Interests(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255)
+    name VARCHAR(255),
+
+    UNIQUE(name)
+
 );
 
 CREATE TABLE UserInterests(
@@ -123,7 +126,9 @@ CREATE TABLE ChatLogs(
 
 CREATE TABLE Beverages(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255)
+    name VARCHAR(255),
+
+    UNIQUE(name)
 );
 
 CREATE TABLE UserBeverages(

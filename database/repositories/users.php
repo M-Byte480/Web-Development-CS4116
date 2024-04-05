@@ -1,18 +1,19 @@
 <?php
-require_once(__DIR__ . '/../../validators.php');
+require_once(__DIR__ . '/../../validator_functions.php');
 
-global $db_host, $db_username, $db_password, $db_database, $con;
+global $db_host, $db_username, $db_password, $db_database;
 require_once(__DIR__ . '/../../secrets.settings.php');
 
 
-function get_user_by_id($id) // SQL Array
+function get_user_from_user_ID($user_ID): array
 {
-    if (!validate_user_id($id)) {
+    if (!validate_user_id($user_ID)) {
         echo 'invalid ID';
         exit();
     }
 
     global $db_host, $db_username, $db_password, $db_database;
+
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 
     if (!$con) {
@@ -20,7 +21,7 @@ function get_user_by_id($id) // SQL Array
     }
 
 
-    $query = "SELECT * FROM users WHERE id = '{$id}'";
+    $query = "SELECT * FROM Users WHERE id = '{$user_ID}'";
     $result = mysqli_query($con, $query);
 
     mysqli_close($con);
@@ -28,7 +29,7 @@ function get_user_by_id($id) // SQL Array
     return $result->fetch_assoc();
 }
 
-function get_all_users() // SQL Array
+function get_all_users(): array
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
@@ -38,16 +39,16 @@ function get_all_users() // SQL Array
     }
 
 
-    $query = "SELECT * FROM users";
+    $query = "SELECT * FROM Users";
 
     $result = mysqli_query($con, $query);
 
     mysqli_close($con);
 
-    return $result;
+    return $result->fetch_all(MYSQLI_ASSOC);
 }
 
-function get_user_by_credentials($email, $hashed_password) // SQL Array
+function get_user_by_credentials($email, $hashed_password): mysqli_result
 {
     global $db_host, $db_username, $db_password, $db_database;
     if (!validate_email($email)) {
@@ -65,7 +66,7 @@ function get_user_by_credentials($email, $hashed_password) // SQL Array
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "SELECT * FROM users WHERE email = '{$email}' AND hashedPassword = '{$hashed_password}'";
+    $query = "SELECT * FROM Users WHERE email = '{$email}' AND hashedPassword = '{$hashed_password}'";
 
     $result = mysqli_query($con, $query);
 
@@ -73,7 +74,7 @@ function get_user_by_credentials($email, $hashed_password) // SQL Array
     return $result;
 }
 
-function ban_user_by_id($user_id)
+function ban_user_from_user_ID($user_ID): void
 {
     global $db_host, $db_username, $db_password, $db_database;
 
@@ -83,14 +84,14 @@ function ban_user_by_id($user_id)
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "UPDATE users SET banned = true WHERE id = '{$user_id}' ";
+    $query = "UPDATE Users SET banned = true WHERE id = '{$user_ID}' ";
 
     mysqli_query($con, $query);
 
     mysqli_close($con);
 }
 
-function delete_user_by_id($user_id)
+function delete_user_from_user_ID($user_ID): void
 {
     global $db_host, $db_username, $db_password, $db_database;
 
@@ -101,14 +102,14 @@ function delete_user_by_id($user_id)
     }
 
     // USER BEVERAGES
-    $query = "DELETE FROM users WHERE id = '{$user_id}'";
+    $query = "DELETE FROM Users WHERE id = '{$user_ID}'";
     mysqli_query($con, $query);
 
 
     mysqli_close($con);
 }
 
-function update_user_bio($user_id, $bio)
+function update_user_bio_from_user_ID($user_ID, $bio): void
 {
     global $db_host, $db_username, $db_password, $db_database;
 
@@ -119,11 +120,52 @@ function update_user_bio($user_id, $bio)
     }
 
     // USER BEVERAGES
-    $query = "UPDATE users set description = {$bio} WHERE id = '{$user_id}'";
+    $query = "UPDATE Users set description = {$bio} WHERE id = '{$user_ID}'";
     mysqli_query($con, $query);
 
 
     mysqli_close($con);
+}
+
+function get_first_name_from_user_ID(string $user_ID): string
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+
+    $query = "SELECT firstName FROM Users where id = '{$user_ID}'";
+    $result = mysqli_query($con, $query);
+
+    mysqli_close($con);
+
+    if ($result->num_rows > 0)
+        return $result->fetch_array()[0];
+    return "";
+}
+
+function get_age_from_user_ID(string $user_ID): string
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    $query = "SELECT dateOfBirth FROM Users where id = '{$user_ID}'";
+    $result = mysqli_query($con, $query);
+
+    mysqli_close($con);
+
+    if ($result->num_rows > 0) {
+        $birthDate = explode("-", $result->fetch_array()[0]);
+        return (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[2], $birthDate[0]))) > date("md")
+            ? ((date("Y") - $birthDate[0]) - 1)
+            : (date("Y") - $birthDate[0]));
+    }
+    return "";
 }
 
 

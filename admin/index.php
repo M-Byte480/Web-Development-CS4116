@@ -1,26 +1,18 @@
+<?php
+// Validate is user logged in
+require_once(__DIR__ . '/../validate_user.php');
+
+require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <?php require_once("../imports.php"); ?>
+    <meta http-equiv="content-type" content="no-cache, must-revalidate">
     <!-- Custom CSS-->
     <link rel="stylesheet" href="styles.css">
-    <!-- jQuery -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.js"
-            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-
-    <!-- Bootstrap JavaScript -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     <title>PubClub Admin</title>
 
 </head>
@@ -29,33 +21,11 @@
 
 <?php
 
-// Validation
-if (!isset($_COOKIE['email']) || !isset($_COOKIE['hashed_password'])) {
-    header("Location: ../login/index.php");
-    exit();
-}
-
-// Import users, pfp accessor
-require_once(__DIR__ . "/../database/repositories/users.php");
-require_once(__DIR__ . "/../database/repositories/profilePictures.php");
-
-$result = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password']);
-$user = $result->fetch_assoc();
-
-// Both these need to be true
-if ($user == null || !validate_admin($user['id'])) {
-    echo 'Unauthorised';
-    exit();
-}
-
-// Free the buffer/memory
-mysqli_free_result($result);
-
 // Import navigation bar
-require_once(__DIR__ . "/../NavBar/index.php");
+require_once(__DIR__ . "/../nav_bar/index.php");
 
 
-function action_button($user)
+function action_button($user): void
 {
     ?>
     <div class="dropdown">
@@ -113,10 +83,10 @@ function action_button($user)
     <?php
 }
 
-function pfp($user)
+function pfp($user): void
 {
     ?>
-    <img src="<?= get_user_pfp($user) ?>"
+    <img src="<?= get_user_pfp_from_user_ID($user['id']) ?>"
          alt="Profile Picture"
          class="img-fluid rounded-circle"
          style="width: 100px; height: 100px; object-fit: cover;"
@@ -126,7 +96,7 @@ function pfp($user)
 
 include_once(__DIR__ . '/admin_functions.php');
 
-function user_information($user)
+function user_information($user): void
 {
     ?>
     <div class="container">
