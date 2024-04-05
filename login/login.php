@@ -2,6 +2,9 @@
 
 session_start();
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 global $db_host, $db_username, $db_password, $db_database;
 
 require_once(__DIR__ . "/../database/repositories/users.php");
@@ -14,19 +17,14 @@ if (!(isset($_POST['email']) && isset($_POST['password']))) {
     exit();
 }
 
-if (!function_exists('mysqli_init') && !extension_loaded('mysqli')) {
-    echo 'We don\'t have mysqli!!!';
-} else {
-    echo 'Phew we have it!';
-}
-
-$email = $_POST['email'];
+$email = trim($_POST['email']);
+echo "Email being sent: " . $email . "\n";
 
 $password = $_POST['password'];
+echo "Password being sent: " . $password . "\n";
 
 if (empty($email) || empty($password)) {
     echo "Please fill in all text fields";
-    var_dump(function_exists('mysqli_connect'));
     exit();
 }
 
@@ -65,18 +63,23 @@ if ($res->num_rows === 0) {
 
 $row = $res->fetch_assoc();
 
-if (!isset($row['password'])) {
+if (!isset($row['hashedPassword'])) {
     die("Error: password is not contained in fetched row");
 }
 
-if (password_verify($password, $row['password'])) {
+
+if (($row['hashedPassword'] === hash("sha256", $password))) {
 
     $_SESSION['user id'] = $row['id'];
+    $_SESSION['name'] = $row['firstname'];
+    setcookie('hashed_password', $row['hashedPassword'], time() + 60 * 60 * 24 * 7, '/');
+    setcookie('email', $row['email'], time() + 60 * 60 * 24 * 7, '/');
     echo "Login Successful";
+    header("Location: /../profile/index.php");
 } else {
     echo "Invalid Login";
 }
-
+exit();
 
 ?>
 
