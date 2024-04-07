@@ -26,18 +26,11 @@ try {
 
 <?php require_once(__DIR__ . '/../nav_bar/index.php'); ?>
 
->
-
 <form action="results.php" method="get">
     <div class="container">
         <div class="row">
-            <div class="size">
+            <div class=" col-sm-12 col-md-4 bg-light p-3 border bg-blue">
                 <div class="gender">
-
-                    <style>
-                     
-                    </style
-
                     <h5>Gender</h5>
                     <?php
                     require_once(__DIR__ . '/../enums/gender.php');
