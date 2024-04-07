@@ -19,19 +19,19 @@
 
     <div class="carousel-inner">
         <div class="carousel-item carousel-image active">
-            <img src="../resources/landing1.png" alt="railed" class="d-block w-100">
+            <img src="../resources/landing1.png" alt="railed" class="d-block h-100">
             <div class="carousel-caption">
                 <h1>Fancy a Pint?</h1>
             </div>
         </div>
         <div class="carousel-item carousel-image">
-            <img src="../resources/landing2.png" alt="mendrink" class="d-block w-100">
+            <img src="../resources/landing2.png" alt="mendrink" class=" image fluid d-block sm- h-100">
             <div class="carousel-caption">
                 <h1>Fancy a Pint?</h1>
             </div>
         </div>
         <div class="carousel-item carousel-image">
-            <img src="../resources/landing3.png" alt="womendrink" class="d-block w-100">
+            <img src="../resources/landing3.png" alt="womendrink" class="d-block h-100">
             <div class="carousel-caption">
                 <h1>Fancy a Pint?</h1>
             </div>
