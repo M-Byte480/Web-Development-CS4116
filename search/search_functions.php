@@ -65,9 +65,9 @@ function get_user_by_matches($get): bool|mysqli_result|null
                 ";
 
     if (isset($get['beverage']) && $get['beverage'] !== 'None') {
-        $query .= "AND
-                bev.name = '{$get['beverage']}'
-                ";
+        $query .=
+            sprintf("AND bev.name = '%s'",
+                mysqli_real_escape_string($con, $get['beverage']));
     }
 
     if (isset($get['genders'])) {
