@@ -8,11 +8,11 @@
 
 .carousel-inner .carousel-item {
     transition: -webkit-transform 2s ease;
-    transition: transform 2s ease;
     transition: transform 2s ease, -webkit-transform 2s ease;
 }
 
-.buttonM {
+.buttonModal {
+    z-index: 999;
     position: absolute;
     bottom: 1%;
     left: 80%;
