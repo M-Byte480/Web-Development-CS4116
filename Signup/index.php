@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="styles.css">
     <title>Signup</title>
 </head>
-<body class>
+<body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
