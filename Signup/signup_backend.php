@@ -53,7 +53,18 @@ if (!empty($errors)) {
     exit();
 }
 
-$id = uniqid();
+function custom_uuid()
+{
+    $bytes = random_bytes(16);
+    
+    $bytes[6] = chr(ord($bytes[6]) & 0x0f | 0x40);
+    $bytes[8] = chr(ord($bytes[8]) & 0x3f | 0x80);
+
+    // Format the bytes as a UUID
+    return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($bytes), 4));
+}
+
+$id = custom_uuid();
 $hashed_user_password = hash("sha256", ($_POST["user_password"]));
 $time_now = date('Y-m-d');
 $date = date('Y-m-d', strtotime($_POST["user_dob"]));

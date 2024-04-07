@@ -149,7 +149,7 @@
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <input name="user_dob" type="date" pattern="\d{4}-\d{2}-\d{2}"
-                               value="2018-07-22" min="1920-01-01" max="2006-04-04"
+                               value="2006-04-04" min="1920-01-01" max="2006-04-04"
                                required><br>
                         <small class="text-danger"> [User must be 18+]</small>
 
