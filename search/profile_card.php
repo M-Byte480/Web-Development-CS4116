@@ -38,7 +38,7 @@ function get_profile_card(array $user, int $interest_flag): void
                      background-position: center; background-image: url('<?php echo $cover_image; ?>')">
             <div class="name rounded-4">
                 <div class="bottom ">
-                    <h5 class=" no-margin "> <?= $user['firstname'] . ' ' . get_user_age($user) ?> </h5>
+                    <h5 class=" no-margin user-name"> <?= $user['firstname'] . ' ' . $user['lastname'] . ' ' . get_user_age($user) ?> </h5>
                     <div class=" no-margin no-padding-top">
                         <?php
                         echo $user['beverage'];
