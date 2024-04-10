@@ -168,5 +168,18 @@ function get_age_from_user_ID(string $user_ID): string
     return "";
 }
 
+function get_user_by_id($id)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    $query = "SELECT * FROM Users where id = '{$id}'";
+    $result = mysqli_query($con, $query);
+
+    return $result->fetch_all(MYSQLI_ASSOC)[0];
+}
 
 ?>

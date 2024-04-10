@@ -21,6 +21,9 @@ require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 // Query Database
 $usersInDb = get_all_users();
 
+usort($usersInDb, function ($first, $second) {
+    return $first['reportCount'] - $second['reportCount'];
+});
 
 ?>
 
@@ -42,30 +45,33 @@ $usersInDb = get_all_users();
     }
 
     // Ban User
-    $(document).ready(function () { // On DOM ready
-        $('.banForm').submit(function (e) {
-            e.preventDefault(); // Overrides the default Form Submission
-            $.ajax({ // Send this asynchronously
-                type: "POST",
-                url: 'admin_backend.php',
-                data: $(this).serialize(),
-                success: function (response) {
-                    var jsonData = JSON.parse(response);
-
-                    // Check for what the backend returned value is
-                    if (jsonData.success == "1") {
-                        let toastHTML = getToast(jsonData.msg);
-                        $(document.body).append(toastHTML);
-                        $('.toast').toast('show');
-                    } else {
-                        let toastHTML = getToast('Failed To Ban User!');
-                        $(document.body).append(toastHTML);
-                        $('.toast').toast('show');
-                    }
-                }
-            });
+    function fetchBanUser(user_id) {
+        $.ajax({
+            type: "POST",
+            url: 'admin_backend.php',
+            data: {
+                'id': user_id,
+                'action': 'get-ban-details'
+            },
+            success: function (response) {
+                $('.ban-modal').html(response);
+            }
         });
-    });
+    }
+
+    function fetchUserActions(user_id) {
+        $.ajax({
+            type: "POST",
+            url: 'admin_backend.php',
+            data: {
+                'id': user_id,
+                'action': 'get-user-actions'
+            },
+            success: function (response) {
+                $('#user-modal').html(response);
+            }
+        });
+    }
 
     // Remove PFP
     $(document).ready(function () { // On DOM ready
@@ -180,9 +186,15 @@ $usersInDb = get_all_users();
 require_once(__DIR__ . "/../nav_bar/index.php");
 ?>
 
-<div class="search-bar-container">
-    <input id="searchBar" type="text" class="search-bar" placeholder="Search...">
-
+<div class="container">
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="search-bar-container m-2">
+                <input id="searchBar" size="40" type="text" class="search-bar" placeholder="Search User..."
+                       style="line-height: 30px">
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -201,37 +213,16 @@ function action_button($user): void
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#<?= 'banModal-' . $user['id'] ?>">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" value="<?= $user['id'] ?>"
+                            data-bs-target="#banModal" onclick="fetchBanUser('<?= $user['id'] ?>')">
                         Ban Options
                     </button>
                 </li>
                 <li>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#<?= 'editUser-' . $user['id'] ?>">
+                            data-bs-target="#editUserModal" onClick="fetchUserActions('<?= $user['id'] ?>')">
                         User Options
                     </button>
-                </li>
-                <li class="dropdown-item">
-                    <form id="removeBio" method="post" action="admin_backend.php">
-                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                        <input type="hidden" name="action" value="remove_id">
-                        <input type="submit" name="banBtn" id="removeBioBtn" value="Remove Bio"/>
-                    </form>
-                </li>
-                <li class="dropdown-item">
-                    <form id="removePfp" method="post" action="admin_backend.php">
-                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                        <input type="hidden" name="action" value="remove_pfp">
-                        <input type="submit" name="banBtn" id="banBtn" value="Remove PFP"/>
-                    </form>
-                </li>
-                <li class="dropdown-item">
-                    <form id="removeAllImages" method="post" action="admin_backend.php">
-                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                        <input type="hidden" name="action" value="remove_all_images">
-                        <input type="submit" name="banBtn" id="banBtn" value="Remove All images"/>
-                    </form>
                 </li>
                 <li>
                     <a class="dropdown-item" href="#">
@@ -248,54 +239,6 @@ function action_button($user): void
 
         </div>
     </div>
-
-    <form id="<?= 'banForm-' . $user['id'] ?>" method="post" action="admin_backend.php" class="banForm">
-        <!-- BAN MODAL -->
-        <div class="modal fade" id="<?= 'banModal-' . $user['id'] ?>" tabindex="-1" aria-labelledby="banModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="banModalLabel">Ban Menu</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Banning:</label>
-                            <input class="form-control" type="text"
-                                   value="<?= $user['firstName'] . " " . $user['lastName'] ?>"
-                                   aria-label="Disabled input example" disabled readonly>
-
-                        </div>
-                        <div class="mb-3">
-                            <label for="banReasonTextBox" class="form-label">Ban Reason:</label>
-                            <textarea class="form-control" id="banReasonTextBox" rows="3"></textarea>
-                        </div>
-                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                        <input type="hidden" name="banned_by_email" value="<?= $_COOKIE['email'] ?>">
-                        <input type="hidden" name="action" value="ban">
-                        <label class="form-group" for="banExpirationDate">
-                            Temporary ban expiration:
-                        </label>
-                        <input id="banExpirationDate" type="date" name="unbanDate" pattern="\d{4}-\d{2}-\d{2}"/>
-                        <span class="validity"></span>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" name="submit" value="permanent" class="btn btn-primary"
-                        > Permanently Ban
-                        </button>
-                        <button type="submit" name="submit" value="temporary" class="btn btn-primary"
-                        >Temporary Ban
-                        </button>
-                        <button type="submit" name="submit" value="unban" class="btn btn-primary"
-                        >Unban user
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
     <?php
 }
 
@@ -351,8 +294,70 @@ foreach ($usersInDb as $user) {
     <?php
 }
 ?>
+<form method="post" action="admin_backend.php" class="banForm" id="banForm">
+    <!-- BAN MODAL -->
+    <div class="modal fade" tabindex="-1" aria-labelledby="banModalLabel" id="banModal"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="banModalLabel">Ban Menu</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body ban-modal">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="submit" value="permanent" class="btn btn-primary"
+                    > Permanently Ban
+                    </button>
+                    <button type="submit" name="submit" value="temporary" class="btn btn-primary"
+                    >Temporary Ban
+                    </button>
+                    <button type="submit" name="submit" value="unban" class="btn btn-primary"
+                    >Unban user
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<form method="post" action="admin_backend.php" class="editUserForm" id="editUserForm">
+    <!-- BAN MODAL -->
+    <div class="modal fade" tabindex="-1" aria-labelledby="editUserModalLabel" id="editUserModal"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editUserModalLabel">Ban Menu</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body user-modal" id="user-modal">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="submit" value="permanent" class="btn btn-primary"
+                    > Remove PFP
+                    </button>
+                    <button type="submit" name="submit" value="temporary" class="btn btn-primary"
+                    >Remove all pictures
+                    </button>
+                    <button type="submit" name="submit" value="unban" class="btn btn-primary"
+                    >Remove user Bio
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 <script>
+
+    // Search bar filer
     $(document).ready(function () {
         $('#searchBar').on('input', function () {
             let searchText = $(this).val().toLowerCase();

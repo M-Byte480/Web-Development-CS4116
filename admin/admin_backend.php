@@ -13,13 +13,14 @@ const ERROR = 0;
 if (isset($_POST['action']) && $_POST['action']) {
     $action = $_POST['action'];
 } else {
-    echo json_encode(array('success' => FAIL));
+    echo json_encode(array('Success' => FAIL));
     exit();
 }
 
 require_once(__DIR__ . '/../validator_functions.php');
 require_once(__DIR__ . '/../database/repositories/users.php');
 require_once(__DIR__ . '/../database/repositories/profile_pictures.php');
+require_once(__DIR__ . '/admin_functions.php');
 
 $return_array = array();
 
@@ -42,6 +43,14 @@ try {
             validate_delete_parameters($_POST);
             delete_user_from_user_ID($_POST['user_id']);
             break;
+        case 'get-ban-details':
+            $user = get_user_by_id($_POST['id']);
+            ban_user_functionality($user);
+            break;
+        case 'get-user-actions':
+            $user = get_user_by_id($_POST['id']);
+            get_user_actions($user);
+            break;
     }
 } catch (ValidationException $e) {
     $return_array['success'] = ERROR;
@@ -50,6 +59,6 @@ try {
 }
 
 $return_array['success'] = SUCCESS;
-echo json_encode($return_array);
+//echo json_encode($return_array);
 
 ?>
