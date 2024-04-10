@@ -34,7 +34,7 @@ if ($mysqli->connect_errno) {
     die("Error connecting to sql: " . $mysqli->connect_errno);
 }
 
-$query = "SELECT * FROM users where email = ?";
+$query = "SELECT * FROM Users where email = ?";
 
 $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 

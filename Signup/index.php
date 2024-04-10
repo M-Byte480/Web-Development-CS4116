@@ -21,7 +21,7 @@
                     console.log(response);
                     var jsonData = JSON.parse(response);
                     if (jsonData.success === 1) {
-                        window.location.href = "../Home/";
+                        window.location.href = "../login/";
                     } else {
                         let msg = "";
                         jsonData['errors'].forEach(elm => {
