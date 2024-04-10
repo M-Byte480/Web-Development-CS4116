@@ -23,7 +23,7 @@
 
 <nav class="navbar navbar-expand-sm navbar-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="../discovery">
+        <a class="navbar-brand" href="../home/">
             <img class="nav-brand" src="../resources/logo.png" alt="Logo">
         </a>
         <button class="navbar-toggler"
@@ -49,7 +49,7 @@
                     </a>
                 </li>
                 <li class="nav-item p-2">
-                    <a class="nav-link float-end" href="#">
+                    <a class="nav-link float-end" href="../profile/">
                         <h2 class="collapse" id="collapsibleNavbar">Profile</h2>
                         <i class="bi bi-person-circle"></i>
                     </a>

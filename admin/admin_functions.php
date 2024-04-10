@@ -1,7 +1,7 @@
 <?php
 function get_user_name($user)
 {
-    return $user['lastName'] . ' ' . $user['firstName'];
+    return $user['firstName'] . ' ' . $user['lastName'];
 }
 
 /**
@@ -25,3 +25,5 @@ function set_ban_state($id, $state)
 }
 
 ?>
+
+

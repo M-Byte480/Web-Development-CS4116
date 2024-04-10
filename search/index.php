@@ -1,6 +1,6 @@
 <?php
 // Validate is user logged in
-require_once(__DIR__ . '/../validators.php');
+require_once(__DIR__ . '/../validator_functions.php');
 try {
     validate_user_logged_in();
 } catch (ValidationException $e) {
@@ -19,18 +19,19 @@ try {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <?php require_once(__DIR__ . '/../css_binding.php'); ?>
-
+    <link rel="stylesheet" href="styles.css">
     <title>PubClub Admin</title>
 </head>
 <body>
 
-<?php require_once(__DIR__ . '/../NavBar/index.php'); ?>
+<?php require_once(__DIR__ . '/../nav_bar/index.php'); ?>
 
-<form action="search-results.php" method="post">
+<form action="results.php" method="get">
     <div class="container">
         <div class="row">
             <div class=" col-sm-12 col-md-4 bg-light p-3 border bg-blue">
                 <div class="gender">
+                    <h5>Gender</h5>
                     <?php
                     require_once(__DIR__ . '/../enums/gender.php');
                     $refl = new ReflectionClass(Gender::class);
@@ -40,7 +41,7 @@ try {
                         <div class="d-flex ">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="<?= $gender ?>"
-                                       name="<?= $gender ?>" value="true">
+                                       name="genders[]" value="<?= $gender ?>">
                                 <label class="form-check-label increased-font"
                                        for="<?= $gender ?>"><?= $gender ?></label>
                             </div>
@@ -51,6 +52,7 @@ try {
                 </div>
             </div>
             <div class="col-sm-12 col-md-4 bg-light p-3 border">
+                <h5>Age Range</h5>
                 <div class="age">
                     <label id="output3" for="lower">Minimum Age:</label>
                     <input type="range" class="form-range width-100" min="18" max="99"
@@ -69,15 +71,22 @@ try {
                 </div>
             </div>
             <div class="col-sm-12 col-md-4 bg-light p-3 border">
+                <h5>Beverage</h5>
                 <div class="go-to-beverages ">
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="none"
+                               name="beverage" value="None" checked>
+                        <label class="form-check-label increased-font"
+                               for="none">None</label>
+                    </div>
                     <?php
                     require_once(__DIR__ . '/../database/repositories/beverages.php');
-                    $beverages_from_db = get_all_beverages();
+                    $beverages_from_db = array_column(get_all_beverages(), 1);
                     foreach ($beverages_from_db as $beverage) {
                         ?>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="<?= $beverage ?>"
-                                   name="<?= $beverage ?>" value="true">
+                            <input type="radio" class="form-check-input" id="<?= $beverage ?>"
+                                   name="beverage" value="<?= $beverage ?>">
                             <label class="form-check-label increased-font"
                                    for="<?= $beverage ?>"><?= $beverage ?></label>
                         </div>
@@ -91,20 +100,21 @@ try {
 
             <?php
             require_once(__DIR__ . '/../database/repositories/interests.php');
-            $interests_from_db = get_all_interests();
+            $interests_from_db = array_column(get_all_interests(), 1);
 
             $len = count($interests_from_db);
             $first_half = array_slice($interests_from_db, 0, $len / 2);
             $second_half = array_slice($interests_from_db, $len / 2);
             ?>
             <div class="col-sm-12 col-md-4 bg-light p-3 border">
+                <h5>Interests</h5>
                 <div class="interests">
                     <?php
                     foreach ($interests_from_db as $interest) {
                         ?>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="<?= $interest ?>"
-                                   name="<?= $interest ?>" value="true">
+                                   name="interests[]" value="<?= $interest ?>">
                             <label class="form-check-label increased-font"
                                    for="<?= $interest ?>"><?= $interest ?></label>
                         </div>
@@ -152,5 +162,7 @@ try {
         }
     }
 </script>
+
+
 </body>
 </html>

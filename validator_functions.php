@@ -35,7 +35,10 @@ function validate_password($password)
 
 function validate_unique_result($result): void
 {
-    if ($result->num_rows != 1) {
+    if ($result->num_rows == 0) {
+        echo 'User logged in no longer exists';
+        exit();
+    } elseif ($result->num_rows != 1) {
         echo 'Result is not unique';
         exit();
     }
@@ -47,7 +50,7 @@ function validate_admin($id): bool
         return false;
     }
 
-    $retrieved_user = get_user_by_id($id);
+    $retrieved_user = get_user_from_user_ID($id);
 
     return $retrieved_user['admin']; // Returns true or false attribute
 }
@@ -113,8 +116,6 @@ function validate_user_logged_in(): void
 
 function validate_user_is_admin(): void
 {
-
-
     // Validation
     if (!isset($_COOKIE['email']) || !isset($_COOKIE['hashed_password'])) {
         header("Location: ../login/index.php");
