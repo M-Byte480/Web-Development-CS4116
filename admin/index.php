@@ -73,6 +73,7 @@ usort($usersInDb, function ($first, $second) {
         });
     }
 
+
     // Remove PFP
     $(document).ready(function () { // On DOM ready
         $('#removePfp').submit(function (e) {
@@ -178,6 +179,7 @@ usort($usersInDb, function ($first, $second) {
         });
     });
 
+
 </script>
 
 <?php
@@ -190,7 +192,7 @@ require_once(__DIR__ . "/../nav_bar/index.php");
     <div class="row">
         <div class="col-12 d-flex justify-content-center">
             <div class="search-bar-container m-2">
-                <input id="searchBar" size="40" type="text" class="search-bar" placeholder="Search User..."
+                <input id="searchBar" size="35" type="text" class="search-bar" placeholder="Search User..."
                        style="line-height: 30px">
             </div>
         </div>
@@ -211,29 +213,29 @@ function action_button($user): void
                     aria-expanded="false">
                 <i class="bi bi-three-dots-vertical"></i>
             </button>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu p-2">
                 <li>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" value="<?= $user['id'] ?>"
+                    <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" value="<?= $user['id'] ?>"
                             data-bs-target="#banModal" onclick="fetchBanUser('<?= $user['id'] ?>')">
                         Ban Options
                     </button>
                 </li>
                 <li>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal"
                             data-bs-target="#editUserModal" onClick="fetchUserActions('<?= $user['id'] ?>')">
                         User Options
                     </button>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="#">
-                        <form id="removeForm" method="post" action="admin_backend.php">
-                            <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                            <input type="hidden" name="banned_by_email" value="<?= $_COOKIE['email'] ?>">
-                            <input type="hidden" name="action" value="delete">
-                            <input type="submit" name="removeBtn" id="removeBtn" value="Delete"
-                                   onclick="return confirm('Are you sure? This action cannot be undone')"/>
-                        </form>
-                    </a>
+                    <form id="removeForm-<?= $user['id'] ?>" method="post" action="admin_backend.php">
+                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                        <input type="hidden" name="banned_by_email" value="<?= $_COOKIE['email'] ?>">
+                        <input type="hidden" name="action" value="delete">
+                        <button type="button" class="btn btn-danger m-1" name="removeBtn" id="removeBtn" value="Delete"
+                                onclick="deleteUser('<?= $user['id'] ?>')">
+                            Delete
+                        </button>
+                    </form>
                 </li>
             </ul>
 
@@ -260,7 +262,7 @@ function user_information($user): void
     ?>
     <div class="container">
         <div class="row">
-            <div class="col-md-4"><h4><?= get_user_name($user) ?> |
+            <div class="col-md-4"><h4><?= get_user_name($user) ?>
                     <?= get_user_age($user) ?></h4>
             </div>
             <div class="col-md-6">Reports: <?= $user['reportCount'] ?>
@@ -382,6 +384,42 @@ foreach ($usersInDb as $user) {
             }
         });
     });
+
+    $(document).ready(function () {
+        $('#removeForm').submit(function (e) {
+            e.preventDefault();
+        });
+    });
+
+    function deleteUser(userId) {
+        if (confirm('Are you sure? This action cannot be undone')) {
+            $.ajax({ // Send this asynchronously
+                type: "POST",
+                url: 'admin_backend.php',
+                data: $(`#removeForm-${userId}`).serialize(),
+                success: function (response) {
+                    var jsonData = JSON.parse(response);
+                    console.log("Response");
+                    // Check for what the backend returned value is
+                    if (jsonData.success == "1") {
+                        let toastHTML = getToast("User Successfully Been Deleted!");
+                        $(document.body).append(toastHTML);
+                        $('.toast').toast('show');
+                        $(document).getElementById('')
+                    } else {
+                        let toastHTML = getToast("Failed to delete user!");
+                        $(document.body).append(toastHTML);
+                        $('.toast').toast('show');
+                    }
+                }
+            });
+            console.log('test');
+            document.getElementById(userId).style.display = "none";
+            return true;
+        } else {
+            return false;
+        }
+    }
 </script>
 </body>
 </html>
