@@ -19,7 +19,8 @@ function enter_new_ban($banned_by_email, $unban_date, $user_id, $is_permanent, $
         $query = "INSERT INTO Bans (userId, bannedBy, time, reason, permanent) VALUES ('{$user_id}', '{$banned_by}', '{$now}', '{$reason}', 1)";
     } else {
         // Temp
-        $query = "INSERT INTO Bans (userId, bannedBy, time, reason, permanent, endDate) VALUES ({$user_id}, {$banned_by}, {$now}, {$reason}, true, {$unban_date})";
+        $query = "INSERT INTO Bans (userId, bannedBy, time, reason, permanent, endDate) VALUES ('{$user_id}', '{$banned_by}', '{$now}', '{$reason}', 1, '{$unban_date}')";
+
     }
 
     $success = true;
