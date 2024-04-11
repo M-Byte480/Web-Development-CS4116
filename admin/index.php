@@ -73,32 +73,39 @@ usort($usersInDb, function ($first, $second) {
         });
     }
 
+    var actionButtonState = '';
+
+    function updateAction(newState) {
+        actionButtonState = newState;
+    }
+
 
     // Remove PFP
-    $(document).ready(function () { // On DOM ready
-        $('#removePfp').submit(function (e) {
-            e.preventDefault(); // Overrides the default Form Submission
-            $.ajax({ // Send this asynchronously
-                type: "POST",
-                url: 'admin_backend.php',
-                data: $(this).serialize(),
-                success: function (response) {
-                    var jsonData = JSON.parse(response);
+    $(document)
+        .ready(function () { // On DOM ready
+            $('#removePfp').submit(function (e) {
+                e.preventDefault(); // Overrides the default Form Submission
+                $.ajax({ // Send this asynchronously
+                    type: "POST",
+                    url: 'admin_backend.php',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        var jsonData = JSON.parse(response);
 
-                    // Check for what the backend returned value is
-                    if (jsonData.success == "1") {
-                        let toastHTML = getToast(jsonData.msg);
-                        $(document.body).append(toastHTML);
-                        $('.toast').toast('show');
-                    } else {
-                        let toastHTML = getToast('Failed To Remove User!');
-                        $(document.body).append(toastHTML);
-                        $('.toast').toast('show');
+                        // Check for what the backend returned value is
+                        if (jsonData.success == "1") {
+                            let toastHTML = getToast(jsonData.msg);
+                            $(document.body).append(toastHTML);
+                            $('.toast').toast('show');
+                        } else {
+                            let toastHTML = getToast('Failed To Remove User!');
+                            $(document.body).append(toastHTML);
+                            $('.toast').toast('show');
+                        }
                     }
-                }
+                });
             });
         });
-    });
 
     // Remove all images
     $(document).ready(function () { // On DOM ready
@@ -151,17 +158,65 @@ usort($usersInDb, function ($first, $second) {
             });
         });
     });
+
+    // Ban User
+    $(document).ready(function () { // On DOM ready
+        $('#banForm').submit(function (e) {
+            e.preventDefault(); // Overrides the default Form Submission
+
+            var button1 = document.getElementById('permanent-ban');
+            var button2 = document.getElementById('temporary-ban');
+            var button3 = document.getElementById('unban');
+
+            button1.disabled = true;
+            button2.disabled = true;
+            button3.disabled = true;
+
+            $.ajax({ // Send this asynchronously
+                type: "POST",
+                url: 'admin_backend.php',
+                data: $(this).serialize() + '&action=' + actionButtonState,
+                success:
+
+                    function (response) {
+                        var jsonData = JSON.parse(response);
+                        console.log(actionButtonState);
+                        setTimeout(() => {
+                            button1.disabled = false;
+                            button2.disabled = false;
+                            button3.disabled = false;
+                        }, 1000);
+
+                        // Check for what the backend returned value is
+                        if (jsonData.success == "1") {
+                            let toastHTML = getToast("Success!");
+                            $(document.body).append(toastHTML);
+                            $('.toast').toast('show');
+
+                        } else {
+                            let toastHTML = getToast("There was an issue doing that...");
+                            $(document.body).append(toastHTML);
+                            $('.toast').toast('show');
+                        }
+
+
+                    }
+            });
+        });
+    })
+    ;
+
     // Ban User
     $(document).ready(function () { // On DOM ready
         $('#removeForm').submit(function (e) {
             e.preventDefault(); // Overrides the default Form Submission
+
             $.ajax({ // Send this asynchronously
                 type: "POST",
                 url: 'admin_backend.php',
                 data: $(this).serialize(),
                 success: function (response) {
                     var jsonData = JSON.parse(response);
-
 
                     // Check for what the backend returned value is
                     if (jsonData.success == "1") {
@@ -311,13 +366,19 @@ foreach ($usersInDb as $user) {
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="submit" value="permanent" class="btn btn-primary"
+                    <button type="submit" name="submit" value="permanent" class="btn btn-primary" id="permanent-ban"
+                            onclick="updateAction('permanent')"
+
                     > Permanently Ban
                     </button>
-                    <button type="submit" name="submit" value="temporary" class="btn btn-primary"
+                    <button type="submit" name="submit" value="temporary" class="btn btn-primary" id="temporary-ban"
+                            onclick="updateAction('temporary')"
+
                     >Temporary Ban
                     </button>
-                    <button type="submit" name="submit" value="unban" class="btn btn-primary"
+                    <button type="submit" name="submit" value="unban" class="btn btn-primary" id="unban"
+                            onclick="updateAction('unban')"
+
                     >Unban user
                     </button>
                 </div>
@@ -328,13 +389,12 @@ foreach ($usersInDb as $user) {
 
 
 <form method="post" action="admin_backend.php" class="editUserForm" id="editUserForm">
-    <!-- BAN MODAL -->
     <div class="modal fade" tabindex="-1" aria-labelledby="editUserModalLabel" id="editUserModal"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="editUserModalLabel">Ban Menu</h1>
+                    <h1 class="modal-title fs-5" id="editUserModalLabel">Edit User Menu</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                 </div>
@@ -346,9 +406,11 @@ foreach ($usersInDb as $user) {
                     > Remove PFP
                     </button>
                     <button type="submit" name="submit" value="temporary" class="btn btn-primary"
+
                     >Remove all pictures
                     </button>
                     <button type="submit" name="submit" value="unban" class="btn btn-primary"
+
                     >Remove user Bio
                     </button>
                 </div>

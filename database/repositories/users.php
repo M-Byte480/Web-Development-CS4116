@@ -182,4 +182,18 @@ function get_user_by_id($id)
     return $result->fetch_all(MYSQLI_ASSOC)[0];
 }
 
+function get_user_id_by_email($email)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    $query = "SELECT id FROM Users where email = '{$email}'";
+    $result = mysqli_query($con, $query);
+
+    return $result->fetch_all(MYSQLI_ASSOC)[0]['id'];
+}
+
 ?>

@@ -23,12 +23,16 @@ require_once(__DIR__ . '/../database/repositories/profile_pictures.php');
 require_once(__DIR__ . '/admin_functions.php');
 
 $return_array = array();
+$return_array['success'] = SUCCESS;
 
 try {
     switch ($action) {
-        case 'ban':
+        case 'permanent':
             validate_ban_parameters($_POST);
-            ban_user_from_user_ID($_POST['user_id']);
+            if (!permanently_ban_user_with_user_ID($_POST)) {
+                $return_array['success'] = ERROR;
+                break;
+            }
             $return_array['msg'] = "Successfully banned user!";
             break;
         case 'remove_bio':
@@ -46,11 +50,11 @@ try {
         case 'get-ban-details':
             $user = get_user_by_id($_POST['id']);
             ban_user_functionality($user);
-            break;
+            exit();
         case 'get-user-actions':
             $user = get_user_by_id($_POST['id']);
             get_user_actions($user);
-            break;
+            exit();
     }
 } catch (ValidationException $e) {
     $return_array['success'] = ERROR;
@@ -58,7 +62,6 @@ try {
     exit();
 }
 
-$return_array['success'] = SUCCESS;
-//echo json_encode($return_array);
+echo json_encode($return_array);
 
 ?>
