@@ -30,6 +30,19 @@ usort($usersInDb, function ($first, $second) {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 
+
+    /*
+    Global Variable for the button clicked
+     */
+    var actionButtonState = '';
+
+    function updateAction(newState) {
+        actionButtonState = newState;
+    }
+
+    /*
+    Displays Toast
+     */
     function getToast(msg) {
         return `<div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -44,7 +57,9 @@ usort($usersInDb, function ($first, $second) {
         </div>`
     }
 
-    // Ban User
+    /*
+        Fetches the ban modal content based on the UUID
+     */
     function fetchBanUser(user_id) {
         $.ajax({
             type: "POST",
@@ -59,6 +74,9 @@ usort($usersInDb, function ($first, $second) {
         });
     }
 
+    /*
+    Fetches the user profile actions modal content based on the UUID
+    */
     function fetchUserActions(user_id) {
         $.ajax({
             type: "POST",
@@ -73,14 +91,9 @@ usort($usersInDb, function ($first, $second) {
         });
     }
 
-    var actionButtonState = '';
-
-    function updateAction(newState) {
-        actionButtonState = newState;
-    }
-
-
-    // Remove PFP
+    /*
+        Ajax to remove the PFP
+     */
     $(document)
         .ready(function () { // On DOM ready
             $('#removePfp').submit(function (e) {
@@ -173,7 +186,7 @@ usort($usersInDb, function ($first, $second) {
 
     }
 
-    // Ban, and Unban
+    // Ban, and Unban AJAX
     $(document)
         .ready(function () { // On DOM ready
             $('#banForm').submit(function (e) {
@@ -227,7 +240,7 @@ usort($usersInDb, function ($first, $second) {
         })
     ;
 
-    // DELETE USER
+    // DELETE USER AJAX
     $(document).ready(function () { // On DOM ready
         $('#removeForm').submit(function (e) {
             e.preventDefault(); // Overrides the default Form Submission
@@ -483,7 +496,7 @@ foreach ($usersInDb as $user) {
                 data: $(`#removeForm-${userId}`).serialize(),
                 success: function (response) {
                     var jsonData = JSON.parse(response);
-                    console.log("Response");
+
                     // Check for what the backend returned value is
                     if (jsonData.success == "1") {
                         let toastHTML = getToast("User Successfully Been Deleted!");
@@ -497,7 +510,6 @@ foreach ($usersInDb as $user) {
                     }
                 }
             });
-            console.log('test');
             document.getElementById(userId).style.display = "none";
             return true;
         } else {
