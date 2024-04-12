@@ -74,22 +74,6 @@ function get_user_by_credentials($email, $hashed_password): mysqli_result
     return $result;
 }
 
-function ban_user_from_user_ID($user_ID): void
-{
-    global $db_host, $db_username, $db_password, $db_database;
-
-    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
-
-    if (!$con) {
-        die('Could not connect: ' . mysqli_error($con));
-    }
-
-    $query = "UPDATE Users SET banned = true WHERE id = '{$user_ID}' ";
-
-    mysqli_query($con, $query);
-
-    mysqli_close($con);
-}
 
 function delete_user_from_user_ID($user_ID): void
 {
@@ -178,7 +162,7 @@ function get_user_by_id($id)
 
     $query = "SELECT * FROM Users where id = '{$id}'";
     $result = mysqli_query($con, $query);
-
+    mysqli_close($con);
     return $result->fetch_all(MYSQLI_ASSOC)[0];
 }
 
@@ -192,8 +176,53 @@ function get_user_id_by_email($email)
 
     $query = "SELECT id FROM Users where email = '{$email}'";
     $result = mysqli_query($con, $query);
-
+    mysqli_close($con);
     return $result->fetch_all(MYSQLI_ASSOC)[0]['id'];
+}
+
+
+function change_user_ban_state_by_user_id($user_id, $state)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    $success = true;
+
+    try {
+        $query = "UPDATE Users set banned = {$state}  where id = '{$user_id}'";
+        mysqli_query($con, $query);
+    } catch (Exception $e) {
+        $success = false;
+    } finally {
+        mysqli_close($con);
+    }
+
+    return $success;
+}
+
+function unban_user_by_ID($user_id): bool
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    $success = true;
+
+    try {
+        $query = "UPDATE Users set banned = false  where id = '{$user_id}'";
+        mysqli_query($con, $query);
+    } catch (Exception $e) {
+        $success = false;
+    } finally {
+        mysqli_close($con);
+    }
+
+    return $success;
 }
 
 ?>

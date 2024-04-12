@@ -19,11 +19,6 @@ function ban_user($user_id): void
     echo 'user banned';
 }
 
-function set_ban_state($id, $state)
-{
-
-}
-
 function ban_user_functionality($user): void
 {
     ?>
@@ -68,16 +63,27 @@ function get_user_actions($user): void
     <?php
 }
 
-function permanently_ban_user_with_user_ID($POST): bool
+function unban_user($POST)
 {
-    ban_user_from_user_ID($POST['user_id']);
-    return new_entry_in_bans($POST);
+    return unban_user_by_ID($POST['user_id']);
 }
 
-function new_entry_in_bans($POST): bool
+function temporarily_ban_user_with_user_ID($POST): bool
+{
+    change_user_ban_state_by_user_id($POST['user_id'], true);
+    return new_entry_in_bans($POST, false);
+}
+
+function permanently_ban_user_with_user_ID($POST): bool
+{
+    change_user_ban_state_by_user_id($POST['user_id'], true);
+    return new_entry_in_bans($POST, true);
+}
+
+function new_entry_in_bans($POST, $is_permanent): bool
 {
     require_once(__DIR__ . '/../database/repositories/bans.php');
-    return enter_new_ban($POST['banned_by_email'], $POST['unbanDate'], $POST['user_id'], true, $POST['reason']);
+    return enter_new_ban($POST['banned_by_email'], $POST['unbanDate'], $POST['user_id'], $is_permanent, $POST['reason']);
 }
 
 ?>

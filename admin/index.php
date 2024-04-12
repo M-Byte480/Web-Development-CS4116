@@ -159,54 +159,75 @@ usort($usersInDb, function ($first, $second) {
         });
     });
 
-    // Ban User
-    $(document).ready(function () { // On DOM ready
-        $('#banForm').submit(function (e) {
-            e.preventDefault(); // Overrides the default Form Submission
+    function changeRowColour(id, colour) {
 
-            var button1 = document.getElementById('permanent-ban');
-            var button2 = document.getElementById('temporary-ban');
-            var button3 = document.getElementById('unban');
+        var element = document.getElementById(`row-${id}`);
 
-            button1.disabled = true;
-            button2.disabled = true;
-            button3.disabled = true;
+        if (colour === 'unbanned') {
+            element.classList.add('bg-gray');
+            element.classList.remove('bg-red');
+        } else {
+            element.classList.remove('bg-gray');
+            element.classList.add('bg-red');
+        }
 
-            $.ajax({ // Send this asynchronously
-                type: "POST",
-                url: 'admin_backend.php',
-                data: $(this).serialize() + '&action=' + actionButtonState,
-                success:
+    }
 
-                    function (response) {
-                        var jsonData = JSON.parse(response);
-                        console.log(actionButtonState);
-                        setTimeout(() => {
-                            button1.disabled = false;
-                            button2.disabled = false;
-                            button3.disabled = false;
-                        }, 1000);
+    // Ban, and Unban
+    $(document)
+        .ready(function () { // On DOM ready
+            $('#banForm').submit(function (e) {
+                e.preventDefault(); // Overrides the default Form Submission
 
-                        // Check for what the backend returned value is
-                        if (jsonData.success == "1") {
-                            let toastHTML = getToast("Success!");
-                            $(document.body).append(toastHTML);
-                            $('.toast').toast('show');
+                var button1 = document.getElementById('permanent-ban');
+                var button2 = document.getElementById('temporary-ban');
+                var button3 = document.getElementById('unban');
 
-                        } else {
-                            let toastHTML = getToast("There was an issue doing that...");
-                            $(document.body).append(toastHTML);
-                            $('.toast').toast('show');
+                button1.disabled = true;
+                button2.disabled = true;
+                button3.disabled = true;
+
+                $.ajax({ // Send this asynchronously
+                    type: "POST",
+                    url: 'admin_backend.php',
+                    data: $(this).serialize() + '&action=' + actionButtonState,
+                    success:
+
+                        function (response) {
+                            var jsonData = JSON.parse(response);
+
+                            setTimeout(() => {
+                                button1.disabled = false;
+                                button2.disabled = false;
+                                button3.disabled = false;
+                            }, 1000);
+
+                            // Check for what the backend returned value is
+                            if (jsonData.success == "1") {
+                                let toastHTML = getToast(jsonData['msg']);
+                                $(document.body).append(toastHTML);
+                                $('.toast').toast('show');
+
+                                if (jsonData['msg'].includes("unbanned")) {
+                                    changeRowColour(jsonData['user_id'], 'unbanned');
+                                } else {
+                                    changeRowColour(jsonData['user_id'], 'banned');
+                                }
+
+                            } else {
+                                let toastHTML = getToast(jsonData['msg']);
+                                $(document.body).append(toastHTML);
+                                $('.toast').toast('show');
+                            }
+
+
                         }
-
-
-                    }
+                });
             });
-        });
-    })
+        })
     ;
 
-    // Ban User
+    // DELETE USER
     $(document).ready(function () { // On DOM ready
         $('#removeForm').submit(function (e) {
             e.preventDefault(); // Overrides the default Form Submission
@@ -262,7 +283,7 @@ function action_button($user): void
     ?>
     <div class="dropdown">
         <div class="mobile-menu-toggle">
-            <button class="btn btn-danger dropdown-toggle mobile-toggle-btn btn-sm"
+            <button class="btn <?= $user['banned'] ? 'btn-light' : 'btn-dark' ?> dropdown-toggle mobile-toggle-btn btn-sm"
                     type="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
@@ -320,7 +341,7 @@ function user_information($user): void
             <div class="col-md-4"><h4><?= get_user_name($user) ?>
                     <?= get_user_age($user) ?></h4>
             </div>
-            <div class="col-md-6">Reports: <?= $user['reportCount'] ?>
+            <div class="col-md-6">Reports: <?= $user['reportCount'] === null ? 0 : $user['reportCount'] ?>
             </div>
         </div>
     </div>
@@ -334,7 +355,8 @@ foreach ($usersInDb as $user) {
         <div style="display: none;" class="list-flag">
             <?= get_user_name($user) . ' ' . get_user_age($user) ?></div>
         <div style="display: none;" class="list-id"><?= $user['id'] ?></div>
-        <div class=" row align-items-center height-100px mt-3 border curve-100 bg-gray ">
+        <div id="<?= 'row-' . $user['id'] ?>"
+             class=" row align-items-center height-100px mt-3 border curve-100 <?= $user['banned'] ? 'bg-red' : 'bg-gray' ?>">
             <div class="col-2 col-sm-2 col-md-2 p-1 width-100px">
                 <?php pfp($user) ?>
             </div>

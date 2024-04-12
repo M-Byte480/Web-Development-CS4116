@@ -31,29 +31,62 @@ try {
             validate_ban_parameters($_POST);
             if (!permanently_ban_user_with_user_ID($_POST)) {
                 $return_array['success'] = ERROR;
+                $return_array['msg'] = "Failed to ban user!";
+
                 break;
             }
-            $return_array['msg'] = "Successfully banned user!";
+            $return_array['msg'] = "Permanently banned user!";
+            $return_array['user_id'] = $_POST['user_id'];
+            break;
+        case 'temporary':
+            validate_ban_parameters($_POST);
+            if (!temporarily_ban_user_with_user_ID($_POST)) {
+                $return_array['success'] = ERROR;
+                $return_array['msg'] = "Failed to ban user!";
+
+                break;
+            }
+            $return_array['msg'] = "Temporarily banned user!";
+            $return_array['user_id'] = $_POST['user_id'];
+
+            break;
+
+        case 'unban':
+            if (!unban_user($_POST)) {
+                $return_array['success'] = ERROR;
+                $return_array['msg'] = "Failed to unban user!";
+
+                break;
+            }
+            $return_array['msg'] = "Successfully unbanned user!";
+            $return_array['user_id'] = $_POST['user_id'];
+
             break;
         case 'remove_bio':
             update_user_bio_from_user_ID($_POST['user_id'], '');
+
             break;
         case 'remove_pfp':
             update_user_pfp_from_user_ID($_POST['user_id'], '');
+
             break;
         case 'remove_all_images':
+
             break;
         case 'delete':
             validate_delete_parameters($_POST);
             delete_user_from_user_ID($_POST['user_id']);
+
             break;
         case 'get-ban-details':
             $user = get_user_by_id($_POST['id']);
             ban_user_functionality($user);
+
             exit();
         case 'get-user-actions':
             $user = get_user_by_id($_POST['id']);
             get_user_actions($user);
+
             exit();
     }
 } catch (ValidationException $e) {
