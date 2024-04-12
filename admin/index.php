@@ -335,7 +335,7 @@ foreach ($usersInDb as $user) {
             <div class="col-2 col-sm-2 col-md-2 p-1 width-100px">
                 <?php pfp($user) ?>
             </div>
-            <div class="col-8 col-sm-8 col-md-8">
+            <div class="col-6 col-sm-8 col-md-8">
                 <?php user_information($user) ?>
             </div>
             <div class="col-2 col-sm-2 col-md-2 text-md-right">
