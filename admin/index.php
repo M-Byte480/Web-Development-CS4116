@@ -91,86 +91,6 @@ usort($usersInDb, function ($first, $second) {
         });
     }
 
-    /*
-        Ajax to remove the PFP
-     */
-    $(document)
-        .ready(function () { // On DOM ready
-            $('#removePfp').submit(function (e) {
-                e.preventDefault(); // Overrides the default Form Submission
-                $.ajax({ // Send this asynchronously
-                    type: "POST",
-                    url: 'admin_backend.php',
-                    data: $(this).serialize(),
-                    success: function (response) {
-                        var jsonData = JSON.parse(response);
-
-                        // Check for what the backend returned value is
-                        if (jsonData.success == "1") {
-                            let toastHTML = getToast(jsonData.msg);
-                            $(document.body).append(toastHTML);
-                            $('.toast').toast('show');
-                        } else {
-                            let toastHTML = getToast('Failed To Remove User!');
-                            $(document.body).append(toastHTML);
-                            $('.toast').toast('show');
-                        }
-                    }
-                });
-            });
-        });
-
-    // Remove all images
-    $(document).ready(function () { // On DOM ready
-        $('#removeAllImages').submit(function (e) {
-            e.preventDefault(); // Overrides the default Form Submission
-            $.ajax({ // Send this asynchronously
-                type: "POST",
-                url: 'admin_backend.php',
-                data: $(this).serialize(),
-                success: function (response) {
-                    var jsonData = JSON.parse(response);
-
-                    // Check for what the backend returned value is
-                    if (jsonData.success == "1") {
-                        let toastHTML = getToast(jsonData.msg);
-                        $(document.body).append(toastHTML);
-                        $('.toast').toast('show');
-                    } else {
-                        let toastHTML = getToast('Failed to remove images');
-                        $(document.body).append(toastHTML);
-                        $('.toast').toast('show');
-                    }
-                }
-            });
-        });
-    });
-
-    // Remove Bio
-    $(document).ready(function () { // On DOM ready
-        $('#removeBio').submit(function (e) {
-            e.preventDefault(); // Overrides the default Form Submission
-            $.ajax({ // Send this asynchronously
-                type: "POST",
-                url: 'admin_backend.php',
-                data: $(this).serialize(),
-                success: function (response) {
-                    var jsonData = JSON.parse(response);
-
-                    // Check for what the backend returned value is
-                    if (jsonData.success == "1") {
-                        let toastHTML = getToast(jsonData.msg);
-                        $(document.body).append(toastHTML);
-                        $('.toast').toast('show');
-                    } else {
-                        let toastHTML = getToast('Failed to remove bio');
-                        $(document.body).append(toastHTML);
-                        $('.toast').toast('show');
-                    }
-                }
-            });
-        });
-    });
 
     function changeRowColour(id, colour) {
 
@@ -232,13 +152,55 @@ usort($usersInDb, function ($first, $second) {
                                 $(document.body).append(toastHTML);
                                 $('.toast').toast('show');
                             }
-
-
                         }
                 });
             });
-        })
-    ;
+        });
+
+    /*
+    Ajax to edit profile
+ */
+    $(document)
+        .ready(function () {
+            $('#editUserForm').submit(function (e) {
+
+                e.preventDefault();
+
+                var button1 = document.getElementById('remove_pfp');
+                var button2 = document.getElementById('remove_all_images');
+                var button3 = document.getElementById('remove_bio');
+
+                button1.disabled = true;
+                button2.disabled = true;
+                button3.disabled = true;
+
+                $.ajax({
+                    type: "POST",
+                    url: 'admin_backend.php',
+                    data: $(this).serialize() + '&action=' + actionButtonState,
+                    success: function (response) {
+                        var jsonData = JSON.parse(response);
+
+                        setTimeout(() => {
+                            button1.disabled = false;
+                            button2.disabled = false;
+                            button3.disabled = false;
+                        }, 1000);
+
+                        if (jsonData.success == "1") {
+                            let toastHTML = getToast(jsonData['msg']);
+                            $(document.body).append(toastHTML);
+                            $('.toast').toast('show');
+
+                        } else {
+                            let toastHTML = getToast('There was an issue doing that');
+                            $(document.body).append(toastHTML);
+                            $('.toast').toast('show');
+                        }
+                    }
+                });
+            });
+        });
 
     // DELETE USER AJAX
     $(document).ready(function () { // On DOM ready
@@ -422,7 +384,7 @@ foreach ($usersInDb as $user) {
     </div>
 </form>
 
-
+<!--Edit user Modal -->
 <form method="post" action="admin_backend.php" class="editUserForm" id="editUserForm">
     <div class="modal fade" tabindex="-1" aria-labelledby="editUserModalLabel" id="editUserModal"
          aria-hidden="true">
@@ -437,16 +399,18 @@ foreach ($usersInDb as $user) {
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="submit" value="permanent" class="btn btn-primary"
-                    > Remove PFP
+                    <button type="submit" name="submit" value="remove_pfp" class="btn btn-primary" id="remove_pfp"
+                            onclick="updateAction('remove_pfp')">
+                        Remove PFP
                     </button>
-                    <button type="submit" name="submit" value="temporary" class="btn btn-primary"
-
-                    >Remove all pictures
+                    <button type="submit" name="submit" value="remove_all_images" class="btn btn-primary"
+                            id="remove_all_images"
+                            onclick="updateAction('remove_all_images')">
+                        Remove all pictures
                     </button>
-                    <button type="submit" name="submit" value="unban" class="btn btn-primary"
-
-                    >Remove user Bio
+                    <button type="submit" name="submit" value="remove_bio" class="btn btn-primary" id="remove_bio"
+                            onclick="updateAction('remove_bio')">
+                        Remove user Bio
                     </button>
                 </div>
             </div>

@@ -86,4 +86,22 @@ function update_user_seeking_from_user_ID(string $user_ID, string $new_seeking):
     mysqli_close($con);
 }
 
+function update_user_bio_from_user_ID($user_ID, $bio): void
+{
+    global $db_host, $db_username, $db_password, $db_database;
+
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    // USER BEVERAGES
+    $query = "UPDATE Profiles set description = '{$bio}' WHERE userId = '{$user_ID}'";
+    mysqli_query($con, $query);
+
+
+    mysqli_close($con);
+}
+
 ?>

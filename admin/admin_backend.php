@@ -19,7 +19,9 @@ if (isset($_POST['action']) && $_POST['action']) {
 
 require_once(__DIR__ . '/../validator_functions.php');
 require_once(__DIR__ . '/../database/repositories/users.php');
+require_once(__DIR__ . '/../database/repositories/profiles.php');
 require_once(__DIR__ . '/../database/repositories/profile_pictures.php');
+require_once(__DIR__ . '/../database/repositories/images.php');
 require_once(__DIR__ . '/admin_functions.php');
 
 $return_array = array();
@@ -64,13 +66,17 @@ try {
             break;
         case 'remove_bio':
             update_user_bio_from_user_ID($_POST['user_id'], '');
+            $return_array['msg'] = "Successfully removed Bio!";
 
             break;
         case 'remove_pfp':
             update_user_pfp_from_user_ID($_POST['user_id'], '');
+            $return_array['msg'] = "Successfully removed PFP!";
 
             break;
         case 'remove_all_images':
+            remove_all_pictures($_POST['user_id']);
+            $return_array['msg'] = "Successfully removed images!";
 
             break;
         case 'delete':

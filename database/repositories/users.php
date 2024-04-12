@@ -93,23 +93,6 @@ function delete_user_from_user_ID($user_ID): void
     mysqli_close($con);
 }
 
-function update_user_bio_from_user_ID($user_ID, $bio): void
-{
-    global $db_host, $db_username, $db_password, $db_database;
-
-    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
-
-    if (!$con) {
-        die('Could not connect: ' . mysqli_error($con));
-    }
-
-    // USER BEVERAGES
-    $query = "UPDATE Users set description = {$bio} WHERE id = '{$user_ID}'";
-    mysqli_query($con, $query);
-
-
-    mysqli_close($con);
-}
 
 function get_first_name_from_user_ID(string $user_ID): string
 {

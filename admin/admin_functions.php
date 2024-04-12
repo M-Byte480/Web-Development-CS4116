@@ -54,6 +54,8 @@ function get_user_actions($user): void
 {
     ?>
     <div class="mb-3">
+        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+
         <label for="exampleFormControlInput1" class="form-label">Editing:</label>
         <input class="form-control" type="text"
                value="<?= $user['firstName'] . " " . $user['lastName'] ?>"
