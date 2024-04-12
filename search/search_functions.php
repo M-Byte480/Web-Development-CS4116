@@ -49,7 +49,7 @@ function get_user_by_matches($get): bool|mysqli_result|null
     $min_date = $min_date->format('Y-m-d');
     $max_date = $max_date->format('Y-m-d');
 
-    $query = "SELECT u.id, u.firstName as firstname, 
+    $query = "SELECT u.id, u.firstName as firstname, u.lastName as lastname,
                 u.dateOfBirth, Profiles.gender, 
                 Profiles.seeking, Profiles.description, 
                 COUNT(u.id) as matching_interests,
