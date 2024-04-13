@@ -1,5 +1,5 @@
 <?php
-function get_user_name($user)
+function get_user_name($user): string
 {
     return $user['firstName'] . ' ' . $user['lastName'];
 }
@@ -12,11 +12,6 @@ function get_user_age($user): int
     $dob = new DateTime($user['dateOfBirth']);
     $diff = $dob->diff(new DateTime());
     return $diff->y;
-}
-
-function ban_user($user_id): void
-{
-    echo 'user banned';
 }
 
 function ban_user_functionality($user): void
@@ -65,9 +60,9 @@ function get_user_actions($user): void
     <?php
 }
 
-function unban_user($POST)
+function unban_user($POST): bool
 {
-    return unban_user_by_ID($POST['user_id']);
+    return change_user_ban_state_by_user_id($POST['user_id'], false);
 }
 
 function temporarily_ban_user_with_user_ID($POST): bool

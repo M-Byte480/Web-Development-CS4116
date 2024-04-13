@@ -164,7 +164,7 @@ function get_user_id_by_email($email)
 }
 
 
-function change_user_ban_state_by_user_id($user_id, $state)
+function change_user_ban_state_by_user_id($user_id, $state): bool
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
@@ -176,28 +176,6 @@ function change_user_ban_state_by_user_id($user_id, $state)
 
     try {
         $query = "UPDATE Users set banned = {$state}  where id = '{$user_id}'";
-        mysqli_query($con, $query);
-    } catch (Exception $e) {
-        $success = false;
-    } finally {
-        mysqli_close($con);
-    }
-
-    return $success;
-}
-
-function unban_user_by_ID($user_id): bool
-{
-    global $db_host, $db_username, $db_password, $db_database;
-    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
-    if (!$con) {
-        die('Could not connect: ' . mysqli_error($con));
-    }
-
-    $success = true;
-
-    try {
-        $query = "UPDATE Users set banned = false  where id = '{$user_id}'";
         mysqli_query($con, $query);
     } catch (Exception $e) {
         $success = false;
