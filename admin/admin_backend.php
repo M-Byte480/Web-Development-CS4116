@@ -65,7 +65,7 @@ try {
 
             break;
         case 'remove_bio':
-            update_user_bio_from_user_ID($_POST['user_id'], '');
+            update_user_description_from_user_ID($_POST['user_id'], '');
             $return_array['msg'] = "Successfully removed Bio!";
 
             break;
