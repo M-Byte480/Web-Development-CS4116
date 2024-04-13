@@ -478,7 +478,7 @@ foreach ($usersInDb as $user) {
                     }
                 }
             });
-            document.getElementById(userId).style.display = "none";
+            document.getElementById(userId).remove();
             return true;
         } else {
             return false;
