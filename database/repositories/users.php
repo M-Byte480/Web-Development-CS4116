@@ -175,9 +175,13 @@ function change_user_ban_state_by_user_id($user_id, $state): bool
     $success = true;
 
     try {
-        $query = "UPDATE Users set banned = {$state}  where id = '{$user_id}'";
+        // Get true and false for
+        $mysqli_bool = $state ? 1 : 0;
+
+        $query = "UPDATE Users set banned = {$mysqli_bool}  where id = '{$user_id}'";
         mysqli_query($con, $query);
     } catch (Exception $e) {
+        print_r($e);
         $success = false;
     } finally {
         mysqli_close($con);

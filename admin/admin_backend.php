@@ -42,14 +42,21 @@ try {
             break;
         case 'temporary':
             validate_ban_parameters($_POST);
-            if (!temporarily_ban_user_with_user_ID($_POST)) {
-                $return_array['success'] = ERROR;
-                $return_array['msg'] = "Failed to ban user!";
 
+            if (!is_value_set($_POST, 'unbanDate')) {
+                $return_array['msg'] = 'Expiration is not set';
+                $return_array['success'] = ERROR;
                 break;
             }
-            $return_array['msg'] = "Temporarily banned user!";
-            $return_array['user_id'] = $_POST['user_id'];
+
+            if (!temporarily_ban_user_with_user_ID($_POST)) {
+                $return_array['success'] = ERROR;
+                $return_array['msg'] = "Failed to ban user! Contact the developers";
+
+            } else {
+                $return_array['msg'] = "Temporarily banned user!";
+                $return_array['user_id'] = $_POST['user_id'];
+            }
 
             break;
 

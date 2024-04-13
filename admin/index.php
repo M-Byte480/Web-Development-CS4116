@@ -280,7 +280,7 @@ function action_button($user): void
                 <li>
                     <form id="removeForm-<?= $user['id'] ?>" method="post" action="admin_backend.php">
                         <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                        <input type="hidden" name="banned_by_email" value="<?= $_COOKIE['email'] ?>">
+                        <input type="hidden" name="admin_email" value="<?= $_COOKIE['email'] ?>">
                         <input type="hidden" name="action" value="delete">
                         <button type="button" class="btn btn-danger m-1" name="removeBtn" id="removeBtn" value="Delete"
                                 onclick="deleteUser('<?= $user['id'] ?>')">
@@ -313,8 +313,12 @@ function user_information($user): void
     ?>
     <div class="container">
         <div class="row">
-            <div class="col-md-4"><h4><?= get_user_name($user) ?>
-                    <?= get_user_age($user) ?></h4>
+            <div class="col-md-4">
+                <h4>
+                    <a href="<?= '../profile/' . "?user_id=" . $user['id'] ?>"
+                       target="_blank"
+                       style="color: inherit;"><?= get_user_name($user) ?></a> <?= get_user_age($user) ?>
+                </h4>
             </div>
             <div class="col-md-6">Reports: <?= $user['reportCount'] === null ? 0 : $user['reportCount'] ?>
             </div>

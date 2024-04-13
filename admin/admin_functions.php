@@ -33,13 +33,13 @@ function ban_user_functionality($user): void
         <textarea class="form-control" id="banReasonTextBox" rows="3" name="reason"></textarea>
     </div>
     <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-    <input type="hidden" name="banned_by_email" value="<?= $_COOKIE['email'] ?>">
+    <input type="hidden" name="admin_email" value="<?= $_COOKIE['email'] ?>">
     <label class="form-group" for="banExpirationDate">
         Temporary ban expiration:
     </label>
     <br>
     <input id="banExpirationDate" type="date" name="unbanDate" pattern="\d{4}-\d{2}-\d{2}"/>
-    <i>Only enter expiration if its not permanent</i>
+    <i>Enter expiration if its Temporary Ban</i>
     <span class="validity"></span>
 
     <?php
@@ -65,8 +65,14 @@ function unban_user($POST): bool
     return change_user_ban_state_by_user_id($POST['user_id'], false);
 }
 
+function is_value_set($array, $value)
+{
+    return isset($array[$value]) && $array[$value];
+}
+
 function temporarily_ban_user_with_user_ID($POST): bool
 {
+
     change_user_ban_state_by_user_id($POST['user_id'], true);
     return new_entry_in_bans($POST, false);
 }
@@ -80,7 +86,7 @@ function permanently_ban_user_with_user_ID($POST): bool
 function new_entry_in_bans($POST, $is_permanent): bool
 {
     require_once(__DIR__ . '/../database/repositories/bans.php');
-    return enter_new_ban($POST['banned_by_email'], $POST['unbanDate'], $POST['user_id'], $is_permanent, $POST['reason']);
+    return enter_new_ban($POST['admin_email'], $POST['unbanDate'], $POST['user_id'], $is_permanent, $POST['reason']);
 }
 
 ?>
