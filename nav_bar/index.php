@@ -52,61 +52,6 @@ try {
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
-            <ul class="navbar-nav">
-                <?php
-                if ($user_logged_in) {
-                    ?>
-                    <li class="nav-item p-2">
-                        <a class="nav-link float-end" href="../search">
-                            <h2 class="collapse" id="collapsibleNavbar"> Search</h2>
-                            <i class="bi bi-search"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item p-2">
-                        <a class="nav-link float-end" href="#">
-                            <h2 class="collapse" id="collapsibleNavbar"> Messages</h2>
-                            <i class="bi bi-envelope"></i>
-                        </a>
-                    </li>
-                    <?php
-                }
-                ?>
-                <li class="nav-item p-2">
-                    <div class="btn-group float-end">
-                        <div class="dropdown">
-                            <button class="bg-transparent border-0 nav-link" type="button"
-                                    id="dropdownMenuButton1"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="float-end">
-                                    <h2 class="collapse" id="collapsibleNavbar">Profile</h2>
-                                    <i class="bi bi-person-circle"></i>
-                                </span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li>
-                                    <a class="float-end dropdown-item" href="../profile">
-                                        <h4 class="collapse" id="collapsibleNavbar">Profile</h4>
-                                    </a>
-                                </li>
-                                <?php
-                                if ($user_is_admin) {
-                                    ?>
-                                    <li>
-                                        <a class="float-end dropdown-item" href="../admin">
-                                            <h4>Admin</h4>
-                                        </a>
-                                    </li>
-                                    <?php
-                                }
-                                ?>
-                                <li>
-                                    <a class="float-end dropdown-item" href="../home">
-                                        <h4>Logout</h4>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
             <ul class="navbar-nav float-end">
                 <?php
                 if ($user_logged_in) {
