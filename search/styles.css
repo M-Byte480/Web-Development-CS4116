@@ -58,10 +58,13 @@ input[type="checkbox"] {
 
 .my-card {
 
-    transition: 0.3s;
+    transition: 0.5s;
 }
 
 .my-card:hover {
     scale: 1.1;
 }
 
+.search-bar-container {
+
+}

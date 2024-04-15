@@ -6,6 +6,11 @@
     background-color: #dbdbdb;
 }
 
+.bg-red {
+    background-color: #ef1a2b;
+    color: white;
+}
+
 .row {
     display: flex;
     align-items: center;
@@ -15,6 +20,6 @@
     min-height: 100px;
 }
 
-.width-100px{
+.width-100px {
     min-width: 100px;
 }
