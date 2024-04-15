@@ -60,8 +60,8 @@ function validate_admin($id): bool
  */
 function validate_ban_parameters($POST): void
 {
-    if (array_key_exists('banned_by_email', $POST) && $POST['banned_by_email']) {
-        if (!validate_email($POST['banned_by_email'])) {
+    if (array_key_exists('admin_email', $POST) && $POST['admin_email']) {
+        if (!validate_email($POST['admin_email'])) {
             throw new ValidationException('Email Validation -> Ban');
         }
     }
