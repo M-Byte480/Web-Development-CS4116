@@ -8,6 +8,11 @@ try {
     exit();
 }
 
+require_once(__DIR__ . '/../database/repositories/likes.php');
+require_once(__DIR__ . '/../database/repositories/dislikes.php');
+require_once(__DIR__ . '/profile_card.php');
+require_once(__DIR__ . '/search_functions.php');
+
 $interest_flag = isset($_GET['interests']);
 ?>
 
@@ -26,73 +31,59 @@ $interest_flag = isset($_GET['interests']);
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<?php require_once(__DIR__ . '/../nav_bar/index.php'); ?>
-
 <?php
-require_once(__DIR__ . '/search_functions.php');
+
+require_once(__DIR__ . '/../nav_bar/index.php');
+
 
 $searched_profiles = get_user_by_matches($_GET);
 $user_count = mysqli_num_rows($searched_profiles);
 
-?>
-
-<?php
-// Assuming you have already connected to your database
-require_once(__DIR__ . '/../secrets.settings.php'); // Include database connection settings
-
 // Get the email variable from the frontend (assuming it's passed via cookie)
 $email_variable = $_COOKIE['email'];
 
-// Initialize variables
-$id = null;
-$liked_users = array();
-$disliked_users = array();
 
-// Connect to the database
-global $db_host, $db_username, $db_password, $db_database;
-$mysqli = new mysqli($db_host, $db_username, $db_password, $db_database);
+$user_id = get_user_id_by_email($email_variable);
 
-// Check for connection errors
-if ($mysqli->connect_errno) {
-    die("Connection Error: " . $mysqli->connect_error);
-}
+$liked_users = get_all_liked_user_by_user_id($user_id);
 
-// Query to fetch the user's ID based on email
-$query = "SELECT id FROM users WHERE email = ?";
-$stmt = $mysqli->prepare($query);
-$stmt->bind_param("s", $email_variable);
-$stmt->execute();
-$stmt->bind_result($id);
-$stmt->fetch();
-$stmt->close();
+$disliked_users = get_all_disliked_user_by_user_id($user_id);
 
-// Query to fetch liked users
-$query = "SELECT likedUser FROM likes WHERE userId = ?";
-$stmt = $mysqli->prepare($query);
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$stmt->bind_result($liked_user);
-while ($stmt->fetch()) {
-    $liked_users[] = $liked_user;
-}
-$stmt->close();
+$union_users = array_merge($liked_users, $disliked_users);
 
-// Query to fetch disliked users
-$query = "SELECT dislikeUser FROM dislikes WHERE userId = ?";
-$stmt = $mysqli->prepare($query);
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$stmt->bind_result($disliked_user);
-while ($stmt->fetch()) {
-    $disliked_users[] = $disliked_user;
-}
-$stmt->close();
 
-// Close the database connection
-$mysqli->close();
 $rows = [];
 
+while ($row = mysqli_fetch_assoc($searched_profiles)) {
+    $rows[] = $row;
+}
+
+$completement_users = array_diff($rows, $union_users);
+
 ?>
+
+<script>
+    let showAllUsersFlag = true;
+
+    function newMatchesOnly() {
+        console.log("click");
+        showAllUsersFlag = !showAllUsersFlag;
+
+        if (showAllUsersFlag) {
+            (document).querySelector('#switch-state').innerHTML = "See all Users";
+
+            (document).getElementById('all-users').style.display = 'block';
+            (document).getElementById('complement-users').style.display = 'none';
+        } else {
+            (document).querySelector('#switch-state').innerHTML = "New Matches Only";
+
+            (document).getElementById('all-users').style.display = 'none';
+            (document).getElementById('complement-users').style.display = 'block';
+        }
+
+    }
+</script>
+
 <div class="search-bar-container container">
     <div class="row">
         <div class="col-12 d-flex justify-content-center m-2">
@@ -101,14 +92,35 @@ $rows = [];
         </div>
     </div>
 </div>
-<div class="container">
+
+<div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+           onclick="newMatchesOnly()">
+    <label class="form-check-label" for="flexSwitchCheckDefault" id="switch-state">All users</label>
+</div>
+
+<div class="container" id="all-users">
+    <div class="row">
+        <?php
+        foreach ($rows as $row) {
+            ?>
+
+            <div class="col-12 col-md-3 user_card profiles">
+                <?php get_profile_card($row, $interest_flag) ?>
+            </div>
+            <?php
+        }
+        ?>
+    </div>
+</div>
+
+<div class="container" id="complement-users" style="display: none;">
     <div class="row">
         <?php
         require_once(__DIR__ . '/profile_card.php');
-        while ($row = mysqli_fetch_assoc($searched_profiles)) {
+        foreach ($completement_users as $row) {
             ?>
-
-            <div class="col-12 col-md-3 user_card">
+            <div class="col-12 col-md-3 user-card">
                 <?php get_profile_card($row, $interest_flag) ?>
             </div>
             <?php
@@ -118,93 +130,20 @@ $rows = [];
 </div>
 
 
-<script>
-    let count = 0;
-
-    function newMatchesOnly() {
-        const likedUsers = <?php echo json_encode($liked_users); ?>;
-        const dislikedUsers = <?= json_encode($disliked_users); ?>;
-        const mutual = likedUsers.concat(dislikedUsers);
-
-        while ($row = get_user_by_matches($_GET)->
-        fetch_assoc()
-    )
-        {
-            $rows[] = $row;
-        }
-        const all = <?php echo json_encode($rows); ?>;
-        var filterArray = all.filter((element) => {
-            return mutual.indexOf(element) === -1;
-        });
-
-        if (count % 2 !== 0) {
-            count++
-            (document).querySelector('.change').innerHTML = "New Matches Only";
-            Array.from((document).getElementsByClassName('user_card')).forEach((element) => {
-                if (!filterArray.id.includes($(this).id)) {
-                    (this).show();
-                } else {
-                    (this).hide();
-                }
-            });
-
-        } else {
-            count++
-            (document).querySelector('.change').innerHTML = "See all Users";
-            Array.from((document).getElementsByClassName('user_card')).forEach((element) => {
-                if (!all.id.includes(element.id)) {
-                    (this).show();
-                } else {
-                    (this).hide();
-                }
-            });
-
-        }
-
-    }
-</script>
-<p>
-
-</p>
-
-<div class="container">
-    <button class="change" type="button" onclick="newMatchesOnly()">New Matches Only</button>
-    <div class="row">
-        <?php
-        require_once(__DIR__ . '/profile_card.php');
-        while ($row = mysqli_fetch_assoc($searched_profiles)) {
-            ?>
-            <div class="col-12 col-md-3">
-                <?php get_profile_card($row, $interest_flag) ?>
-            </div>
-            <?php
-        }
-        ?>
-    </div>
-</div>
 <script>
     $(document).ready(function () {
         $('#searchBar').on('input', function () {
             let searchText = $(this).val().toLowerCase();
-            if (searchText.length === 36) {
-                $('.profiles').each(function () {
-                    var uuid = $(this).find('.user-name').text();
-                    if (searchText.includes(uuid)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
-            } else {
-                $('.profiles').each(function () {
-                    var userName = $(this).find('.user-name').text().toLowerCase();
-                    if (userName.includes(searchText)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
-            }
+
+            $('.profiles').each(function () {
+                var userName = $(this).find('.user-name').text().toLowerCase();
+
+                if (userName.includes(searchText)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
         });
     });
 </script>

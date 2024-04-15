@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Tadhg] Fixes from Milan's conversations.">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="b03dce99-2dc6-427f-b0d0-70b45f0f48a2" name="Changes" comment="[Milan] Delete div instead of display none">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/repositories/beverages.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/beverages.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/repositories/interests.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/interests.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/repositories/profiles.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/profiles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/database_definitions" beforeDir="false" afterPath="$PROJECT_DIR$/database/database_definitions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/repositories/dislikes.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/dislikes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/repositories/likes.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/likes.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/repositories/users.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/repositories/users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profile/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/profile/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/search/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/search/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/results.php" beforeDir="false" afterPath="$PROJECT_DIR$/search/results.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,13 +20,21 @@
   <component name="ComposerSettings">
     <execution />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="tsconfig.json" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
   <component name="FormatOnSaveOptions">
     <option name="myRunOnSave" value="true" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="milan/admin-backend" />
+        <entry key="$PROJECT_DIR$" value="milan/discovery_page" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -49,23 +55,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Project&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "milan/search__filter",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/xampp/htdocs/Project",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "rearrange.code.on.save": "true",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\Project" />
@@ -82,7 +89,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.15026.12" />
+        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.14475.35" />
       </set>
     </attachedChunks>
   </component>
@@ -116,6 +123,15 @@
       <workItem from="1712079300283" duration="1386000" />
       <workItem from="1712087671879" duration="7449000" />
       <workItem from="1712147113549" duration="19028000" />
+      <workItem from="1712832854266" duration="819000" />
+      <workItem from="1712833754354" duration="2278000" />
+      <workItem from="1712841614555" duration="6316000" />
+      <workItem from="1712919453586" duration="10077000" />
+      <workItem from="1712942275933" duration="2720000" />
+      <workItem from="1712946686255" duration="847000" />
+      <workItem from="1713019472605" duration="2694000" />
+      <workItem from="1713026558275" duration="336000" />
+      <workItem from="1713199931329" duration="5005000" />
     </task>
     <task id="LOCAL-00001" summary="[Milan] Added a redirect to the Home page upon connecting to the site">
       <option name="closed" value="true" />
@@ -245,29 +261,166 @@
       <option name="project" value="LOCAL" />
       <updated>1711110821741</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="[Milan] Moved search from admin page">
+      <option name="closed" value="true" />
+      <created>1712779531898</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1712779531898</updated>
+    </task>
+    <task id="LOCAL-00018" summary="[Milan] Made the modals dynamic">
+      <option name="closed" value="true" />
+      <created>1712786406673</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1712786406673</updated>
+    </task>
+    <task id="LOCAL-00019" summary="[Milan] Uniquely delete user, asynchronously">
+      <option name="closed" value="true" />
+      <created>1712835991637</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1712835991637</updated>
+    </task>
+    <task id="LOCAL-00020" summary="[Milan] Added Permanent Ban">
+      <option name="closed" value="true" />
+      <created>1712853424290</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1712853424290</updated>
+    </task>
+    <task id="LOCAL-00021" summary="[Milan] Updated Temporary Ban query">
+      <option name="closed" value="true" />
+      <created>1712853584713</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1712853584713</updated>
+    </task>
+    <task id="LOCAL-00022" summary="[Milan] Colours update based on ban state. Admins can now unban and ban users">
+      <option name="closed" value="true" />
+      <created>1712925660258</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1712925660259</updated>
+    </task>
+    <task id="LOCAL-00023" summary="[Milan] Added comments">
+      <option name="closed" value="true" />
+      <created>1712925950451</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1712925950451</updated>
+    </task>
+    <task id="LOCAL-00024" summary="[Milan] User functionality implemented">
+      <option name="closed" value="true" />
+      <created>1712928536706</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1712928536706</updated>
+    </task>
+    <task id="LOCAL-00025" summary="[Milan] Fixed responsiveness on phone">
+      <option name="closed" value="true" />
+      <created>1712928868039</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1712928868039</updated>
+    </task>
+    <task id="LOCAL-00026" summary="[Milan] Resolving PR comments">
+      <option name="closed" value="true" />
+      <created>1713019834598</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1713019834598</updated>
+    </task>
+    <task id="LOCAL-00027" summary="[Milan] Removed duplicated code">
+      <option name="closed" value="true" />
+      <created>1713020099159</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1713020099159</updated>
+    </task>
+    <task id="LOCAL-00028" summary="[Milan] Fixed unban state injection, added view profile">
+      <option name="closed" value="true" />
+      <created>1713021962640</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1713021962640</updated>
+    </task>
+    <task id="LOCAL-00029" summary="[Milan] Delete div instead of display none">
+      <option name="closed" value="true" />
+      <created>1713022172131</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1713022172131</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/milan/discovery_page" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/milan/discovery_page" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[Milan] Added a redirect to the Home page upon connecting to the site" />
-    <MESSAGE value="[Milan] Updated the routing, added refactored the names" />
-    <MESSAGE value="[Milan] Added GitIgnore, updated the database definitions, added drop file, created Secrets ignored by the" />
-    <MESSAGE value="[Milan] Added Populate database with sample data" />
-    <MESSAGE value="[Milan] Added Prettier, created validators" />
     <MESSAGE value="[Milan] Updated the queries to have validators" />
     <MESSAGE value="[Milan] Removed unused global variable" />
     <MESSAGE value="[Milan] Added uniqueness to the User table, updated the logic and flow of the admin validation" />
@@ -280,7 +433,20 @@
     <MESSAGE value="[Milan] Skeleton functionality is created" />
     <MESSAGE value="[Milan] Added age POST values" />
     <MESSAGE value="[Milan] Skeleton of the search page is implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Skeleton of the search page is implemented" />
+    <MESSAGE value="[Milan] Moved search from admin page" />
+    <MESSAGE value="[Milan] Made the modals dynamic" />
+    <MESSAGE value="[Milan] Uniquely delete user, asynchronously" />
+    <MESSAGE value="[Milan] Added Permanent Ban" />
+    <MESSAGE value="[Milan] Updated Temporary Ban query" />
+    <MESSAGE value="[Milan] Colours update based on ban state. Admins can now unban and ban users" />
+    <MESSAGE value="[Milan] Added comments" />
+    <MESSAGE value="[Milan] User functionality implemented" />
+    <MESSAGE value="[Milan] Fixed responsiveness on phone" />
+    <MESSAGE value="[Milan] Resolving PR comments" />
+    <MESSAGE value="[Milan] Removed duplicated code" />
+    <MESSAGE value="[Milan] Fixed unban state injection, added view profile" />
+    <MESSAGE value="[Milan] Delete div instead of display none" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Milan] Delete div instead of display none" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
