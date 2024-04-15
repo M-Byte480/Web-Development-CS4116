@@ -71,13 +71,13 @@ try {
                     <?php
                 }
                 ?>
-                <li class="nav-item p-2 btn-group justify-content-end">
-                    <button class="bg-transparent border-0 p-0" type="button"
+                <li class="nav-item p-2 d-inline btn-group float-end">
+                    <button class="bg-transparent border-0 p-0 float-end" type="button"
                             id="profileDropdown"
                             data-bs-toggle="dropdown" aria-expanded="false">
                         <a class="nav-link float-end">
-                            <h2 class="collapse" id="collapsibleNavbar">Profile</h2>
-                            <i class="bi bi-person-circle"></i>
+                            <h2 class="collapse" id="collapsibleNavbar">Settings</h2>
+                            <i class="bi bi-gear"></i>
                         </a>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-md-end position-absolute"
