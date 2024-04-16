@@ -17,6 +17,10 @@
     transition: transform 2s ease, -webkit-transform 2s ease;
 }
 
+ul {
+    list-style: none;
+}
+
 main {
     display: block;
 }
@@ -57,6 +61,7 @@ section {
     margin-right: calc(-.5 * var(--bs-gutter-x));
     margin-left: calc(-.5 * var(--bs-gutter-x));
 }
+
 
 /*SYMBOL*/
 .mdi--drink {
