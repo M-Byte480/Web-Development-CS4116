@@ -33,6 +33,7 @@ require_once(__DIR__ . '/search_functions.php');
 
 $searched_profiles = get_user_by_matches($_GET);
 $user_count = mysqli_num_rows($searched_profiles);
+
 ?>
 <div class="search-bar-container container">
     <div class="row">

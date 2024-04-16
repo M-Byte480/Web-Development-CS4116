@@ -60,8 +60,8 @@ function validate_admin($id): bool
  */
 function validate_ban_parameters($POST): void
 {
-    if (array_key_exists('banned_by_email', $POST) && $POST['banned_by_email']) {
-        if (!validate_email($POST['banned_by_email'])) {
+    if (array_key_exists('admin_email', $POST) && $POST['admin_email']) {
+        if (!validate_email($POST['admin_email'])) {
             throw new ValidationException('Email Validation -> Ban');
         }
     }
@@ -113,7 +113,9 @@ function validate_user_logged_in(): void
     validate_unique_result($query_result);
 }
 
-
+/**
+ * @throws ValidationException
+ */
 function validate_user_is_admin(): void
 {
     // Validation
@@ -130,8 +132,7 @@ function validate_user_is_admin(): void
 
     // Both these need to be true
     if ($user == null || !validate_admin($user['id'])) {
-        echo 'Unauthorised';
-        exit();
+        throw new ValidationException('Unauthorised');
     }
 
     // Free the buffer/memory
