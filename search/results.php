@@ -70,11 +70,15 @@ $completement_users = array_diff($rows, $union_users);
         showAllUsersFlag = !showAllUsersFlag;
 
         if (showAllUsersFlag) {
+            (document).getElementById('searchBar').disabled = false;
+
             (document).querySelector('#switch-state').innerHTML = "See all Users";
 
             (document).getElementById('all-users').style.display = 'block';
             (document).getElementById('complement-users').style.display = 'none';
         } else {
+            (document).getElementById('searchBar').disabled = true;
+
             (document).querySelector('#switch-state').innerHTML = "New Matches Only";
 
             (document).getElementById('all-users').style.display = 'none';
@@ -84,20 +88,23 @@ $completement_users = array_diff($rows, $union_users);
     }
 </script>
 
-<div class="search-bar-container container">
+<div class="container">
     <div class="row">
-        <div class="col-12 d-flex justify-content-center m-2">
-            <label for="searchBar" class="p-2">Filter Users: </label>
-            <input id="searchBar" size="30" type="text" class="search-bar" placeholder="Search...">
+        <div class="d-flex align-items-center justify-content-center " style="height: 75px;">
+            <div class="m-2">
+                <input id="searchBar" size="30" type="text" class="search-bar" placeholder="Search Users...">
+            </div>
+
+            <div class="form-check form-switch ml-2">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                       onclick="newMatchesOnly()">
+
+            </div>
+            <div id="switch-state" style="width: 150px;">All users</div>
         </div>
     </div>
 </div>
 
-<div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
-           onclick="newMatchesOnly()">
-    <label class="form-check-label" for="flexSwitchCheckDefault" id="switch-state">All users</label>
-</div>
 
 <div class="container" id="all-users">
     <div class="row">
