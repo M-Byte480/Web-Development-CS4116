@@ -88,6 +88,7 @@ function update_user_seeking_from_user_ID(string $user_ID, string $new_seeking):
 
 function set_id_gender($db_host, $db_username, $db_password, $db_database, $id): void
 {
+
     $mysqli = new mysqli($db_host, $db_username, $db_password, $db_database);
 
     $stmt = $mysqli->stmt_init();
@@ -110,7 +111,6 @@ function set_id_gender($db_host, $db_username, $db_password, $db_database, $id):
         exit();
     };
     mysqli_close($mysqli);
-    echo json_encode(array('success' => 1));
 }
 
 ?>

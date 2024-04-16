@@ -193,6 +193,9 @@ function change_user_ban_state_by_user_id($user_id, $state): bool
 function set_id_email_pw_fname_lname_dob_jd($db_host, $db_username, $db_password, $db_database, $id): void
 {
 
+    $hashed_user_password = hash("sha256", ($_POST["user_password"]));
+    $time_now = date('Y-m-d');
+    $date = date('Y-m-d', strtotime($_POST["user_dob"]));
     $mysqli = new mysqli($db_host, $db_username, $db_password, $db_database);
 
     if ($mysqli->connect_errno) {
@@ -229,39 +232,26 @@ VALUES (?,?,?,?,?,?,?)";
     mysqli_close($mysqli);
 }
 
-function get_email_pass_login($db_host, $db_username, $db_password, $db_database)
+function get_user_from_email($email)
 {
+
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    $success = true;
     $mysqli = new mysqli($db_host, $db_username, $db_password, $db_database);
 
 
-    $query = "SELECT * FROM Users where email = ?";
+    $query = "SELECT * FROM Users where email = '{$email}'";
+    $result = mysqli_query($con, $query);
 
-    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    mysqli_close($con);
 
-    if ($con->connect_error) {
-        die("Connection Failed: " . $con->connect_error);
-    }
-    $st = $con->prepare($query);
 
-    if ((!$st)) {
-        die("Error occurred in preparing statement: " . $con->error);
-    }
-
-    $st->bind_param("s", $email);
-    $st->execute();
-
-    $res = $st->get_result();
-
-    if (!$res) {
-        die("Error occurred in getting result: " . $con->error);
-    }
-    if ($res->num_rows === 0) {
-        $alerts = ("Invalid Login");
-        exit();
-    }
-    $row = $res->fetch_assoc();
-    mysqli_close($mysqli);
-    return $row;
+    return $result->fetch_assoc();
 }
 
 ?>
