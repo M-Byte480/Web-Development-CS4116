@@ -4,50 +4,40 @@ function validateData()
 {
     $errors = [];
     if (!isset($_POST['user_email'])) {
-        $errors['errors'][] = "Email is empty \r";
+        $errors[] = "Email is empty \r";
     }
     if (!validate_email($_POST['user_email'])) {
-        $errors['errors'][] = "Invalid email format \r";
+        $errors[] = "Invalid email format \r";
     }
 
     if (!isset($_POST['user_first_name'])) {
-        $errors['errors'][] = "First name is empty \r";
+        $errors[] = "First name is empty \r";
     }
     if (!isset($_POST['user_first_name'])) {
-        $errors['errors'][] = "First name is empty \r";
+        $errors[] = "First name is empty \r";
     }
 
     if (!isset($_POST['user_second_name'])) {
-        $errors['errors'][] = "Surname is empty \r";
+        $errors[] = "Surname is empty \r";
     }
 
     if (strlen($_POST["user_password"]) < 8) {
-        $errors['errors'][] = "Password must be at least 8 characters \r";
+        $errors[] = "Password must be at least 8 characters \r";
     }
 
     if (!preg_match("/[a-zA-Z' ]/i", $_POST["user_password"])) {
-        $errors['errors'][] = "Password must contain at least one letter \r";
+        $errors[] = "Password must contain at least one letter \r";
     }
 
     if (!preg_match("/[0-9]/", $_POST["user_password"])) {
-        $errors['errors'][] = "Password must contain at least one number \r";
+        $errors[] = "Password must contain at least one number \r";
     }
     if (!isset($_POST['user_password'])) {
-        $errors['errors'][] = "Password field is empty \r";
+        $errors[] = "Password field is empty \r";
     }
 
     if ($_POST["user_password"] !== $_POST["password_confirmation"]) {
-        $errors['errors'][] = "Passwords must match \r";
-    }
-
-    $radioVal = $_POST["gender"];
-    $gender = '';
-    if ($radioVal === "Male") {
-        $gender = "Male";
-    } else if ($radioVal === "Female") {
-        $gender = "Female";
-    } else if ($radioVal === "Other") {
-        $gender = "Other";
+        $errors[] = "Passwords must match \r";
     }
 
     return $errors;

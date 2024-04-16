@@ -4,12 +4,41 @@
     <?php
     require_once(__DIR__ . "/../imports.php")
     ?>
+
+
     <link rel="stylesheet" href="styles.css">
 
     <title>Login</title>
 </head>
 <body>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/toastmaker/dist/toastmaker.min.css">
+<script type="text/javascript" src="https://unpkg.com/toastmaker/dist/toastmaker.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#loginForm').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "get",
+                url: './login.php',
+                data: $(this).serialize(),
+                success: function (response) {
+                    const jsonData = JSON.parse(response);
+                    if (jsonData['success'] === 1) {
+                        window.location.href = "../profile/";
+                    } else {
+                        let msg = "";
+                        jsonData['alerts'].forEach(elm => {
+                            msg += elm;
+                        });
+                        const errors = new ToastMaker(msg, 3000);
+                        errors.show();
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 <div class="vh-100">
     <div class="container-fluid">
@@ -17,7 +46,7 @@
             <div class="col-sm-6 text-black">
 
                 <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5">
-                    <form action="login.php" method="post" style="width: 23rem;">
+                    <form id="loginForm" method="post" style="width: 23rem;">
                         <h2 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Log-In</h2>
 
                         <?php if (isset($_GET['error'])) { ?>
@@ -39,7 +68,8 @@
                         </div>
 
                         <div class="pt-4">
-                            <button type="submit" class="btn btn-dark mt-3">LOGIN</button>
+                            <button type="submit" class="btn btn-dark mt-3">LOGIN
+                            </button>
                         </div>
 
                         <p class="pt-3">Don't have an Account?

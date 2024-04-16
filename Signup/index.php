@@ -9,6 +9,8 @@
 <body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/toastmaker/dist/toastmaker.min.css">
+<script type="text/javascript" src="https://unpkg.com/toastmaker/dist/toastmaker.min.js"></script>
 <script>
     $(document).ready(function () {
         $('#signup').submit(function (e) {
@@ -18,6 +20,7 @@
                 url: 'signup_backend.php',
                 data: $(this).serialize(),
                 success: function (response) {
+                    console.log(response)
                     var jsonData = JSON.parse(response);
                     if (jsonData.success === 1) {
                         window.location.href = "../login/";
@@ -26,7 +29,8 @@
                         jsonData['errors'].forEach(elm => {
                             msg += elm;
                         })
-                        alert(msg);
+                        const errors = new ToastMaker(msg, 3000);
+                        errors.show();
                     }
                 }
             });
@@ -75,7 +79,9 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <input name="user_first_name" id="user_first_name" type="text" class="form-control"
+                        <input pattern="[a-zA-Z ]{2,30}" name="user_first_name" id="user_first_name" type="text"
+                               class="form-control"
+                               title="Please enter a valid input containing only letters (a-z, A-Z) and spaces, with a length between 2 and 30 characters."
                                placeholder="Enter your first name" required>
                         <small class="text-danger">[First name must follow a-z/A-Z Format]</small>
                     </div>
@@ -91,7 +97,9 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <input name="user_second_name"
+                        <input pattern="[a-zA-Z ]{2,30}"
+                               title="Please enter a valid input containing only letters (a-z, A-Z) and spaces, with a length between 2 and 30 characters."
+                               name="user_second_name"
                                id="user_second_name"
                                type="text" class="form-control"
                                placeholder="Enter your surname" required>

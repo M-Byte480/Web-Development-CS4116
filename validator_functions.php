@@ -51,7 +51,7 @@ function validate_admin($id)
     }
 
     $retrieved_user = get_user_from_user_ID($id);
-
+    
     return $retrieved_user['admin']; // Returns true or false attribute
 }
 
