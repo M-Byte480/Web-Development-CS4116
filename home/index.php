@@ -68,27 +68,49 @@
 </div>
 <main>
     <section id="about" class="about">
-        <div class="container" data-aos="fade-up">
+        <div class="container aos-init aos-animate" data-aos="fade-up">
             <div class="section-title">
-                <h2>About Us</h2>
+
+                <h2>Pub-Club</h2>
+
             </div>
             <div class="row content">
                 <div class="col-lg-6">
-                    <p>Impsum Delorum</p>
-                    <ul>cool</ul>
-                    <ul>so</ul>
-                    <ul>im</ul>
+                    <p>Pub-Club is a site for real people who enjoy a fresh pint at the end of their day and want to
+                        share that joy with others!</p>
+                    <ul>
+                        <li><i class="mdi--drink"></i>
+                            " Chat and Message with people online to organise Real life meet-ups! "
+                        </li>
+                        <li><i class="mdi--drink"></i>
+                            " Match with people who pique your interest based on their go-to drink! "
+                        </li>
+                        <li><i class="mdi--drink"></i>
+                            " Make your profile look sweet as hell to get those clicks! "
+                        </li>
+                    </ul>
                 </div>
                 <div class="col-lg-6 pt-4 pt-lg-0"
-                <p>Impsum Delorum</p>
-                <ul>
-                    <li><i class="mdi--drink"></i>
-                        " Ullamco laboris nisi ut aliquip ex ea commodo consequat "
-                    </li>
-                </ul>
-
+                <p="">Get in the action with over 50+ users and meet your Pint Mate today!<p></p>
+                <p>Sign Up now!!</p>
+                <a class="buttonS btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Sign up
+                </a>
             </div>
         </div>
+    </section>
+    <section id="team" class="team">
+        <div class="row content">
+            <div class="column">
+                <div class="card">
+                    <img src="#" alt="Milan" style="width:100%;"
+                    <div class="container">
+                        <h2>Milan Kovacs</h2>
+                        <p class="title">Supreme Leader</p>
+                    </div>
+                </div>
+            </div>
+
     </section>
 </main>
 <footer id="footer">
