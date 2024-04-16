@@ -16,7 +16,7 @@ function get_user_description_from_user_ID(string $user_ID): string|null // base
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "SELECT description FROM Profiles WHERE userid = '{$user_ID}'";
+    $query = "SELECT description FROM Profiles WHERE userId = '{$user_ID}'";
     $result = mysqli_query($con, $query);
     mysqli_close($con);
 
@@ -39,7 +39,7 @@ function update_user_description_from_user_ID(string $user_ID, string $new_desc)
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "UPDATE Profiles SET description = '{$new_desc}' WHERE userid = '{$user_ID}'";
+    $query = "UPDATE Profiles SET description = '{$new_desc}' WHERE userId = '{$user_ID}'";
     mysqli_query($con, $query);
     mysqli_close($con);
 }
@@ -58,7 +58,7 @@ function get_user_seeking_from_user_ID(string $user_ID): string|null // base64
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "SELECT seeking FROM Profiles WHERE userid = '{$user_ID}'";
+    $query = "SELECT seeking FROM Profiles WHERE userId = '{$user_ID}'";
     $result = mysqli_query($con, $query);
     mysqli_close($con);
 
@@ -81,7 +81,7 @@ function update_user_seeking_from_user_ID(string $user_ID, string $new_seeking):
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "UPDATE Profiles SET seeking = '{$new_seeking}' WHERE userid = '{$user_ID}'";
+    $query = "UPDATE Profiles SET seeking = '{$new_seeking}' WHERE userId = '{$user_ID}'";
     mysqli_query($con, $query);
     mysqli_close($con);
 }
