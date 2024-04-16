@@ -10,7 +10,7 @@ global $db_host, $db_username, $db_password, $db_database;
 require_once(__DIR__ . "/../database/repositories/users.php");
 require_once(__DIR__ . '/../secrets.settings.php');
 
-print_r($_POST);
+//print_r($_POST);
 
 if (!(isset($_POST['email']) && isset($_POST['password']))) {
     echo "No email or password set";
@@ -70,8 +70,8 @@ if (!isset($row['hashedPassword'])) {
 
 if (($row['hashedPassword'] === hash("sha256", $password))) {
 
-    $_SESSION['user id'] = $row['id'];
-    $_SESSION['name'] = $row['firstname'];
+//    $_SESSION['user id'] = $row['id'];
+//    $_SESSION['name'] = $row['firstname'];
     setcookie('hashed_password', $row['hashedPassword'], time() + 60 * 60 * 24 * 7, '/');
     setcookie('email', $row['email'], time() + 60 * 60 * 24 * 7, '/');
     echo "Login Successful";
