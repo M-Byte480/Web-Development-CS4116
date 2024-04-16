@@ -169,4 +169,78 @@ function get_age_from_user_ID(string $user_ID): string
 }
 
 
+function set_id_email_pw_fname_lname_dob_jd($db_host, $db_username, $db_password, $db_database, $id): void
+{
+
+    $mysqli = new mysqli($db_host, $db_username, $db_password, $db_database);
+
+    if ($mysqli->connect_errno) {
+        die("Connection Error: " . $mysqli->connect_error);
+    }
+
+    $stmt = $mysqli->stmt_init();
+
+    $sql = "INSERT INTO Users (id, email, hashedpassword, firstname, lastname, dateofbirth, datejoined)
+VALUES (?,?,?,?,?,?,?)";
+
+    if (!$stmt->prepare($sql)) {
+        die("SQL ERROR : " . $mysqli->error);
+    }
+
+    $stmt->bind_param("sssssss",
+        $id,
+        $_POST["user_email"],
+        $hashed_user_password,
+        $_POST["user_first_name"],
+        $_POST["user_second_name"],
+        $date,
+        $time_now,
+    );
+
+    try {
+        $stmt->execute();
+    } catch (Exception $e) {
+        $errors['errors'][] = "Email is linked to existing account \r";
+        echo json_encode($errors);
+        mysqli_close($mysqli);
+        exit();
+    }
+    mysqli_close($mysqli);
+}
+
+function get_email_pass_login($db_host, $db_username, $db_password, $db_database)
+{
+    $mysqli = new mysqli($db_host, $db_username, $db_password, $db_database);
+
+
+    $query = "SELECT * FROM Users where email = ?";
+
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if ($con->connect_error) {
+        die("Connection Failed: " . $con->connect_error);
+    }
+    $st = $con->prepare($query);
+
+    if ((!$st)) {
+        die("Error occurred in preparing statement: " . $con->error);
+    }
+
+    $st->bind_param("s", $email);
+    $st->execute();
+
+    $res = $st->get_result();
+
+    if (!$res) {
+        die("Error occurred in getting result: " . $con->error);
+    }
+    if ($res->num_rows === 0) {
+        $alerts = ("Invalid Login");
+        exit();
+    }
+    $row = $res->fetch_assoc();
+    mysqli_close($mysqli);
+    return $row;
+}
+
 ?>

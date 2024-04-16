@@ -86,4 +86,31 @@ function update_user_seeking_from_user_ID(string $user_ID, string $new_seeking):
     mysqli_close($con);
 }
 
+function set_id_gender($db_host, $db_username, $db_password, $db_database, $id): void
+{
+    $mysqli = new mysqli($db_host, $db_username, $db_password, $db_database);
+
+    $stmt = $mysqli->stmt_init();
+
+    $sql = "INSERT INTO Profiles (userId,gender)
+    VALUES (?,?)";
+
+    if (!$stmt->prepare($sql)) {
+        die("SQL ERROR : " . $mysqli->error);
+    }
+
+    try {
+        $stmt->bind_param("ss",
+            $id,
+            $gender
+        );
+        $stmt->execute();
+    } catch (Exception $e) {
+        mysqli_close($mysqli);
+        exit();
+    };
+    mysqli_close($mysqli);
+    echo json_encode(array('success' => 1));
+}
+
 ?>
