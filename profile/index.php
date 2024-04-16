@@ -7,6 +7,7 @@ require_once(__DIR__ . "/../database/repositories/interests.php");
 require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 require_once(__DIR__ . "/../database/repositories/users.php");
 require_once(__DIR__ . "/../database/repositories/profiles.php");
+require_once(__DIR__ . "/../database/repositories/images.php");
 
 $user_ID = (string)get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password'])->fetch_assoc()['id'];
 
@@ -59,6 +60,41 @@ function display_interests_options(): void
     }
 }
 
+function display_user_pictures_in_carousel(): void
+{
+    global $user_ID;
+    $users_pictures = get_images_by_user_id($user_ID);
+    $first_image = true;
+
+    echo("<div class=\"carousel-indicators\">");
+
+    $image_counter = 0;
+    foreach ($users_pictures as $users_pic) {
+        echo("<button type=\"button\" data-bs-target=\"#carousel\" data-bs-slide-to=" . $users_pic['position'] . " ");
+        if ($first_image) {
+            echo("class=\"active\" aria-current=\"true\"");
+            $first_image = false;
+        }
+        echo("></button>");
+        $image_counter += 1;
+    }
+    echo("</div>");
+
+    echo("<div class=\"carousel-inner\">");
+    $first_image = true;
+    foreach ($users_pictures as $users_pic) {
+        if ($first_image) {
+            echo("<div class=\"carousel-item active\">");
+            $first_image = false;
+        } else {
+            echo("<div class=\"carousel-item\">");
+        }
+        echo("<img src=data:image/png;base64," . $users_pic['image'] . " class=\"img-fluid rounded-3 w-100\">");
+        echo("</div>");
+    }
+    echo("</div>");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -72,97 +108,148 @@ function display_interests_options(): void
             list-style-type: none;
             padding-left: 1em
         }
-
-        img.img-fluid {
-            object-fit: cover;
-            border: 2px black solid;
-        }
     </style>
 </head>
 <body>
 <?php require_once("../nav_bar/index.php"); ?>
 
-<div class="row m-3 p-3">
-    <div class="col-sm-4 col-12 p-3">
-        <div class="ratio ratio-1x1">
-            <img src="<?= get_user_pfp_from_user_ID($user_ID) ?>" alt="Profile Picture"
-                 class="img-fluid">
+<div class="row flex-column-reverse flex-md-row m-3 p-3 text-center">
+    <div class="col-sm-6 col-12 p-1">
+        <div class="bg-secondary rounded-3 p-3 h-100 pb-5 position-relative">
+            <h4>My Pictures</h4>
+            <div class="ratio" style="--bs-aspect-ratio: 177.78%">
+                <div id="carousel"
+                     class="carousel slide bg-black d-flex flex-wrap align-items-center rounded-3 overflow-hidden">
+                    <?php display_user_pictures_in_carousel(); ?>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="position-absolute bottom-0 end-0">
+                <div class="p-1">
+                    <button type="button" name="delete_picture" class="btn btn-danger mx-1" data-bs-toggle="modal"
+                            data-bs-target="#delete_picture">
+                        <span class="me-1">Delete</span>
+                        <i class="bi bi-archive"></i>
+                    </button>
+                    <button type="button" name="add_picture" class="btn btn-success mx-1" data-bs-toggle="modal"
+                            data-bs-target="#add_picture">
+                        <span class="me-1">Add</span>
+                        <i class="bi bi-plus-circle"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-sm-8 col-12 p-1 my-auto text-center">
-        <h1 class="d-inline p-3"><?php echo get_first_name_from_user_ID($user_ID) ?? "No name :("; ?>,</h1>
-        <h1 class="d-inline p-3"><?php echo get_age_from_user_ID($user_ID) ?></h1>
+    <div class="col-sm-6 col-12 p-0">
+        <div class="row p-0 m-0">
+            <div class="col-sm-2 col-12 p-0">
+            </div>
+            <div class="col-sm-8 col-12 p-0">
+                <div class="card text-center border border-0 p-1">
+                    <div class="ratio ratio-1x1">
+                        <img src="data:image/png;base64,<?= get_user_pfp_from_user_ID($user_ID) ?>"
+                             alt="Profile Picture"
+                             class="img-fluid object-fit-cover rounded-top-3">
+                    </div>
+                    <div class="card-body bg-secondary rounded-bottom-3">
+                        <h5 class="card-text">
+                            <?php echo get_first_name_from_user_ID($user_ID) ?? "No name :("; ?>,
+                            <?php echo get_age_from_user_ID($user_ID) ?>
+                        </h5>
+                        <div class="position-absolute bottom-0 end-0">
+                            <button type="button" name="edit_name_age" class="btn" data-bs-toggle="modal"
+                                    data-bs-target="#edit_name_age">
+                                <span>Edit</span>
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row p-0 m-0">
+            <div class="col-sm-8 col-12 p-0">
+                <div class="row p-0 m-0">
+                    <div class="col-12 p-1">
+                        <div class="bg-secondary rounded-3 p-3 h-100 position-relative">
+                            <h4>About Me</h4>
+                            <p>
+                                <?php echo get_user_description_from_user_ID($user_ID) ?? "No bio :("; ?>
+                            </p>
+                            <div class="position-absolute bottom-0 end-0">
+                                <button type="button" name="edit_bio" class="btn" data-bs-toggle="modal"
+                                        data-bs-target="#edit_bio">
+                                    <span>Edit</span>
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-0 m-0">
+                        <div class="col-sm-6 col-12 p-1">
+                            <div class="bg-secondary rounded-3 p-3 h-100 position-relative">
+                                <h4>Go To Drink</h4>
+                                <ul>
+                                    <li><?= get_users_beverage_from_user_ID($user_ID) ?? "Water (boo)" ?></li>
+                                </ul>
+                                <div class="position-absolute bottom-0 end-0">
+                                    <button type="button" name="edit_drink" class="btn" data-bs-toggle="modal"
+                                            data-bs-target="#edit_drink">
+                                        <span>Edit</span>
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-12 p-1">
+                            <div class="bg-secondary rounded-3 p-3 h-100 position-relative">
+                                <h4>Looking For</h4>
+                                <ul> <?= get_user_seeking_from_user_ID($user_ID) ?? "Looking for help" ?>
+                                </ul>
+                                <div class="position-absolute bottom-0 end-0">
+                                    <button type="button" name="edit_looking_for" class="btn" data-bs-toggle="modal"
+                                            data-bs-target="#edit_looking_for">
+                                        <span>Edit</span>
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-12 p-1">
+                <div class="bg-secondary rounded-3 p-3 position-relative h-100">
+                    <h4>My Interests</h4>
+                    <ul>
+                        <?php display_interests() ?>
+                    </ul>
+                    <div class="position-absolute bottom-0 end-0">
+                        <button type="button" name="edit_interests" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#edit_interests">
+                            <span>Edit</span>
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="row m-3 p-3 justify-content-center text-center text-sm-start">
-    <div class="col-sm-4 col-12 p-1">
-        <div class="bg-secondary rounded-3 p-3 h-100">
-            <h2>My Pictures</h2>
-        </div>
-    </div>
-    <div class="row col-sm-8 col-12 px-0 px-md-1 m-0">
-        <div class="col-12 p-1">
-            <div class="bg-secondary rounded-3 p-3 h-100 position-relative">
-                <h2>About Me</h2>
-                <p>
-                    <?php echo get_user_description_from_user_ID($user_ID) ?? "No bio :("; ?>
-                </p>
-                <div class="position-absolute bottom-0 end-0">
-                    <button type="button" name="edit_bio" class="btn" data-bs-toggle="modal"
-                            data-bs-target="#edit_bio">
-                        <span>Edit</span>
-                        <i class="bi bi-pencil-square"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4 col-12 p-1">
-            <div class="bg-secondary rounded-3 p-3 h-100 position-relative">
-                <h2>Go To Drink</h2>
-                <ul>
-                    <li><?= get_users_beverage_from_user_ID($user_ID) ?? "Water (boo)" ?></li>
-                </ul>
-                <div class="position-absolute bottom-0 end-0">
-                    <button type="button" name="edit_drink" class="btn" data-bs-toggle="modal"
-                            data-bs-target="#edit_drink">
-                        <span>Edit</span>
-                        <i class="bi bi-pencil-square"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4 col-12 p-1">
-            <div class="bg-secondary rounded-3 p-3 position-relative">
-                <h2>My Interests</h2>
-                <ul>
-                    <?php display_interests() ?>
-                </ul>
-                <div class="position-absolute bottom-0 end-0">
-                    <button type="button" name="edit_interests" class="btn" data-bs-toggle="modal"
-                            data-bs-target="#edit_interests">
-                        <span>Edit</span>
-                        <i class="bi bi-pencil-square"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4 col-12 p-1">
-            <div class="bg-secondary rounded-3 p-3 h-100 position-relative">
-                <h2>Looking For</h2>
-                <ul> <?= get_user_seeking_from_user_ID($user_ID) ?? "Looking for help" ?>
-                </ul>
-                <div class="position-absolute bottom-0 end-0">
-                    <button type="button" name="edit_looking_for" class="btn" data-bs-toggle="modal"
-                            data-bs-target="#edit_looking_for">
-                        <span>Edit</span>
-                        <i class="bi bi-pencil-square"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</body>
+<script>
+    document.querySelector('#carousel').addEventListener('slid.bs.carousel', event => {
+        document.querySelector("#delete_picture_input").setAttribute("value", event.to);
+    });
+</script>
 
 <div class="modal fade" id="edit_bio">
     <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
@@ -242,3 +329,75 @@ function display_interests_options(): void
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="edit_name_age">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form method="post" action="profile_backend.php">
+                    <div class="mb-3">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label" for="edit_firstname">Change First Name</label>
+                                <input type="text" class="form-control" name="edit_firstname"
+                                       value="<?= get_first_name_from_user_ID($user_ID) ?? "No name :("; ?>"
+                                       id="edit_firstname">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label" for="edit_lastname">Change Last Name</label>
+                                <input type="text" class="form-control" name="edit_lastname"
+                                       value="<?= get_last_name_from_user_ID($user_ID) ?? "No name :("; ?>"
+                                       id="edit_lastname">
+                            </div>
+                        </div>
+
+                        <label class="form-label" for="edit_age">Change Date of Birth</label>
+                        <input type="date" class="form-control" name="edit_age"
+                               value="<?= get_DOB_from_user_ID($user_ID) ?>"
+                               id="edit_age">
+                    </div>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Exit</button>
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Save and Exit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add_picture">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form method="post" action="profile_backend.php" enctype="multipart/form-data">
+                    <div class="modal-header d-flex justify-content-center">
+                        <h5 class="modal-title">Select a picture to add</h5>
+                    </div>
+                    <input class="form-control mb-3" type="file" name="add_picture"
+                           accept=".jpg,.JPG,.jpeg,.JPEG,.png,.PNG,.gif,.GIF,.bmp,.BMP,.svg,.SVG,.webp,.WEBP">
+
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Exit</button>
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Save and Exit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delete_picture">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
+        <div class="modal-content ">
+            <div class="modal-header d-flex justify-content-center">
+                <h5 class="modal-title">Are you sure you want to delete your picture?</h5>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="profile_backend.php" class="d-flex justify-content-center">
+                    <input id="delete_picture_input" class="form-control" type="text" name="delete_picture"
+                           hidden="hidden" value="0">
+                    <button type="button" class="btn btn-danger mx-3" data-bs-dismiss="modal">Exit</button>
+                    <button type="submit" class="btn btn-success mx-3" data-bs-dismiss="modal">Yes, delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
