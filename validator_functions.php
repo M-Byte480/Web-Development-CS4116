@@ -44,7 +44,7 @@ function validate_unique_result($result): void
     }
 }
 
-function validate_admin($id): bool
+function validate_admin($id)
 {
     if (!validate_user_id($id)) {
         return false;
