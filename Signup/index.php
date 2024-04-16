@@ -18,7 +18,6 @@
                 url: 'signup_backend.php',
                 data: $(this).serialize(),
                 success: function (response) {
-                    console.log(response);
                     var jsonData = JSON.parse(response);
                     if (jsonData.success === 1) {
                         window.location.href = "../login/";
@@ -47,7 +46,7 @@
                 <div class="row">
                     <div class="col-12">
                         <p class="text-danger
-            ">* required field '\n'</p>
+            ">* required field </p>
                     </div>
                 </div>
 
