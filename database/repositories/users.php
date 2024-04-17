@@ -306,9 +306,6 @@ function get_user_from_email($email)
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $success = true;
-    $mysqli = new mysqli($db_host, $db_username, $db_password, $db_database);
-
 
     $query = "SELECT * FROM Users where email = '{$email}'";
     $result = mysqli_query($con, $query);
@@ -317,6 +314,7 @@ function get_user_from_email($email)
 
 
     return $result->fetch_assoc();
+}
 
 function get_age_from_DOB($DOB): string
 {
