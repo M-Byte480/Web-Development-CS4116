@@ -86,8 +86,9 @@ function update_user_seeking_from_user_ID(string $user_ID, string $new_seeking):
     mysqli_close($con);
 }
 
-function set_id_gender($db_host, $db_username, $db_password, $db_database, $id, $gender): void
+function set_id_gender($id, $gender): void
 {
+    global $db_host, $db_username, $db_password, $db_database;
 
     $mysqli = new mysqli($db_host, $db_username, $db_password, $db_database);
 
