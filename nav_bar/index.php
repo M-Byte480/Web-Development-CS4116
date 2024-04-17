@@ -63,7 +63,7 @@ try {
                         </a>
                     </li>
                     <li class="nav-item p-2">
-                        <a class="nav-link float-end" href="#">
+                        <a class="nav-link float-end" href="../messages">
                             <h2 class="collapse" id="collapsibleNavbar">Messages</h2>
                             <i class="bi bi-envelope"></i>
                         </a>
