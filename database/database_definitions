@@ -93,10 +93,10 @@ CREATE TABLE Dislikes(
 
     FOREIGN KEY (userId) REFERENCES Users(id)
     ON DELETE CASCADE,
-    FOREIGN KEY (likedUser) REFERENCES Users(id)
+    FOREIGN KEY (dislikedUser) REFERENCES Users(id)
     ON DELETE CASCADE,
 
-    PRIMARY KEY (userId, likedUser)
+    PRIMARY KEY (userId, dislikedUser)
 );
 
 CREATE TABLE Connections(
