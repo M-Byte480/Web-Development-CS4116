@@ -289,6 +289,8 @@ function get_age_from_DOB($DOB): string
 
 function set_id_email_pw_fname_lname_dob_jd($db_host, $db_username, $db_password, $db_database, $id): void
 {
+    global $db_host, $db_username, $db_password, $db_database;
+
 
     $hashed_user_password = hash("sha256", ($_POST["user_password"]));
     $time_now = date('Y-m-d');
