@@ -27,16 +27,14 @@
                     if (jsonData['success'] === 1) {
                         window.location.href = "../profile/";
                     } else {
-                        let msg = "";
-                        jsonData['alerts'].forEach(elm => {
-                            msg += elm;
-                        });
+                        let msg = jsonData['alerts'];
                         const errors = new ToastMaker(msg, 3000);
                         errors.show();
                     }
                 }
             });
-        });
+        })
+        ;
     });
 </script>
 
