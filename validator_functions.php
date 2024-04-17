@@ -5,7 +5,7 @@ require_once(__DIR__ . '/exceptions/ValidationException.php');
 function validate_email($email): false|int
 {
     // Regex
-    $regex = '/^(?!\.)[A-Za-z0-9.]+@[A-Za-z]+[A-Za-z0-9]*\.[A-Za-z]+$/';
+    $regex = '/^(?!\.)[A-Za-z0-9.]+@[A-Za-z]+[A-Za-z0-9.]*[A-Za-z]+$/';
     return preg_match($regex, $email);
 }
 
@@ -51,7 +51,7 @@ function validate_admin($id)
     }
 
     $retrieved_user = get_user_from_user_ID($id);
-
+    
     return $retrieved_user['admin']; // Returns true or false attribute
 }
 

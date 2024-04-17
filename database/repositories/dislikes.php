@@ -12,7 +12,7 @@ function get_all_disliked_user_by_user_id($user_id)
     }
 
     $disliked_users = array();
-    $query = "SELECT dislikeUser FROM Dislikes WHERE userId = '{$user_id}'";
+    $query = "SELECT dislikedUser FROM Dislikes WHERE userId = '{$user_id}'";
     $result = mysqli_query($con, $query);
 
     while ($disliked_user = $result->fetch_assoc()) {
