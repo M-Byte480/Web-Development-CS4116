@@ -1,10 +1,5 @@
 <?php
 
-session_start();
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 global $db_host, $db_username, $db_password, $db_database;
 
 require_once(__DIR__ . "/../database/repositories/users.php");
