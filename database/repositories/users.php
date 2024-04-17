@@ -287,7 +287,7 @@ function get_age_from_DOB($DOB): string
 }
 
 
-function set_id_email_pw_fname_lname_dob_jd($db_host, $db_username, $db_password, $db_database, $id): void
+function set_id_email_pw_fname_lname_dob_jd($id): void
 {
     global $db_host, $db_username, $db_password, $db_database;
 
@@ -352,7 +352,6 @@ function get_user_from_email($email)
 
     return $result->fetch_assoc();
 }
-
 
 
 ?>
