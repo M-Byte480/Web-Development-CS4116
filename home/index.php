@@ -93,28 +93,83 @@
                 <div class="col-lg-6 pt-4 pt-lg-0"
                 <p="">Get in the action with over 50+ users and meet your Pint Mate today!<p></p>
                 <p>Sign Up now!!</p>
-                <a class="buttonS btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <a href="../Signup/" class="btn btn-dark">
                     Sign up
                 </a>
             </div>
         </div>
     </section>
-    <section id="team" class="team">
-        <div class="row content">
-            <div class="column">
-                <div class="card">
-                    <img src="#" alt="Milan" style="width:100%;"
-                    <div class="container">
-                        <h2>Milan Kovacs</h2>
-                        <p class="title">Supreme Leader</p>
+    <hr>
+    <section id="team" class="team align-items-center ">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 col-xs-12">
+                    <div class="card border-dark">
+                        <img src="../resources/infocards/breny.png" alt="Milan"
+                             style="width:100%; height:30vw">
+                        <div class="container">
+                            <h2>Brendan Quinn</h2>
+                            <hr>
+                            <p class="title">Designated Driver</p>
+                            <p>My name is Brendan, professional Overwatch player</p>
+                            <p>breny.test@example.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-xs-12">
+                    <div class="card border-dark">
+                        <img src="../resources/infocards/kevin.png" alt="Milan"
+                             style="width:100%; height:30vw">
+                        <div class="container">
+                            <h2>Kevin Hough</h2>
+                            <hr>
+                            <p class="title">CEO of the Slabs</p>
+                            <p>My name is Kevin, how are ya now pal? Pints Later?</p>
+                            <p>kevin.test@example.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-xs-12">
+                    <div class="card border-dark">
+                        <img src="../resources/infocards/milan.png" alt="Milan"
+                             style="width:100%; height:30vw">
+                        <div class="container">
+                            <h2>Milan Kovacs</h2>
+                            <hr>
+                            <p class="title">Supreme Pint Enjoyer</p>
+                            <p>My name is Milan and I love coding and Beer</p>
+                            <p>milan.test@example.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-xs-12">
+                    <div class="card border-dark">
+                        <img src="../resources/infocards/tadhg.jpg" alt="Milan"
+                             style="width:100%; height:30vw">
+                        <div class="container">
+                            <h2>Tadhg Ryan</h2>
+                            <hr>
+                            <p class="title">Ladies Man</p>
+                            <p>My name is Tadhg you can find me drinking in Stables</p>
+                            <p>tadhg.test@example.com</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
+        </div>
     </section>
 </main>
-<footer id="footer">
-
+<footer id="footer" class="text-center text-lg-start text-white bg-dark">
+    <section class="d-flex justify-content-center p-4 border-bottom">
+        <div class="me-5 d-none d-lg-block">
+            <span>Find us on Social Media!</span>
+        </div>
+        <div>
+            <a href="https://github.com/M-Byte480/Web-Development-CS4116.git" class="me-4 text-reset">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+    </section>
 </footer>
 
 </body>
