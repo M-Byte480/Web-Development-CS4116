@@ -1,3 +1,4 @@
+
 <?php
 // Validate is user logged in
 require_once(__DIR__ . '/../validators.php');
@@ -145,3 +146,4 @@ function interest_card($user_profile)
 
 </body>
 </html>
+

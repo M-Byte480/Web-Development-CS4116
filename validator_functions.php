@@ -44,7 +44,7 @@ function validate_unique_result($result): void
     }
 }
 
-function validate_admin($id): bool
+function validate_admin($id)
 {
     if (!validate_user_id($id)) {
         return false;
@@ -113,7 +113,9 @@ function validate_user_logged_in(): void
     validate_unique_result($query_result);
 }
 
-
+/**
+ * @throws ValidationException
+ */
 function validate_user_is_admin(): void
 {
     // Validation
@@ -130,8 +132,7 @@ function validate_user_is_admin(): void
 
     // Both these need to be true
     if ($user == null || !validate_admin($user['id'])) {
-        echo 'Unauthorised';
-        exit();
+        throw new ValidationException('Unauthorised');
     }
 
     // Free the buffer/memory
