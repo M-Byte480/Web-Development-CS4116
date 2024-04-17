@@ -14,11 +14,13 @@ function get_profile_card(array $user, int $interest_flag): void
         function onCardClicked(user_id) {
             // Open page with get request
             let getRequest = "?user_id=" + user_id;
-            window.open("../profile/" + getRequest, "_parent");
+            window.open("../discovery/" + getRequest, "_parent");
+            console.log("got to here")
         }
     </script>
 
-    <div onclick="onCardClicked('<?= $user['id'] ?>')"
+    <div id="<?= $user['id'] ?>" class="user_card" onclick="onCardClicked('<?= $user['id'] ?>')"
+
          class="bg-dark text-white m-1 my-card border border-2 border-dark rounded-4">
         <?php
 
