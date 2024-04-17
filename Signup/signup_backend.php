@@ -1,7 +1,6 @@
 <?php
 
 require_once(__DIR__ . '/../validator_functions.php');
-//global $host, $user, $db, $pass;
 global $db_host, $db_username, $db_password, $db_database;
 require_once(__DIR__ . '/../secrets.settings.php');
 $errors = [];
@@ -56,7 +55,7 @@ if (!empty($errors)) {
 function custom_uuid()
 {
     $bytes = random_bytes(16);
-    
+
     $bytes[6] = chr(ord($bytes[6]) & 0x0f | 0x40);
     $bytes[8] = chr(ord($bytes[8]) & 0x3f | 0x80);
 

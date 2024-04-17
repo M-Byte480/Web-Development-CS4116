@@ -48,6 +48,25 @@ function get_all_users(): array
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
+function get_all_user_ids(): array
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+
+    $query = "SELECT id FROM users";
+
+    $result = mysqli_query($con, $query);
+
+    mysqli_close($con);
+
+    return array_column($result->fetch_all(), 0);
+}
+
 function get_user_by_credentials($email, $hashed_password): mysqli_result
 {
     global $db_host, $db_username, $db_password, $db_database;
@@ -213,18 +232,21 @@ function get_user_by_id($id)
 
 function get_user_id_by_email($email)
 {
+    $id = null;
+
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
     if (!$con) {
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "SELECT id FROM Users where email = '{$email}'";
+    // Query to fetch the user's ID based on email
+    $query = "SELECT id FROM Users WHERE email = '{$email}'";
     $result = mysqli_query($con, $query);
-    mysqli_close($con);
-    return $result->fetch_all(MYSQLI_ASSOC)[0]['id'];
-}
+    $con->close();
 
+    return $result->fetch_assoc()['id'];
+}
 
 function change_user_ban_state_by_user_id($user_id, $state): bool
 {
