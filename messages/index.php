@@ -100,7 +100,7 @@
              style="border-color:#ff8527!important;" id="messageWindow">
             <!-- Messages -->
         </div>
-        <div class="m-0 p-3 position-absolute bottom-0 w-100" id="textInput">
+        <div class="m-0 p-3 position-absolute bottom-0 mb-2 w-100" id="textInput">
             <div class="form p-0">
                 <div class="row p-0">
                     <div class="col-10 p-0">
