@@ -1,7 +1,6 @@
-
 <?php
 // Validate is user logged in
-require_once(__DIR__ . '/../validators.php');
+require_once(__DIR__ . '/../validator_functions.php');
 try {
     validate_user_logged_in();
 } catch (ValidationException $e) {
@@ -9,7 +8,7 @@ try {
     exit();
 }
 
-require_once(__DIR__ . "/../database/repositories/profilePictures.php");
+require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 
 ?>
 
@@ -39,7 +38,7 @@ require_once(__DIR__ . "/../database/repositories/profilePictures.php");
     }
 </script>
 <body>
-<?php require_once(__DIR__ . '/../NavBar/index.php') ?>
+<?php require_once(__DIR__ . '/../Nav_bar/index.php') ?>
 
 <?php
 
@@ -61,7 +60,7 @@ $potential_matches_ids = get_potential_matching_profiles($user['id']);
 //}while();
 
 $suggested_user_profile = get_user_profile($potential_matches_ids[0]);
-print_r($suggested_user_profile);
+
 
 if (sizeof($potential_matches_ids) == 0) {
     echo 'You beat the game';
