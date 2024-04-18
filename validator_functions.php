@@ -94,10 +94,6 @@ function validate_user_logged_in(): void
         throw new ValidationException('No user_email');
     }
 
-    if (!validate_email($_COOKIE['email'])) {
-        throw new ValidationException('Invalid user_email');
-    }
-
     if (!(array_key_exists('hashed_password', $_COOKIE) && $_COOKIE['hashed_password'])) {
         throw new ValidationException('No hashed_password');
     }
