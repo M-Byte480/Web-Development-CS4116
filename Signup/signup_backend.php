@@ -1,6 +1,6 @@
 <?php
 
-global $db_host, $db_username, $db_password, $db_database;
+global $db_host, $db_username, $db_password, $db_database, $db_some_secret, $secret_encryption_method, $secret_encryption_key;
 require_once(__DIR__ . '/../secrets.settings.php');
 require_once(__DIR__ . '/signup_functions.php');
 require_once(__DIR__ . '/../database/repositories/profiles.php');
