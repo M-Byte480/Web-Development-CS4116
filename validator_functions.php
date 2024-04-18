@@ -111,6 +111,8 @@ function validate_user_logged_in(): void
     $query_result = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password']);
 
     validate_unique_result($query_result);
+
+
 }
 
 /**
@@ -120,7 +122,7 @@ function validate_user_is_admin(): void
 {
     // Validation
     if (!isset($_COOKIE['email']) || !isset($_COOKIE['hashed_password'])) {
-        header("Location: ../login/index.php");
+        header("Location: ../login/");
         exit();
     }
 
@@ -137,6 +139,23 @@ function validate_user_is_admin(): void
 
     // Free the buffer/memory
     mysqli_free_result($result);
+}
+
+function validate_user_is_banned()
+{
+//    if (!isset($_COOKIE['email']) || !isset($_COOKIE['hashed_password'])) {
+//        header("Location: ../login/index.php");
+//        exit();
+//    }
+
+    // Import users, pfp accessor
+    require_once(__DIR__ . "/database/repositories/users.php");
+
+    $user = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password'])->fetch_assoc();
+
+    if($user['banned'] == 1){
+        throw new ValidationException('Banned');
+    }
 }
 
 ?>

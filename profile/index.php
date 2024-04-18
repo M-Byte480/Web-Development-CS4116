@@ -1,6 +1,6 @@
 <?php
 // Validate is user logged in
-require_once(__DIR__ . '/../validate_user.php');
+require_once(__DIR__ . '/../validate_user_logged_in.php');
 
 require_once(__DIR__ . "/../database/repositories/beverages.php");
 require_once(__DIR__ . "/../database/repositories/interests.php");
