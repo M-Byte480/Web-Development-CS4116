@@ -6,11 +6,13 @@ $ban = get_recent_ban_of_this_user();
 
 if($ban == null){ // if this user hasn't been banned
     header('Location: ../profile');
+    exit();
 }
 
 // Check if Ban is permanent
 if($ban['permanent'] == 1){
     header('Location: ../banned.php');
+    exit();
 }
 
 
@@ -25,3 +27,4 @@ if(is_temporary_ban_expired($ban)){
     exit();
 }
 header('Location: ./banned.php');
+exit();

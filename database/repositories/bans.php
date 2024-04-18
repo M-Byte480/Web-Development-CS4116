@@ -47,10 +47,16 @@ function get_most_recent_ban($user_id) : null | array
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query =   "SELECT *, MAX(time) AS most_recent_ban 
-                FROM Bans
-                WHERE userId = '{$user_id}' 
-                GROUP BY userId";
+    $query =   "SELECT ban.* 
+                FROM Bans ban 
+                INNER JOIN (
+                    SELECT MAX(time) AS max_time 
+                    FROM Bans
+                    WHERE userId = '{$user_id}' 
+                    GROUP BY userId) as recent_ban
+                WHERE ban.userId = '{$user_id}'  AND ban.time = recent_ban.max_time;";
+
+
     $result = mysqli_query($con, $query);
     mysqli_close($con);
     $output = '';
