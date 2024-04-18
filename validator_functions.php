@@ -4,9 +4,7 @@
 require_once(__DIR__ . '/exceptions/ValidationException.php');
 function validate_email($email): false|int
 {
-    // Regex
-    $regex = '/^(?!\.)[A-Za-z0-9.]+@[A-Za-z]+[A-Za-z0-9.]*[A-Za-z]+$/';
-    return preg_match($regex, $email);
+    return !!filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
 function validate_uuid($uuid): false|int

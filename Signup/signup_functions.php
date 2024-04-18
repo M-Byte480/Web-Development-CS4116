@@ -1,12 +1,12 @@
 <?php
 require_once(__DIR__ . '/../validator_functions.php');
-function validateData()
+function validateData(): array
 {
     $errors = [];
     if (!isset($_POST['user_email'])) {
         $errors[] = "Email is empty \r";
     }
-    if (!validate_email($_POST['user_email'])) {
+    if (!filter_var($_POST['user_email'], FILTER_VALIDATE_EMAIL)) {
         $errors[] = "Invalid email format \r";
     }
 
@@ -25,13 +25,14 @@ function validateData()
         $errors[] = "Password must be at least 8 characters \r";
     }
 
-    if (!preg_match("/[a-zA-Z' ]/i", $_POST["user_password"])) {
+    if (!preg_match("/[a-zA-Z]/i", $_POST["user_password"])) {
         $errors[] = "Password must contain at least one letter \r";
     }
 
     if (!preg_match("/[0-9]/", $_POST["user_password"])) {
         $errors[] = "Password must contain at least one number \r";
     }
+
     if (!isset($_POST['user_password'])) {
         $errors[] = "Password field is empty \r";
     }
