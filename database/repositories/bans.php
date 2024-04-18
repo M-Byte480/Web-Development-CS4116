@@ -38,7 +38,7 @@ function enter_new_ban($banned_by_email, $unban_date, $user_id, $is_permanent, $
     return $success;
 }
 
-function get_most_recent_ban($user_id)
+function get_most_recent_ban($user_id) : null | array
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);

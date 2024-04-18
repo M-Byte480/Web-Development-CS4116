@@ -1,6 +1,6 @@
 <?php
 
-function get_recent_ban_of_this_user()
+function get_recent_ban_of_this_user(): false|array|null
 {
     require_once (__DIR__ . '/../database/repositories/users.php');
     require_once(__DIR__ . '/../database/repositories/bans.php');
@@ -8,17 +8,8 @@ function get_recent_ban_of_this_user()
     return get_most_recent_ban($user_id);
 }
 
-function calculate_expiration($ban_expiration)
-{
 
-}
-
-function is_user_permanently_banned()
-{
-    
-}
-
-function is_temporary_ban_expired($ban)
+function is_temporary_ban_expired($ban): bool
 {
     $today = new DateTime('now');
     $endDate = new DateTime($ban['endDate']);
