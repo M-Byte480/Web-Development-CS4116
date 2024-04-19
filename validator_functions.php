@@ -2,9 +2,18 @@
 // We need to check if cookies are tampered with or
 // if text entered by users are SQL injections
 require_once(__DIR__ . '/exceptions/ValidationException.php');
-function validate_email($email): false|int
+function validate_email($email, &$errors): void
 {
-    return !!filter_var($email, FILTER_VALIDATE_EMAIL);
+    if (!isset($email)) {
+        $errors[] = "Email is empty \r";
+    }elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Invalid email format \r";
+    }
+}
+
+function validate_encrypted_email($email)
+{
+
 }
 
 function validate_uuid($uuid): false|int
@@ -26,8 +35,35 @@ function validate_hashed_password($hashed_password): false|int
     return preg_match($regex, $hashed_password);
 }
 
-function validate_password($password)
+function validate_password($password, &$errors): void
 {
+    if (strlen($password) < 8) {
+        $errors[] = "Password must be at least 8 characters \r";
+    }elseif (strlen($password) > 35){
+        $errors[] = "Password must be less than 35 characters \r";
+    }
+
+    if (!preg_match("/[a-zA-Z]/i", $password)) {
+        $errors[] = "Password must contain at least one letter \r";
+    }
+
+    if (!preg_match("/[0-9]/", $password)) {
+        $errors[] = "Password must contain at least one number \r";
+    }
+
+    if(str_contains($password, " ")){
+        $errors[] = "Password must not contain spaces \r";
+    }
+}
+
+function validate_name(&$name, &$errors, $name_type): void
+{
+    $regex = '/^(?!.*[0-9@£$%^!€\[\]{}~#:;\\/<>|*+]).*$/';
+
+    $name = trim($name);
+    if(!preg_match($regex, $name)){
+        $errors[] = "Invalid {$name_type} \r";
+    }
 
 }
 
@@ -58,17 +94,17 @@ function validate_admin($id)
  */
 function validate_ban_parameters($POST): void
 {
-    if (array_key_exists('admin_email', $POST) && $POST['admin_email']) {
-        if (!validate_email($POST['admin_email'])) {
-            throw new ValidationException('Email Validation -> Ban');
-        }
-    }
-
-    if (array_key_exists('user_id', $POST) && $POST['user_id']) {
-        if (!validate_user_id($POST['user_id'])) {
-            throw new ValidationException('User ID Validation -> Ban');
-        }
-    }
+//    if (array_key_exists('admin_email', $POST) && $POST['admin_email']) {
+//        if (!validate_email($POST['admin_email'])) {
+//            throw new ValidationException('Email Validation -> Ban');
+//        }
+//    }
+//
+//    if (array_key_exists('user_id', $POST) && $POST['user_id']) {
+//        if (!validate_user_id($POST['user_id'])) {
+//            throw new ValidationException('User ID Validation -> Ban');
+//        }
+//    }
 }
 
 /**

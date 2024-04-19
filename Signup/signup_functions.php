@@ -1,48 +1,44 @@
 <?php
 require_once(__DIR__ . '/../validator_functions.php');
-function validateData(): array
+function validate_post_data(): array
 {
     $errors = [];
-    if (!isset($_POST['user_email'])) {
-        $errors[] = "Email is empty \r";
-    }
-    if (!filter_var($_POST['user_email'], FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Invalid email format \r";
-    }
 
+    // Email
+    validate_email($_POST['user_email'], $errors);
+
+    // Firstname
     if (!isset($_POST['user_first_name'])) {
         $errors[] = "First name is empty \r";
-    }
-    if (!isset($_POST['user_first_name'])) {
-        $errors[] = "First name is empty \r";
+    } else {
+        validate_name($_POST['user_first_name'], $errors, 'Firstname');
     }
 
+    // Second name
     if (!isset($_POST['user_second_name'])) {
         $errors[] = "Surname is empty \r";
+    } else {
+        validate_name($_POST['user_second_name'], $errors, 'Surname');
     }
 
-    if (strlen($_POST["user_password"]) < 8) {
-        $errors[] = "Password must be at least 8 characters \r";
-    }
-
-    if (!preg_match("/[a-zA-Z]/i", $_POST["user_password"])) {
-        $errors[] = "Password must contain at least one letter \r";
-    }
-
-    if (!preg_match("/[0-9]/", $_POST["user_password"])) {
-        $errors[] = "Password must contain at least one number \r";
-    }
-
+    // Password
     if (!isset($_POST['user_password'])) {
         $errors[] = "Password field is empty \r";
+    }else{
+        validate_password($_POST['user_password'], $errors);
     }
 
+    // Confirm Password
     if ($_POST["user_password"] !== $_POST["password_confirmation"]) {
         $errors[] = "Passwords must match \r";
     }
 
-    return $errors;
+    // Gender
+    if (!isset($_POST['gender']) || $_POST['gender'] === '') {
+        $errors[] = "Gender is not set";
+    }
 
+    return $errors;
 }
 
 function custom_uuid(): string
