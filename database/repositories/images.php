@@ -38,7 +38,7 @@ function remove_all_pictures($user_id): void
     mysqli_close($con);
 }
 
-function delete_picture_by_user_ID($user_id, $index): void
+function delete_picture_from_user_ID($user_id, $index): void
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
@@ -66,7 +66,7 @@ function delete_picture_by_user_ID($user_id, $index): void
     mysqli_close($con);
 }
 
-function add_picture_by_user_ID($user_ID, $picture): void
+function add_picture_from_user_ID($user_ID, $picture): void
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
