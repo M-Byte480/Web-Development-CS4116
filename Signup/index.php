@@ -25,10 +25,7 @@
                     if (jsonData.success === 1) {
                         window.location.href = "../login/";
                     } else {
-                        let msg = "";
-                        jsonData['errors'].forEach(elm => {
-                            msg += elm;
-                        })
+                        let msg = jsonData['errors'].join(', ');
                         const errors = new ToastMaker(msg, 3000);
                         errors.show();
                     }
@@ -66,7 +63,7 @@
                         <input name="user_email" id="user_email" type="email" class="form-control"
                                placeholder="Enter email"
                                required>
-                        <small class="text-danger">[Email must follow xxx@xxx.xxx Format]</small>
+<!--                        <small class="text-danger">[Email must follow xxx@xxx.xxx Format]</small>-->
                     </div>
                 </div>
 
@@ -79,11 +76,11 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <input pattern="[a-zA-Z ]{2,30}" name="user_first_name" id="user_first_name" type="text"
+                        <input pattern="[\w'\-,.][^0-9_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,30}" name="user_first_name" id="user_first_name" type="text"
                                class="form-control"
                                title="Please enter a valid input containing only letters (a-z, A-Z) and spaces, with a length between 2 and 30 characters."
-                               placeholder="Enter your first name" required>
-                        <small class="text-danger">[First name must follow a-z/A-Z Format]</small>
+                               placeholder="Enter your first name" required maxlength="70">
+<!--                        <small class="text-danger">[First name must follow a-z/A-Z Format]</small>-->
                     </div>
                 </div>
 
@@ -97,13 +94,13 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <input pattern="[a-zA-Z ]{2,30}"
+                        <input pattern="[\w'\-,.][^0-9_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,30}"
                                title="Please enter a valid input containing only letters (a-z, A-Z) and spaces, with a length between 2 and 30 characters."
                                name="user_second_name"
                                id="user_second_name"
                                type="text" class="form-control"
-                               placeholder="Enter your surname" required>
-                        <small class="text-danger">[Surname must follow a-z/A-Z Format]</small>
+                               placeholder="Enter your surname" required maxlength="70">
+<!--                        <small class="text-danger">[Surname must follow a-z/A-Z Format]</small>-->
                     </div>
                 </div>
 
@@ -118,7 +115,7 @@
                 <div class="row">
                     <div class="col-12">
                         <input name="user_password" id="user_password" type="password" class="form-control"
-                               placeholder="Password">
+                               placeholder="Password" minlength="8" maxlength="35">
                         <small class="text-danger">[Password may not contain special characters]</small>
                     </div>
                 </div>
@@ -136,8 +133,7 @@
                         <input name="password_confirmation"
                                id="password_confirmation" type="password"
                                class="form-control"
-                               placeholder="Re-enter your password" required>
-                        <small class="text-danger">[Passwords must match]</small>
+                               placeholder="Re-enter your password" required minlength="8" maxlength="35">
                     </div>
                 </div>
 

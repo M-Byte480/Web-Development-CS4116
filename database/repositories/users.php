@@ -70,7 +70,7 @@ function get_all_user_ids(): array
 function get_user_by_credentials($email, $hashed_password): mysqli_result
 {
     global $db_host, $db_username, $db_password, $db_database;
-    if (!validate_email($email)) {
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo 'invalid email';
         exit();
     }
@@ -276,14 +276,13 @@ function change_user_ban_state_by_user_id($user_id, $state): bool
 }
 
 
-function set_id_email_pw_fname_lname_dob_jd($id): void
+function add_user_to_database($id, $email, $first_name, $second_name, $password, $date_of_birth): void
 {
     global $db_host, $db_username, $db_password, $db_database;
 
 
-    $hashed_user_password = hash("sha256", ($_POST["user_password"]));
+    $hashed_user_password = hash("sha256", $password);
     $time_now = date('Y-m-d');
-    $date = date('Y-m-d', strtotime($_POST["user_dob"]));
     $mysqli = new mysqli($db_host, $db_username, $db_password, $db_database);
 
     if ($mysqli->connect_errno) {
@@ -292,8 +291,8 @@ function set_id_email_pw_fname_lname_dob_jd($id): void
 
     $stmt = $mysqli->stmt_init();
 
-    $sql = "INSERT INTO Users (id, email, hashedpassword, firstname, lastname, dateofbirth, datejoined)
-VALUES (?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO Users (id, email, hashedpassword, firstname, lastname, dateofbirth, datejoined, banned, admin, reportCount)
+VALUES (?,?,?,?,?,?,?,0,0,0)";
 
     if (!$stmt->prepare($sql)) {
         die("SQL ERROR : " . $mysqli->error);
@@ -301,22 +300,16 @@ VALUES (?,?,?,?,?,?,?)";
 
     $stmt->bind_param("sssssss",
         $id,
-        $_POST["user_email"],
+        $email,
         $hashed_user_password,
-        $_POST["user_first_name"],
-        $_POST["user_second_name"],
-        $date,
+        $first_name,
+        $second_name,
+        $date_of_birth,
         $time_now,
     );
 
-    try {
-        $stmt->execute();
-    } catch (Exception $e) {
-        $errors['errors'][] = "Email is linked to existing account \r";
-        echo json_encode($errors);
-        mysqli_close($mysqli);
-        exit();
-    }
+    $stmt->execute();
+
     mysqli_close($mysqli);
 }
 
@@ -349,6 +342,24 @@ function get_age_from_DOB($DOB): string
     }
     return "";
 
+}
+
+function is_email_taken($email)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+
+    $query = "SELECT * FROM Users where email = '{$email}'";
+    $result = mysqli_query($con, $query);
+
+    mysqli_close($con);
+
+
+    return 0 != mysqli_num_rows($result);
 }
 
 
