@@ -5,11 +5,10 @@ global $db_host, $db_username, $db_password, $db_database;
 require_once(__DIR__ . '/../../secrets.settings.php');
 
 
-function get_user_from_user_ID($user_ID): array
+function get_user_from_user_ID($user_ID)
 {
     if (!validate_user_id($user_ID)) {
-        echo 'invalid ID';
-        exit();
+        return false;
     }
 
     global $db_host, $db_username, $db_password, $db_database;
@@ -26,7 +25,7 @@ function get_user_from_user_ID($user_ID): array
 
     mysqli_close($con);
 
-    return $result->fetch_assoc();
+    return !($result->fetch_assoc()['admin'] == 0);
 }
 
 function get_all_users(): array
@@ -70,10 +69,7 @@ function get_all_user_ids(): array
 function get_user_by_credentials($email, $hashed_password): mysqli_result
 {
     global $db_host, $db_username, $db_password, $db_database;
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo 'invalid email';
-        exit();
-    }
+
     if (!validate_hashed_password($hashed_password)) {
         echo 'invalid password';
         exit();
