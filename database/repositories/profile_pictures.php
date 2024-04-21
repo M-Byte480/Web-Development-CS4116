@@ -41,7 +41,6 @@ function update_user_pfp_from_user_ID($user_ID, $pfp)
     $query = "UPDATE ProfilePictures set pfp = '{$pfp}' WHERE userid = '{$user_ID}'";
     mysqli_query($con, $query);
 
-
     mysqli_close($con);
 }
 
