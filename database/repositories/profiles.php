@@ -101,6 +101,7 @@ function add_new_row_to_profile($id, $gender): void
         die("SQL ERROR : " . $mysqli->error);
     }
 
+
     $stmt->bind_param("ss",
         $id,
         $gender
@@ -108,6 +109,23 @@ function add_new_row_to_profile($id, $gender): void
     $stmt->execute();
 
     mysqli_close($mysqli);
+}
+
+function get_user_profile($user_id)
+{
+
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+
+    $query = "SELECT * FROM Profiles WHERE userid = '{$user_id}'";
+    $result = mysqli_query($con, $query);
+
+    return $result;
 }
 
 ?>

@@ -58,7 +58,7 @@ function get_all_user_ids(): array
     }
 
 
-    $query = "SELECT id FROM users";
+    $query = "SELECT id FROM Users";
 
     $result = mysqli_query($con, $query);
 
@@ -140,7 +140,7 @@ function get_last_name_from_user_ID(string $user_ID): string
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "SELECT lastName FROM users where id = '{$user_ID}'";
+    $query = "SELECT lastName FROM Users where id = '{$user_ID}'";
     $result = mysqli_query($con, $query);
 
     mysqli_close($con);
