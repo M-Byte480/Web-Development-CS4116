@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__ . '/../../validator_functions.php');
 
-global $db_host, $db_username, $db_password, $db_database;
+global $db_host, $db_username, $db_password, $db_database, $db_some_secret, $secret_encryption_method, $secret_encryption_key;
 require_once(__DIR__ . '/../../secrets.settings.php');
 
 
@@ -69,7 +69,13 @@ function get_all_user_ids(): array
 function get_user_by_credentials($email, $hashed_password): mysqli_result
 {
     global $db_host, $db_username, $db_password, $db_database;
+    require_once (__DIR__ . '/../../encryption/encryption.php');
+    $email = decrypt($email);
 
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo 'invalid email';
+        exit();
+    }
     if (!validate_hashed_password($hashed_password)) {
         echo 'invalid password';
         exit();
@@ -229,6 +235,10 @@ function get_user_by_id($id)
 
 function get_user_id_by_email($email)
 {
+    require_once (__DIR__ . '/../../encryption/encryption.php');
+
+    $email = decrypt($email);
+
     $id = null;
 
     global $db_host, $db_username, $db_password, $db_database;

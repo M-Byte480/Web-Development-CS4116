@@ -81,7 +81,7 @@ function validate_unique_result($result): void
     }
 }
 
-function validate_admin($id): bool
+function validate_admin($id)
 {
     if (!validate_user_id($id)) {
         return false;
@@ -126,11 +126,13 @@ function validate_delete_parameters($POST): void
  */
 function validate_user_logged_in(): void
 {
+    require_once (__DIR__ . '/encryption/encryption.php');
     if (!(array_key_exists('email', $_COOKIE) && $_COOKIE['email'])) {
         throw new ValidationException('No user_email');
     }
 
-    if (!filter_var($_COOKIE['email'], FILTER_VALIDATE_EMAIL)) {
+    $email = decrypt($_COOKIE['email']);
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         throw new ValidationException('Invalid user_email');
     }
 
