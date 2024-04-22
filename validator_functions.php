@@ -2,13 +2,16 @@
 // We need to check if cookies are tampered with or
 // if text entered by users are SQL injections
 require_once(__DIR__ . '/exceptions/ValidationException.php');
-function validate_email($email, &$errors): void
+function validate_email($email, &$errors): bool
 {
     if (!isset($email)) {
         $errors[] = "Email is empty \r";
-    }elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return false;
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "Invalid email format \r";
+        return false;
     }
+    return true;
 }
 
 function validate_encrypted_email($email)
@@ -39,7 +42,7 @@ function validate_password($password, &$errors): void
 {
     if (strlen($password) < 8) {
         $errors[] = "Password must be at least 8 characters \r";
-    }elseif (strlen($password) > 35){
+    } elseif (strlen($password) > 35) {
         $errors[] = "Password must be less than 35 characters \r";
     }
 
@@ -51,7 +54,7 @@ function validate_password($password, &$errors): void
         $errors[] = "Password must contain at least one number \r";
     }
 
-    if(str_contains($password, " ")){
+    if (str_contains($password, " ")) {
         $errors[] = "Password must not contain spaces \r";
     }
 }
@@ -61,7 +64,7 @@ function validate_name(&$name, &$errors, $name_type): void
     $regex = '/^(?!.*[0-9@£$%^!€\[\]{}~#:;\\/<>|*+]).*$/';
 
     $name = trim($name);
-    if(!preg_match($regex, $name)){
+    if (!preg_match($regex, $name)) {
         $errors[] = "Invalid {$name_type} \r";
     }
 
@@ -85,7 +88,7 @@ function validate_admin($id)
     }
 
     $retrieved_user = get_user_from_user_ID($id);
-    
+
     return $retrieved_user['admin']; // Returns true or false attribute
 }
 
@@ -128,7 +131,7 @@ function validate_user_logged_in(): void
         throw new ValidationException('No user_email');
     }
 
-    if (!validate_email($_COOKIE['email'])) {
+    if (!validate_email($_COOKIE['email'], $fuck[])) {
         throw new ValidationException('Invalid user_email');
     }
 
@@ -152,6 +155,7 @@ function validate_user_logged_in(): void
  */
 function validate_user_is_admin(): void
 {
+    validate_user_logged_in();
 
     // Import users, pfp accessor
     require_once(__DIR__ . "/database/repositories/users.php");
