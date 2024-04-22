@@ -4,7 +4,8 @@ require_once (__DIR__.'/ban_functions.php');
 
 $ban = get_recent_ban_of_this_user();
 
-if($ban == null){ // if this user hasn't been banned
+if($ban == null){ // if this user shouldn't been banned
+    change_user_ban_state_by_user_id($ban['userId'], false);
     header('Location: ../profile');
     exit();
 }
