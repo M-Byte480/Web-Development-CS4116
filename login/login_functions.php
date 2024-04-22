@@ -20,8 +20,9 @@ function validate_login_credentials($row, $GET): array
     }
 
     if (($row['hashedPassword'] === hash("sha256", $password))) {
+        require_once (__DIR__ . '/../encryption/encryption.php');
         setcookie('hashed_password', $row['hashedPassword'], time() + 60 * 60 * 24 * 7, '/');
-        setcookie('email', $row['email'], time() + 60 * 60 * 24 * 7, '/');
+        setcookie('email', encrypt($row['email']), time() + 60 * 60 * 24 * 7, '/');
     } else {
         $alerts[] = "Invalid Login  \r";
     }
