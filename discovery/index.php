@@ -51,33 +51,17 @@ if(isset($_GET['user_id'])){
 require_once(__DIR__ . '/discovery_functions.php');
 require_once(__DIR__ . '/../database/repositories/interests.php');
 require_once(__DIR__ . '/../database/repositories/profiles.php');
-//$user = get_user_from_cookies()->fetch_assoc(); // Creates assoc array so we use [] accessors
 
-// todo: use this are a reference to get potential matches
 $this_user_profile = get_user_profile($user_id);
 
-// Todo: setup cookies to store array of ids alongside with the counter of which user we are on.
-// Todo: this helps us track stuff about our user without the need to query the DB constantly
 if($user_id == 0){
     $potential_matches = get_potential_matching_profiles();
 }else{
     $this_user_profile = get_user_profile($user_id);
 }
 
-print_r($potential_matches);
+echo 'Potential Matches: ' . count($potential_matches);
 
-// todo: add do while to check if suggested user has a profile filled out
-//do{
-//
-//}while();
-//
-//$suggested_user_profile = get_user_profile($potential_matches_ids[0]);
-//
-//
-//if (sizeof($potential_matches_ids) == 0) {
-//    echo 'You beat the game';
-//    exit();
-//}
 function bio_card($user_profile)
 {
     ?>
@@ -147,8 +131,8 @@ function interest_card($user_profile)
 
 
                 //                console_log(json_encode($suggested_user_profile));
-//                bio_card($clicked_user);
-//                interest_card($clicked_user);
+                bio_card($clicked_user);
+                interest_card($clicked_user);
                 ?>
             </div>
         </div>
