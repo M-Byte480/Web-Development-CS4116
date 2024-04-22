@@ -25,7 +25,7 @@ function get_user_from_user_ID($user_ID)
 
     mysqli_close($con);
 
-    return !($result->fetch_assoc()['admin'] == 0);
+    return $result->fetch_assoc();
 }
 
 function get_all_users(): array
