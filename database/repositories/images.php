@@ -74,10 +74,10 @@ function add_picture_from_user_ID($user_ID, $picture): void
     if (!$con) {
         die('Could not connect: ' . mysqli_error($con));
     }
-    $query = "SELECT * FROM pictures WHERE userId = '{$user_ID}'";
+    $query = "SELECT * FROM Pictures WHERE userId = '{$user_ID}'";
     $index = mysqli_query($con, $query)->num_rows;
 
-    $query = "INSERT INTO pictures(userId, imageIndex, imageData) VALUES ('{$user_ID}',{$index},'{$picture}')";
+    $query = "INSERT INTO Pictures(userId, imageIndex, imageData) VALUES ('{$user_ID}',{$index},'{$picture}')";
     mysqli_query($con, $query);
 }
 

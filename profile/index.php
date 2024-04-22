@@ -34,12 +34,13 @@ function display_drink_options(): void
 {
     global $user_ID;
     $bev_table = get_all_beverages();
-    $uesrs_current_bev = get_users_beverage_from_user_ID($user_ID);
+    $users_current_bev = get_users_beverage_from_user_ID($user_ID);
 
     foreach ($bev_table as $bev_row) {
-        if ($uesrs_current_bev == $bev_row[1])
-            echo("<option selected value=\"" . $bev_row[0] . "\">" . $bev_row[1] . "</option>");
-        echo("<option value=\"" . $bev_row[0] . "\">" . $bev_row[1] . "</option>");
+        echo("<option ");
+        if ($users_current_bev == $bev_row[1])
+            echo("selected ");
+        echo("value=\"" . $bev_row[0] . "\">" . $bev_row[1] . "</option>");
     }
 }
 
@@ -47,7 +48,7 @@ function display_interests_options(): void
 {
     global $user_ID;
     $interests_table = get_all_interests();
-    $users_current_interests = get_user_interests_from_user_ID($user_ID);
+    $users_current_interests = get_user_interests_from_user_ID($user_ID) ?? array();
 
     foreach ($interests_table as $interest_row) {
         echo("<div class=\"form-check form-check-inline m-1 p-0\">");

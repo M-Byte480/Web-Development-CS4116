@@ -68,43 +68,53 @@ try {
                             <i class="bi bi-envelope"></i>
                         </a>
                     </li>
-                    <?php
-                }
-                ?>
-                <li class="nav-item p-2 d-inline btn-group float-end">
-                    <button class="bg-transparent border-0 p-0 float-end" type="button"
-                            id="profileDropdown"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                        <a class="nav-link float-end">
-                            <h2 class="collapse" id="collapsibleNavbar">Settings</h2>
-                            <i class="bi bi-gear"></i>
-                        </a>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-md-end position-absolute"
-                        aria-labelledby="profileDropdown">
-                        <li>
-                            <a class="float-end dropdown-item" href="../profile">
-                                <h4>Profile</h4>
+                    <li class="nav-item p-2 d-inline btn-group float-end">
+                        <button class="bg-transparent border-0 p-0 float-end" type="button"
+                                id="profileDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link float-end">
+                                <h2 class="collapse" id="collapsibleNavbar">Settings</h2>
+                                <i class="bi bi-gear"></i>
                             </a>
-                        </li>
-                        <?php
-                        if ($user_is_admin) {
-                            ?>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-md-end position-absolute"
+                            aria-labelledby="profileDropdown">
                             <li>
-                                <a class="float-end dropdown-item" href="../admin">
-                                    <h4>Admin</h4>
+                                <a class="float-end dropdown-item" href="../profile">
+                                    <h4>Profile</h4>
                                 </a>
                             </li>
                             <?php
-                        }
-                        ?>
-                        <li>
-                            <a class="float-end dropdown-item" href="../logout.php">
-                                <h4>Logout</h4>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                            if ($user_is_admin) {
+                                ?>
+                                <li>
+                                    <a class="float-end dropdown-item" href="../admin">
+                                        <h4>Admin</h4>
+                                    </a>
+                                </li>
+                                <?php
+                            }
+                            ?>
+                            <li>
+                                <a class="float-end dropdown-item" href="../logout.php">
+                                    <h4>Logout</h4>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <?php
+                } else {
+                    ?>
+                    <li>
+                        <div class="btn-group">
+                            <a class="btn btn-primary border-end" href=" ../login/">Sign In</a>
+                            <a class="btn btn-primary border-start" href=" ../signup/">Sign Up</a>
+                        </div>
+                    </li>
+                    <?php
+                }
+                ?>
+
             </ul>
         </div>
     </div>
