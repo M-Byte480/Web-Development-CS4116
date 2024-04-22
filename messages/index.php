@@ -212,8 +212,6 @@ function display_message_thread(): void
     </div>
 </div>
 <script>
-    let backButtonPressed = false;
-
     function updateHeights() {
         let vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
         let topOfMessageThread = document.getElementById("messageThreads").getBoundingClientRect().top;
@@ -225,7 +223,7 @@ function display_message_thread(): void
         document.getElementById("messageWindow").style.height = (vh - topOfMessageWindow - heightOfTextInput).toString() + "px";
         document.getElementById("topLevelRow").style.height = (vh - topLevelNavBarHeight).toString() + "px";
 
-        if (window.matchMedia("(max-width: 767.98px)").matches && !backButtonPressed) {
+        if (window.matchMedia("(max-width: 767.98px)").matches) {
             document.getElementById("backButton").classList.add("d-flex");
             document.getElementById("backButton").classList.remove("d-none");
         } else {
@@ -237,12 +235,13 @@ function display_message_thread(): void
     function openMessageThread() {
         document.getElementById("topLevelMessageThread").classList.add("d-block");
         document.getElementById("topLevelMessageThread").classList.remove("d-none");
-        backButtonPressed = true;
     }
 
     function updateMessageView() {
-        document.getElementById("topLevelMessageThread").classList.add("d-none");
-        document.getElementById("topLevelMessageThread").classList.remove("d-block");
+        if (window.matchMedia("(max-width: 767.98px)").matches) {
+            document.getElementById("topLevelMessageThread").classList.add("d-none");
+            document.getElementById("topLevelMessageThread").classList.remove("d-block");
+        }
         let postData = {
             "connectionId": document.querySelector('a[data-bs-toggle="list"].active').dataset.connection_id,
             "sentUserId": document.querySelector('a[data-bs-toggle="list"].active').dataset.user_id
