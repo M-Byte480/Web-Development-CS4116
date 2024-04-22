@@ -81,15 +81,14 @@ function validate_unique_result($result): void
     }
 }
 
-function validate_admin($id)
+function validate_admin($id): bool
 {
     if (!validate_user_id($id)) {
         return false;
     }
 
     $retrieved_user = get_user_from_user_ID($id);
-
-    return $retrieved_user['admin']; // Returns true or false attribute
+    return @$retrieved_user['admin'] == 1; // Returns true or false attribute
 }
 
 /**
@@ -131,7 +130,7 @@ function validate_user_logged_in(): void
         throw new ValidationException('No user_email');
     }
 
-    if (!validate_email($_COOKIE['email'], $fuck[])) {
+    if (!filter_var($_COOKIE['email'], FILTER_VALIDATE_EMAIL)) {
         throw new ValidationException('Invalid user_email');
     }
 
@@ -155,16 +154,18 @@ function validate_user_logged_in(): void
  */
 function validate_user_is_admin(): void
 {
-    validate_user_logged_in();
 
     // Import users, pfp accessor
     require_once(__DIR__ . "/database/repositories/users.php");
 
+    if ((!isset($_COOKIE['email'])) || !filter_var($_COOKIE['email'], FILTER_VALIDATE_EMAIL)) {
+        throw new ValidationException("Not Admin");
+    }
     $result = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password']);
     $user = $result->fetch_assoc();
 
     // Both these need to be true
-    if ($user == null || !validate_admin($user['id'])) {
+    if ($user == null || (!validate_admin($user['id']))) {
         throw new ValidationException('Unauthorised');
     }
 

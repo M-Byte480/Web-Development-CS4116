@@ -58,7 +58,7 @@ while ($row = mysqli_fetch_assoc($searched_profiles)) {
     $rows[] = $row;
 }
 
-$completement_users = array_diff($rows, $union_users);
+$completement_users = @array_diff($rows, $union_users);
 
 ?>
 
