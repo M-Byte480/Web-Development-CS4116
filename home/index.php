@@ -9,11 +9,11 @@
 </head>
 
 <body>
+<?php require_once("../nav_bar/index.php") ?>
 <script>
     const elmnt = document.getElementById("nav-bar");
     document.documentElement.style.setProperty('--navbar-height', elmnt.offsetHeight + 'px');
 </script>
-<?php require_once("../nav_bar/index.php") ?>
 <div id="landing-carousel" class="carousel slide" data-bs-ride="carousel" data-interval="3000">
 
     <div class="carousel-indicators">
@@ -40,28 +40,6 @@
             <img src="../resources/landing3.png" alt="womendrink" class="d-block">
             <div class="carousel-caption">
                 <h1>Fancy a Pint?</h1>
-            </div>
-        </div>
-    </div>
-    <button type="button" class="buttonModal btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Sign up / Log in
-    </button>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="form">
-                        <form>
-                            <p style="align-content: center"> Welcome! </p>
-                            <a class="px-0" href=" ../signup/">
-                                <button type="button" class="btn btn-dark">Sign-Up</button>
-                            </a>
-                            <a class="mx-5" href="../login/">
-                                <button type="button" class="btn btn-dark">Log-In</button>
-                            </a>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

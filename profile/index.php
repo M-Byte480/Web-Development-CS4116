@@ -34,12 +34,13 @@ function display_drink_options(): void
 {
     global $user_ID;
     $bev_table = get_all_beverages();
-    $uesrs_current_bev = get_users_beverage_from_user_ID($user_ID);
+    $users_current_bev = get_users_beverage_from_user_ID($user_ID);
 
     foreach ($bev_table as $bev_row) {
-        if ($uesrs_current_bev == $bev_row[1])
-            echo("<option selected value=\"" . $bev_row[0] . "\">" . $bev_row[1] . "</option>");
-        echo("<option value=\"" . $bev_row[0] . "\">" . $bev_row[1] . "</option>");
+        echo("<option ");
+        if ($users_current_bev == $bev_row[1])
+            echo("selected ");
+        echo("value=\"" . $bev_row[0] . "\">" . $bev_row[1] . "</option>");
     }
 }
 
@@ -47,7 +48,7 @@ function display_interests_options(): void
 {
     global $user_ID;
     $interests_table = get_all_interests();
-    $users_current_interests = get_user_interests_from_user_ID($user_ID);
+    $users_current_interests = get_user_interests_from_user_ID($user_ID) ?? array();
 
     foreach ($interests_table as $interest_row) {
         echo("<div class=\"form-check form-check-inline m-1 p-0\">");
@@ -355,7 +356,31 @@ function display_user_pictures_in_carousel(): void
                         <input type="date" class="form-control" name="edit_age"
                                value="<?= get_DOB_from_user_ID($user_ID) ?>"
                                id="edit_age">
+
+                        <button type="button" name="edit_pfp" class="btn btn-primary mt-3" data-bs-toggle="modal"
+                                data-bs-target="#edit_pfp">
+                            <span>Edit Profile Picture</span>
+                        </button>
                     </div>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Exit</button>
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Save and Exit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="edit_pfp">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form method="post" action="profile_backend.php" enctype="multipart/form-data">
+                    <div class="modal-header d-flex justify-content-center">
+                        <h5 class="modal-title">Select a picture for your Profile</h5>
+                    </div>
+                    <input class="form-control mb-3" type="file" name="edit_pfp"
+                           accept=".jpg,.JPG,.jpeg,.JPEG,.png,.PNG,.gif,.GIF,.bmp,.BMP,.svg,.SVG,.webp,.WEBP">
+
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Exit</button>
                     <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Save and Exit</button>
                 </form>

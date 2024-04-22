@@ -57,8 +57,16 @@ function update_users_beverage_from_user_ID(string $user_ID, int $bev_id): void
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "UPDATE UserBeverages SET beverageId = '{$bev_id}' WHERE UserBeverages.userId = '{$user_ID}'";
+    $query = "SELECT * FROM UserBeverages WHERE userid = '{$user_ID}'";
+    $result = mysqli_query($con, $query);
+
+    if ($result->num_rows > 0) {
+        $query = "UPDATE UserBeverages SET beverageId = {$bev_id} WHERE userId = '{$user_ID}'";
+    } else {
+        $query = "INSERT INTO UserBeverages (userId, beverageId) VALUES ('{$user_ID}', {$bev_id})";
+    }
     mysqli_query($con, $query);
+
     mysqli_close($con);
 }
 

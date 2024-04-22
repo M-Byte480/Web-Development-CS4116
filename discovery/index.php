@@ -38,13 +38,13 @@ require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
     }
 </script>
 <body>
-<?php require_once(__DIR__ . '/../Nav_bar/index.php') ?>
+<?php require_once(__DIR__ . '/../nav_bar/index.php') ?>
 
 <?php
 
 require_once(__DIR__ . '/discovery_functions.php');
 require_once(__DIR__ . '/../database/repositories/interests.php');
-require_once(__DIR__ . '/../database/repositories/profile.php');
+require_once(__DIR__ . '/../database/repositories/profiles.php');
 $user = get_user_from_cookies()->fetch_assoc(); // Creates assoc array so we use [] accessors
 
 // todo: use this are a reference to get potential matches
@@ -87,8 +87,7 @@ function interest_card($user_profile)
         <div class="card-body">
             <h5 class="card-body">Interests</h5>
             <?php
-
-            $user_interests = get_user_interests($user_profile['id']);
+            $user_interests = get_user_interests($user_profile['userId']);
             foreach ($user_interests as $interest) {
                 ?>
 
@@ -136,7 +135,7 @@ function interest_card($user_profile)
             <div style="width: 100%;">
                 <?php
                 bio_card($suggested_user_profile);
-                interest_card($suggested_user_profile);
+                interest_card($suggested_user_profile->fetch_assoc());
                 ?>
             </div>
         </div>
