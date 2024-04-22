@@ -5,11 +5,10 @@ global $db_host, $db_username, $db_password, $db_database, $db_some_secret, $sec
 require_once(__DIR__ . '/../../secrets.settings.php');
 
 
-function get_user_from_user_ID($user_ID): array
+function get_user_from_user_ID($user_ID)
 {
     if (!validate_user_id($user_ID)) {
-        echo 'invalid ID';
-        exit();
+        return false;
     }
 
     global $db_host, $db_username, $db_password, $db_database;
