@@ -55,9 +55,9 @@ function get_user_by_matches($get): bool|mysqli_result|null
                 COUNT(u.id) as matching_interests,
                 bev.name as beverage
                 FROM Users as u
-                JOIN Profiles ON u.id = Profiles.userId
-                JOIN UserInterests as ui on ui.userId = u.id 
-                JOIN Interests as i on i.id = ui.interestId
+                Left JOIN Profiles ON u.id = Profiles.userId
+                Left JOIN UserInterests as ui on ui.userId = u.id 
+                Left JOIN Interests as i on i.id = ui.interestId
                 LEFT JOIN UserBeverages as userbev on userbev.userId = u.id
                 LEFT JOIN Beverages as bev on bev.id = userbev.beverageId
                 WHERE dateOFBirth >= '{$min_date}' AND 

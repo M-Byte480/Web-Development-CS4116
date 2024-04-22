@@ -10,6 +10,12 @@ try {
 
 require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 
+if(isset($_GET['user_id'])){
+    $user_id = $_GET['user_id'];
+}else{
+    $user_id = 0;
+}
+
 ?>
 
 <!doctype html>
@@ -45,27 +51,33 @@ require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 require_once(__DIR__ . '/discovery_functions.php');
 require_once(__DIR__ . '/../database/repositories/interests.php');
 require_once(__DIR__ . '/../database/repositories/profiles.php');
-$user = get_user_from_cookies()->fetch_assoc(); // Creates assoc array so we use [] accessors
+//$user = get_user_from_cookies()->fetch_assoc(); // Creates assoc array so we use [] accessors
 
 // todo: use this are a reference to get potential matches
-$this_user_profile = get_user_profile($user['id']);
+$this_user_profile = get_user_profile($user_id);
 
 // Todo: setup cookies to store array of ids alongside with the counter of which user we are on.
 // Todo: this helps us track stuff about our user without the need to query the DB constantly
-$potential_matches_ids = get_potential_matching_profiles($user['id']);
+if($user_id == 0){
+    $potential_matches = get_potential_matching_profiles();
+}else{
+    $this_user_profile = get_user_profile($user_id);
+}
+
+print_r($potential_matches);
 
 // todo: add do while to check if suggested user has a profile filled out
 //do{
 //
 //}while();
-
-$suggested_user_profile = get_user_profile($potential_matches_ids[0]);
-
-
-if (sizeof($potential_matches_ids) == 0) {
-    echo 'You beat the game';
-    exit();
-}
+//
+//$suggested_user_profile = get_user_profile($potential_matches_ids[0]);
+//
+//
+//if (sizeof($potential_matches_ids) == 0) {
+//    echo 'You beat the game';
+//    exit();
+//}
 function bio_card($user_profile)
 {
     ?>
@@ -132,14 +144,11 @@ function interest_card($user_profile)
         <div class="col-12 col-sm-6 d-sm-flex align-items-center">
             <div style="width: 100%;">
                 <?php
-                function console_log($msg)
-                {
-                    echo '<script>' . "console.log({$msg})" . '</script>';
-                }
+
 
                 //                console_log(json_encode($suggested_user_profile));
-                bio_card($clicked_user);
-                interest_card($clicked_user);
+//                bio_card($clicked_user);
+//                interest_card($clicked_user);
                 ?>
             </div>
         </div>
