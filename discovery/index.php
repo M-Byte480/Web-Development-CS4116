@@ -71,9 +71,9 @@ function bio_card($user_profile)
     ?>
     <div class="bio card m-2 bg-light">
         <div class="card-body ">
-            <h5 class="card-body">About Milan</h5>
+            <h5 class="card-body">About <?= get_first_name_from_user_ID($user_profile['userId']) ?></h5>
             <p class="card-text text-center">
-                You are the gin to my tonic
+                <?= $user_profile['description'] ?>
             </p>
         </div>
     </div>
@@ -103,7 +103,9 @@ function interest_card($user_profile)
 
 }
 
+
 ?>
+
 <div class="container">
     <div class="row">
         <div class="d-none d-md-flex col-md-1 p-1 align-items-center">
@@ -117,11 +119,7 @@ function interest_card($user_profile)
         </div>
 
         <div class="col-12 col-sm-4">
-            <img src="resources/3.jpg"
-                 alt="user image"
-                 class="rounded-3 img-fluid max-height mx-auto d-block "
-            />
-            <!--            <img src="--><?php //= get_user_images($user_id) ?><!--"-->
+        
         </div>
         <div class="d-none d-md-flex col-md-1 p-1 align-items-center">
             <a href="javascript:likeUser(<?= 'test' ?>);">
@@ -134,8 +132,14 @@ function interest_card($user_profile)
         <div class="col-12 col-sm-6 d-sm-flex align-items-center">
             <div style="width: 100%;">
                 <?php
-                bio_card($suggested_user_profile);
-                interest_card($suggested_user_profile->fetch_assoc());
+                function console_log($msg)
+                {
+                    echo '<script>' . "console.log({$msg})" . '</script>';
+                }
+
+                //                console_log(json_encode($suggested_user_profile));
+                bio_card($clicked_user);
+                interest_card($clicked_user);
                 ?>
             </div>
         </div>

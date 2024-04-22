@@ -15,7 +15,6 @@ function get_profile_card(array $user, int $interest_flag): void
             // Open page with get request
             let getRequest = "?user_id=" + user_id;
             window.open("../discovery/" + getRequest, "_parent");
-            console.log("got to here")
         }
     </script>
 
