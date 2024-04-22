@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 
 function get_user_age($user): int
 {

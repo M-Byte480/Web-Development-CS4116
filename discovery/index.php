@@ -1,6 +1,8 @@
 <?php
 // Validate is user logged in
 require_once(__DIR__ . '/../validator_functions.php');
+require_once(__DIR__ . '/../database/repositories/images.php');
+
 try {
     validate_user_logged_in();
 } catch (ValidationException $e) {
@@ -57,23 +59,11 @@ require_once(__DIR__ . '/../database/repositories/profiles.php');
 // todo: use this are a reference to get potential matches
 $clicked_user = get_user_profile($user_id);
 
-// Todo: setup cookies to store array of ids alongside with the counter of which user we are on.
-// Todo: this helps us track stuff about our user without the need to query the DB constantly
+
 $potential_matches_ids = get_potential_matching_profiles($user_id);
 
-// todo: add do while to check if suggested user has a profile filled out
-//do{
-//
-//}while();
 
-//$suggested_user_profile = get_user_profile($potential_matches_ids['userId']);
-
-
-//if (sizeof($potential_matches_ids) == 0) {
-//    echo 'You beat the game';
-//    exit();
-//}
-function bio_card($user_profile)
+function bio_card($user_profile): void
 {
     ?>
     <div class="bio card m-2 bg-light">
@@ -87,7 +77,7 @@ function bio_card($user_profile)
     <?php
 }
 
-function interest_card($user_profile)
+function interest_card($user_profile): void
 {
     ?>
     <div class="interests card m-2 bg-light">
@@ -122,8 +112,43 @@ function interest_card($user_profile)
                 />
             </a>
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-12 col-sm-4 mt-2">
+            <div id="userImagesCarousel" class="carousel slide">
+
+                <?php
+                $images = get_images_by_user_id($user_id);
+                $total_images = count($images);
+                if ($total_images < 1) {
+                    $images = array('../resources/search/default_image.jpg');
+                }
+                ?>
+
+                <div class="carousel-inner">
+                    <?php for ($i = 0; $i < count($images); $i++) {
+                        $image = $images[$i];
+                        ?>
+
+                        <div class="carousel-item <?= $i == 0 ? 'active' : '' ?>">
+                            <img src="<?= $total_images < 1 ? $image : 'data:image/png;base64,' . $image['image']; ?>"
+                                 class="d-block w-100"
+                                 alt="">
+                        </div>
+                    <?php } ?>
+                </div>
+                <button class="carousel-control-next" type="button" data-bs-target="#userImagesCarousel"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="false"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                <button class="carousel-control-prev" type="button" data-bs-target="#userImagesCarousel"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="false"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+            </div>
+
         </div>
+
         <div class="d-none d-md-flex col-md-1 p-1 align-items-center">
             <a href="javascript:likeUser(<?= 'test' ?>);">
                 <img src="resources/like_bottle.png"
@@ -142,7 +167,6 @@ function interest_card($user_profile)
         </div>
     </div>
 </div>
-
 </body>
 </html>
 
