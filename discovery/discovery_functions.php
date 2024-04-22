@@ -25,4 +25,5 @@ function get_user_from_cookies()
     return get_user_by_credentials($_COOKIE["email"], $_COOKIE["hashed_password"]);
 }
 
+
 ?>
