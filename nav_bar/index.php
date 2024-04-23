@@ -38,7 +38,7 @@ try {
 
 ?>
 
-<nav class="navbar navbar-expand-sm navbar-light">
+<nav class="navbar navbar-expand-sm navbar-light" id="topLevelNavBar">
     <div class="container-fluid">
         <a class="navbar-brand" href="../home/">
             <img class="nav-brand" src="../resources/logo.png" alt="Logo">
@@ -63,7 +63,7 @@ try {
                         </a>
                     </li>
                     <li class="nav-item p-2">
-                        <a class="nav-link float-end" href="#">
+                        <a class="nav-link float-end" href="../messages">
                             <h2 class="collapse" id="collapsibleNavbar">Messages</h2>
                             <i class="bi bi-envelope"></i>
                         </a>

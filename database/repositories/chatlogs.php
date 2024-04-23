@@ -1,30 +1,24 @@
 <?php
-
-global $db_host, $db_username, $db_password, $db_database, $con;
+global $db_host, $db_username, $db_password, $db_database;
 require_once(__DIR__ . '/../../secrets.settings.php');
 
-function get_all_liked_user_by_user_id($user_id)
+function get_all_chatlogs_from_connectionId($connectionId): array
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
     if (!$con) {
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $liked_users = array();
-    $query = "SELECT likedUser FROM Likes WHERE userId = '{$user_id}'";
+    $query = "SELECT userSent, time, content FROM ChatLogs WHERE connectionId='{$connectionId}' ORDER BY time ASC";
     $result = mysqli_query($con, $query);
 
-    while ($liked_user = $result->fetch_assoc()) {
-        $liked_users[] = $liked_user;
-    }
-
-    $con->close();
-
-    return $liked_users;
+    mysqli_close($con);
+    return $result->fetch_all(MYSQLI_ASSOC);
 }
 
-function delete_like_by_user_ids($user_id1, $user_id2)
+function add_chatlog($connectionId, $userSent, $content): void
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
@@ -32,7 +26,7 @@ function delete_like_by_user_ids($user_id1, $user_id2)
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "DELETE FROM Likes WHERE userId = '{$user_id1}' AND likedUser = '{$user_id2}'";
+    $query = "INSERT INTO ChatLogs(userSent, connectionId, content) VALUES ('{$userSent}', '{$connectionId}', '{$content}')";
     mysqli_query($con, $query);
     mysqli_close($con);
 }
