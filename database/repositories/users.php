@@ -95,6 +95,32 @@ function get_user_by_credentials($email, $hashed_password): mysqli_result
     return $result;
 }
 
+function get_user_profile_from_credentials($email, $hashed_password)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+    require_once (__DIR__ . '/../../encryption/encryption.php');
+    $email = decrypt($email);
+
+    $query ="SELECT *, B.name as favourite_beverage, U.id as id
+            FROM Users as U
+                LEFT JOIN Profiles as P ON U.id = P.userId
+                LEFT JOIN UserBeverages as UB ON U.id = UB.userId
+                LEFT JOIN Beverages as B ON UB.beverageId = B.id
+            WHERE email = '{$email}' AND hashedPassword = '{$hashed_password}'";
+
+    $result = mysqli_query($con, $query);
+
+    mysqli_close($con);
+
+    return $result->fetch_assoc();
+}
+
 
 function delete_user_from_user_ID($user_ID): void
 {
@@ -115,15 +141,14 @@ function delete_user_from_user_ID($user_ID): void
 }
 
 
+
 function get_first_name_from_user_ID(string $user_ID): string
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
-
     if (!$con) {
         die('Could not connect: ' . mysqli_error($con));
     }
-
     $query = "SELECT firstName FROM Users where id = '{$user_ID}'";
     $result = mysqli_query($con, $query);
 

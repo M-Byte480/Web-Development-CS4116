@@ -57,6 +57,12 @@ try {
                 if ($user_logged_in) {
                     ?>
                     <li class="nav-item p-2">
+                        <a class="nav-link float-end" href="../discovery">
+                            <h2 class="collapse" id="collapsibleNavbar">Start Matching</h2>
+                            <i class="bi bi-heart"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item p-2">
                         <a class="nav-link float-end" href="../search">
                             <h2 class="collapse" id="collapsibleNavbar">Search</h2>
                             <i class="bi bi-search"></i>

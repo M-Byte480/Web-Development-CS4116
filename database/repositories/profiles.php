@@ -111,7 +111,7 @@ function add_new_row_to_profile($id, $gender): void
     mysqli_close($mysqli);
 }
 
-function get_user_profile($user_id)
+function get_user_profile_for_discovery($user_id)
 {
 
     global $db_host, $db_username, $db_password, $db_database;
@@ -125,7 +125,7 @@ function get_user_profile($user_id)
     $query = "SELECT * FROM Profiles WHERE userid = '{$user_id}'";
     $result = mysqli_query($con, $query);
 
-    return $result;
+    return $result->fetch_assoc();
 }
 
 ?>
