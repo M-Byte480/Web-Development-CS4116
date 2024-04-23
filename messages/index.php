@@ -11,8 +11,6 @@ function display_message_thread(): void
     global $userId, $connections;
     $connections = get_all_connections_from_userId($userId);
 
-    $is_first = true;
-
     foreach ($connections as $connection) {
         ?>
         <a href="#"
@@ -22,20 +20,21 @@ function display_message_thread(): void
             <div class="p-2 m-0">
                 <div class="row p-2 m-0">
                     <div class="col-3 p-0">
-                        <img class="img-fluid rounded mx-auto" src="data:image/png;base64,<?= $connection["pfp"] ?>"
-                             alt="Profile picture">
+                        <div class="ratio ratio-1x1">
+                            <img class="img-fluid object-fit-cover rounded-top-3"
+                                 src="data:image/png;base64,<?= $connection["pfp"] ?>"
+                                 alt="Profile picture">
+                        </div>
                     </div>
                     <div class="col-9 p-0 ps-3 pt-1">
                         <div>
                             <h5 id="listgroup-name"><?= $connection["firstname"] . " " . $connection["lastname"] ?></h5>
-                            <!--                            <i>Hello, are you still awake?</i>-->
                         </div>
                     </div>
                 </div>
             </div>
         </a>
         <?php
-        $is_first = false;
     }
 }
 
@@ -143,12 +142,23 @@ function display_message_thread(): void
         border-bottom-left-radius: 10px;
     }
 
+    .textViewBorder {
+        border: #ff8527 solid 0.2rem;
+        border-right: 0;
+    }
+
+    @media screen and (max-width: 767.98px) {
+        .textViewBorder {
+            border-right: #ff8527 solid 0.2rem;
+        }
+    }
+
 </style>
 
 <div class="row m-0" id="topLevelRow">
-    <div class="col-md-4 p-0 pe-1 col-sm-12" id="topLevelMessageThread">
+    <div class="col-md-4 p-0 col-sm-12" id="topLevelMessageThread">
         <!-- Message threads -->
-        <div class="list-group list-group-flush px-1 overflow-scroll overflow-x-hidden" id="messageThreads"
+        <div class="list-group list-group-flush overflow-y-auto overflow-x-hidden" id="messageThreads"
              style="height: 0">
             <?php display_message_thread(); ?>
         </div>
@@ -156,13 +166,13 @@ function display_message_thread(): void
     <div class="col-md-8 col-sm-12 p-0 position-relative" id="topLevelMessageView">
         <div class="fs-2 p-2 d-flex justify-content-between align-items-center">
             <button class="btn" style="font-size:2rem" type="button"
-                    onclick="openMessageThread()" id="backButton">
+                    onclick="backButtonPressed()" id="backButton">
                 <i class="bi bi-arrow-90deg-left text-white"></i>
             </button>
             <b id="thread_title">Select Thread</b>
             <div class="btn-group float-end">
                 <button class="bg-transparent border-0 p-0 float-end align-middle" type="button"
-                        id="userOptionsDropdown"
+                        id="userOptionsDropdown" disabled
                         data-bs-toggle="dropdown" aria-expanded="false">
                     <a class="nav-link float-end">
                         <i class="bi bi-three-dots-vertical text-white"></i>
@@ -171,38 +181,38 @@ function display_message_thread(): void
                 <ul class="dropdown-menu dropdown-menu-md-end position-absolute"
                     aria-labelledby="userOptionsDropdown">
                     <li>
-                        <a class="float-end dropdown-item" href="#">
+                        <a class="float-end dropdown-item" href="" id="buttonToUsersProfile">
                             <h4>Profile</h4>
                         </a>
                     </li>
                     <li>
-                        <a class="float-end dropdown-item" href="#">
+                        <button class="float-end dropdown-item" onclick="sendReport()">
                             <h4>Report</h4>
-                        </a>
+                        </button>
                     </li>
                     <li>
-                        <a class="float-end dropdown-item" href="#">
-                            <h4>Delete Chat</h4>
-                        </a>
+                        <button class="float-end dropdown-item" onclick="unmatchUsers()">
+                            <h4>Unmatch</h4>
+                        </button>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="row w-100 m-0 bg-white rounded-start border border-2 overflow-y-scroll d-flex flex-column-reverse"
+        <div class="row w-100 m-0 bg-light rounded-start overflow-y-auto d-flex flex-column-reverse textViewBorder"
              style="border-color:#ff8527!important;" id="messageWindow">
             <div class="d-flex flex-column p-3" id="message_view">
             </div>
         </div>
         <div class="m-0 p-3 position-absolute bottom-0 w-100" id="textInput">
             <div class="row p-0">
-                <form class="d-flex" onsubmit="sendButtonClicked()">
+                <form class="d-flex" id="sendMessageForm">
                     <div class="col-10 p-0">
-                        <input type="text" class="form-control bg-secondary border-0"
+                        <input type="text" class="form-control bg-secondary border-0" disabled
                                placeholder="Start typing..." id="sendMessageInput">
                     </div>
                     <div class="col-2 p-0 ps-3">
-                        <button class="btn bg-white rounded-3" type="button"
-                                style="--bs-bg-opacity: .1;" onclick="sendButtonClicked()">
+                        <button class="btn bg-white rounded-3" type="submit" id="sendMessageButton" disabled
+                                style="--bs-bg-opacity: .1;">
                             Send
                         </button>
                     </div>
@@ -212,7 +222,7 @@ function display_message_thread(): void
     </div>
 </div>
 <script>
-    function updateHeights() {
+    function initiateWindow() {
         let vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
         let topOfMessageThread = document.getElementById("messageThreads").getBoundingClientRect().top;
         let topOfMessageWindow = document.getElementById("messageWindow").getBoundingClientRect().top;
@@ -232,37 +242,15 @@ function display_message_thread(): void
         }
     }
 
-    function openMessageThread() {
+    function backButtonPressed() {
         document.getElementById("topLevelMessageThread").classList.add("d-block");
         document.getElementById("topLevelMessageThread").classList.remove("d-none");
-    }
-
-    function updateMessageView() {
-        if (window.matchMedia("(max-width: 767.98px)").matches) {
-            document.getElementById("topLevelMessageThread").classList.add("d-none");
-            document.getElementById("topLevelMessageThread").classList.remove("d-block");
-        }
-        let postData = {
-            "connectionId": document.querySelector('a[data-bs-toggle="list"].active').dataset.connection_id,
-            "sentUserId": document.querySelector('a[data-bs-toggle="list"].active').dataset.user_id
-        };
-        $.ajax({
-            type: "POST",
-            url: "message_backend.php",
-            data: {
-                json: JSON.stringify(postData)
-            },
-            success: function (response) {
-                document.getElementById("message_view").innerHTML = "";
-                $("#message_view").append(response);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert(thrownError);
-            }
-        });
+        document.querySelector('a[data-bs-toggle="list"].active').classList.remove("active");
     }
 
     function sendButtonClicked() {
+        if (document.querySelector('#sendMessageInput').value === "")
+            return
         let postData = {
             "sentMessage": {
                 "connectionId": document.querySelector('a[data-bs-toggle="list"].active').dataset.connection_id,
@@ -286,15 +274,100 @@ function display_message_thread(): void
         });
     }
 
+    function updateMessageView() {
+        if (document.querySelector('a[data-bs-toggle="list"].active') == null)
+            return;
+        let postData = {
+            "getMessages": {
+                "connectionId": document.querySelector('a[data-bs-toggle="list"].active').dataset.connection_id,
+                "sentUserId": document.querySelector('a[data-bs-toggle="list"].active').dataset.user_id
+            }
+        };
+        $.ajax({
+            type: "POST",
+            url: "message_backend.php",
+            data: {
+                json: JSON.stringify(postData)
+            },
+            success: function (response) {
+                document.getElementById("message_view").innerHTML = "";
+                $("#message_view").append(response);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError);
+            }
+        });
+        if (document.querySelector('a[data-bs-toggle="list"].active') == null)
+            return;
+        setTimeout(updateMessageView, 5000);
+    }
+
+    function sendReport() {
+        let postData = {
+            "reportUser": {
+                "userId": document.querySelector('a[data-bs-toggle="list"].active').dataset.user_id
+            }
+        };
+        $.ajax({
+            type: "POST",
+            url: "message_backend.php",
+            data: {
+                json: JSON.stringify(postData)
+            },
+            success: function (response) {
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError);
+            }
+        });
+    }
+
+    function unmatchUsers() {
+        let postData = {
+            "unmatchUsers": {
+                "userId": "<?= $userId ?>",
+                "userToUnmatchId": document.querySelector('a[data-bs-toggle="list"].active').dataset.user_id
+            }
+        };
+        $.ajax({
+            type: "POST",
+            url: "message_backend.php",
+            data: {
+                json: JSON.stringify(postData)
+            },
+            success: function (response) {
+                location.reload();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError);
+            }
+        });
+    }
 
     $('document').ready(function () {
-        updateHeights();
-        window.addEventListener('resize', updateHeights);
+        initiateWindow();
+        window.addEventListener('resize', initiateWindow);
+
+        $("#sendMessageForm").submit(function (e) {
+            e.preventDefault();
+            sendButtonClicked();
+        });
 
         const tabElms = document.querySelectorAll('a[data-bs-toggle="list"]');
         tabElms.forEach(tabElm => {
             tabElm.addEventListener('shown.bs.tab', event => {
+                // Thread Clicked...
                 document.getElementById("thread_title").innerHTML = document.querySelectorAll("#messageThreads .active #listgroup-name")[0].innerHTML;
+                document.getElementById("sendMessageInput").removeAttribute("disabled");
+                document.getElementById("sendMessageButton").removeAttribute("disabled");
+                document.getElementById("userOptionsDropdown").removeAttribute("disabled");
+                document.getElementById("buttonToUsersProfile").setAttribute("href", "../profile/?user_id=" +
+                    document.querySelector('a[data-bs-toggle="list"].active').dataset.connection_id);
+
+                if (window.matchMedia("(max-width: 767.98px)").matches) {
+                    document.getElementById("topLevelMessageThread").classList.add("d-none");
+                    document.getElementById("topLevelMessageThread").classList.remove("d-block");
+                }
                 updateMessageView();
             });
         });
