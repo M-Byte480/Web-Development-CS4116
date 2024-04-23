@@ -11,17 +11,8 @@ function get_user_age($user): int
 function get_profile_card(array $user, int $interest_flag): void
 {
     ?>
-    <script>
-        function onCardClicked(user_id) {
-            // Open page with get request
-            let getRequest = "?user_id=" + user_id;
-            window.open("../discovery/" + getRequest, "_parent");
-        }
-    </script>
-
-    <div id="<?= $user['id'] ?>" class="user_card" onclick="onCardClicked('<?= $user['id'] ?>')"
-
-         class="bg-dark text-white m-1 my-card border border-2 border-dark rounded-4">
+    <div id="<?= $user['id'] ?>" onclick="onCardClicked('<?= $user['id'] ?>')"
+         class="bg-dark text-white border border-2 border-dark rounded-4 user_card my-card m-1">
         <?php
 
         require_once(__DIR__ . '/../database/repositories/images.php');
@@ -35,7 +26,7 @@ function get_profile_card(array $user, int $interest_flag): void
         }
         ?>
 
-        <div class="img-overlay no-mouse-hover rounded-4"
+        <div class="img-overlay rounded-4"
              style="height: 400px; background-size: cover;
                      background-position: center; background-image: url('<?= $cover_image ?>')">
             <div class="name rounded-4">

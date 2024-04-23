@@ -57,12 +57,12 @@ input[type="checkbox"] {
 }
 
 .my-card {
-
-    transition: 0.5s;
+    /*transition: 0.5s;*/
 }
 
 .my-card:hover {
-    scale: 1.1;
+    transform: scale(4.075);
+    z-index: 800;
 }
 
 .search-bar-container {
