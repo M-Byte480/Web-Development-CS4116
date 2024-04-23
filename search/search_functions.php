@@ -20,7 +20,7 @@ require_once(__DIR__ . '/../secrets.settings.php');
  */
 function get_user_by_matches($get): bool|mysqli_result|null
 {
-    global $db_host, $db_username, $db_password, $db_database;
+    global $db_host, $db_username, $db_password, $db_database, $db_some_secret, $secret_encryption_method, $secret_encryption_key;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 
     if (!$con) {
@@ -55,9 +55,9 @@ function get_user_by_matches($get): bool|mysqli_result|null
                 COUNT(u.id) as matching_interests,
                 bev.name as beverage
                 FROM Users as u
-                Left JOIN Profiles ON u.id = Profiles.userId
-                Left JOIN UserInterests as ui on ui.userId = u.id 
-                Left JOIN Interests as i on i.id = ui.interestId
+                LEFT JOIN Profiles ON u.id = Profiles.userId
+                LEFT JOIN UserInterests as ui on ui.userId = u.id 
+                LEFT JOIN Interests as i on i.id = ui.interestId
                 LEFT JOIN UserBeverages as userbev on userbev.userId = u.id
                 LEFT JOIN Beverages as bev on bev.id = userbev.beverageId
                 WHERE dateOFBirth >= '{$min_date}' AND 

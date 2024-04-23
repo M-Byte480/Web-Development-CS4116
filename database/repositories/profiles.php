@@ -125,7 +125,7 @@ function get_user_profile($user_id)
     $query = "SELECT * FROM Profiles WHERE userid = '{$user_id}'";
     $result = mysqli_query($con, $query);
 
-    return $result;
+    return $result->fetch_assoc();
 }
 
 ?>

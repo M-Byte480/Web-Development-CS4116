@@ -1,6 +1,8 @@
 <?php
 // Validate is user logged in
 require_once(__DIR__ . '/../validator_functions.php');
+require_once(__DIR__ . '/../database/repositories/images.php');
+
 try {
     validate_user_logged_in();
 } catch (ValidationException $e) {
@@ -51,6 +53,11 @@ if(isset($_GET['user_id'])){
 require_once(__DIR__ . '/discovery_functions.php');
 require_once(__DIR__ . '/../database/repositories/interests.php');
 require_once(__DIR__ . '/../database/repositories/profiles.php');
+//$user = get_user_from_cookies()->fetch_assoc(); // Creates assoc array so we use [] accessors
+
+// todo: use this are a reference to get potential matches
+$clicked_user = get_user_profile($user_id);
+
 
 $this_user_profile = get_user_profile($user_id);
 
@@ -62,7 +69,11 @@ if($user_id == 0){
 
 echo 'Potential Matches: ' . count($potential_matches);
 
-function bio_card($user_profile)
+//if (sizeof($potential_matches_ids) == 0) {
+//    echo 'You beat the game';
+//    exit();
+//}
+function bio_card($user_profile): void
 {
     ?>
     <div class="bio card m-2 bg-light">
@@ -76,7 +87,7 @@ function bio_card($user_profile)
     <?php
 }
 
-function interest_card($user_profile)
+function interest_card($user_profile): void
 {
     ?>
     <div class="interests card m-2 bg-light">
@@ -86,8 +97,7 @@ function interest_card($user_profile)
             $user_interests = get_user_interests($user_profile['userId']);
             foreach ($user_interests as $interest) {
                 ?>
-
-                <span class="badge rounded-pill bg-secondary"><?= $interest ?></span>
+                <span class=" badge rounded-pill bg-secondary"><?= $interest ?></span>
 
                 <?php
             }
@@ -111,12 +121,44 @@ function interest_card($user_profile)
                      class="img-fluid align-middle"
                 />
             </a>
+        </div>
+        <div class="col-12 col-sm-4 mt-2">
+            <div id="userImagesCarousel" class="carousel slide">
+
+                <?php
+                $images = get_images_by_user_id($user_id);
+                $total_images = count($images);
+                if ($total_images < 1) {
+                    $images = array('../resources/search/default_image.jpg');
+                }
+                ?>
+
+                <div class="carousel-inner">
+                    <?php for ($i = 0; $i < count($images); $i++) {
+                        $image = $images[$i];
+                        ?>
+
+                        <div class="carousel-item <?= $i == 0 ? 'active' : '' ?>">
+                            <img src="<?= $total_images < 1 ? $image : 'data:image/png;base64,' . $image['image']; ?>"
+                                 class="d-block w-100"
+                                 alt="">
+                        </div>
+                    <?php } ?>
+                </div>
+                <button class="carousel-control-next" type="button" data-bs-target="#userImagesCarousel"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="false"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                <button class="carousel-control-prev" type="button" data-bs-target="#userImagesCarousel"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="false"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+            </div>
 
         </div>
 
-        <div class="col-12 col-sm-4">
-        
-        </div>
         <div class="d-none d-md-flex col-md-1 p-1 align-items-center">
             <a href="javascript:likeUser(<?= 'test' ?>);">
                 <img src="resources/like_bottle.png"
@@ -128,9 +170,6 @@ function interest_card($user_profile)
         <div class="col-12 col-sm-6 d-sm-flex align-items-center">
             <div style="width: 100%;">
                 <?php
-
-
-                //                console_log(json_encode($suggested_user_profile));
                 bio_card($clicked_user);
                 interest_card($clicked_user);
                 ?>
@@ -138,7 +177,6 @@ function interest_card($user_profile)
         </div>
     </div>
 </div>
-
 </body>
 </html>
 

@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 
 function get_user_age($user): int
 {
@@ -25,18 +26,18 @@ function get_profile_card(array $user, int $interest_flag): void
 
         require_once(__DIR__ . '/../database/repositories/images.php');
 
-        $cover_image = get_images_by_user_id($user['id']);
+        $cover_image = get_user_pfp_from_user_ID($user['id']);
 
-        if (sizeof($cover_image) < 1 || strlen($cover_image[0]['image']) < 4) {
+        if ($cover_image == null || strlen($cover_image) < 4) {
             $cover_image = '../resources/search/default_image.jpg';
         } else {
-            $cover_image = $cover_image[0]['image'];
+            $cover_image = 'data:image/png;base64,' . $cover_image;
         }
         ?>
 
         <div class="img-overlay no-mouse-hover rounded-4"
              style="height: 400px; background-size: cover;
-                     background-position: center; background-image: url('<?php echo $cover_image; ?>')">
+                     background-position: center; background-image: url('<?= $cover_image ?>')">
             <div class="name rounded-4">
                 <div class="bottom ">
                     <h5 class=" no-margin user-name"> <?= $user['firstname'] . ' ' . $user['lastname'] . ' ' . get_user_age($user) ?> </h5>
