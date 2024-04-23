@@ -11,7 +11,7 @@ function get_all_chatlogs_from_connectionId($connectionId): array
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "SELECT userSent, time, content FROM chatlogs WHERE connectionId='{$connectionId}' ORDER BY time ASC";
+    $query = "SELECT userSent, time, content FROM ChatLogs WHERE connectionId='{$connectionId}' ORDER BY time ASC";
     $result = mysqli_query($con, $query);
 
     mysqli_close($con);
@@ -26,7 +26,7 @@ function add_chatlog($connectionId, $userSent, $content): void
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "INSERT INTO chatlogs(userSent, connectionId, content) VALUES ('{$userSent}', '{$connectionId}', '{$content}')";
+    $query = "INSERT INTO ChatLogs(userSent, connectionId, content) VALUES ('{$userSent}', '{$connectionId}', '{$content}')";
     mysqli_query($con, $query);
     mysqli_close($con);
 }

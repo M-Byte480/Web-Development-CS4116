@@ -362,7 +362,7 @@ function display_message_thread(): void
                 document.getElementById("sendMessageButton").removeAttribute("disabled");
                 document.getElementById("userOptionsDropdown").removeAttribute("disabled");
                 document.getElementById("buttonToUsersProfile").setAttribute("href", "../profile/?user_id=" +
-                    document.querySelector('a[data-bs-toggle="list"].active').dataset.connection_id);
+                    document.querySelector('a[data-bs-toggle="list"].active').dataset.user_id);
 
                 if (window.matchMedia("(max-width: 767.98px)").matches) {
                     document.getElementById("topLevelMessageThread").classList.add("d-none");
