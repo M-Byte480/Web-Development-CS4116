@@ -9,7 +9,7 @@ function get_potential_matching_profiles(): array
     $this_user = get_user_from_cookies();
     $users_matching_description = get_user_matching_description($this_user);
     $users_matching_description_assoc = array();
-    while ($row = mysqli_fetch_row($users_matching_description)) {
+    while ($row = mysqli_fetch_assoc($users_matching_description)) {
         $users_matching_description_assoc[] = $row;
     }
 
@@ -22,8 +22,7 @@ function get_potential_matching_profiles(): array
 function get_user_from_cookies()
 {
     if (!isset($_COOKIE["email"])) {
-        // todo: get the user to re-login
-        echo 'Login please';
+        header("Location: ../login/");
         exit();
     }
 

@@ -12,10 +12,12 @@ try {
 
 require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 
+$GET_REQUEST = 1;
+
 if(isset($_GET['user_id'])){
     $user_id = $_GET['user_id'];
 }else{
-    $user_id = 0;
+    $user_id = $GET_REQUEST - 1;
 }
 
 ?>
@@ -56,18 +58,18 @@ require_once(__DIR__ . '/../database/repositories/profiles.php');
 //$user = get_user_from_cookies()->fetch_assoc(); // Creates assoc array so we use [] accessors
 
 // todo: use this are a reference to get potential matches
-$clicked_user = get_user_profile($user_id);
+//$clicked_user = get_user_profile($user_id);
+//
+//
+//$this_user_profile = get_user_profile($user_id);
 
-
-$this_user_profile = get_user_profile($user_id);
-
-if($user_id == 0){
+if($user_id != $GET_REQUEST){
     $potential_matches = get_potential_matching_profiles();
+    echo 'Potential Matches: ' . count($potential_matches);
+    $this_user_profile = $potential_matches[0];
 }else{
     $this_user_profile = get_user_profile($user_id);
 }
-
-echo 'Potential Matches: ' . count($potential_matches);
 
 //if (sizeof($potential_matches_ids) == 0) {
 //    echo 'You beat the game';
@@ -78,7 +80,7 @@ function bio_card($user_profile): void
     ?>
     <div class="bio card m-2 bg-light">
         <div class="card-body ">
-            <h5 class="card-body">About <?= get_first_name_from_user_ID($user_profile['userId']) ?></h5>
+            <h5 class="card-body">About <?= get_first_name_from_user_ID($user_profile['id']) ?></h5>
             <p class="card-text text-center">
                 <?= $user_profile['description'] ?>
             </p>
@@ -170,8 +172,8 @@ function interest_card($user_profile): void
         <div class="col-12 col-sm-6 d-sm-flex align-items-center">
             <div style="width: 100%;">
                 <?php
-                bio_card($clicked_user);
-                interest_card($clicked_user);
+                bio_card($this_user_profile);
+                interest_card($this_user_profile);
                 ?>
             </div>
         </div>
