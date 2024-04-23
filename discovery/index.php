@@ -4,7 +4,7 @@ require_once(__DIR__ . '/../validator_functions.php');
 require_once(__DIR__ . '/../database/repositories/images.php');
 
 try {
-    validate_user_logged_in();
+    $logged_in_user = validate_user_logged_in();
 } catch (ValidationException $e) {
     echo 'User Credentials have expired';
     exit();
@@ -31,22 +31,47 @@ if (isset($_GET['user_id'])) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <?php
-    require_once(__DIR__ . "/../css_binding.php");
+    require_once(__DIR__ . "/../imports.php");
     ?>
     <link rel="stylesheet" href="styles.css">
 
     <title>Discovery</title>
 
 </head>
+
 <script>
+    // Update the image state
     function dislikeUser(userId) {
         console.log(userId);
+        let postData = {
+            "discovery_action": {
+                "action": "dislike",
+                "user_id": "<?= $logged_in_user['id'] ?>",
+                "affected_user": userId
+            }
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "discovery_backend.php",
+            data: {
+                json: JSON.stringify(postData)
+            },
+            success: function (response) {
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log('fuck');
+                alert(thrownError);
+            }
+        });
     }
 
     function likeUser(userId) {
         console.log(userId);
     }
 </script>
+
 <body>
 <?php require_once(__DIR__ . '/../nav_bar/index.php') ?>
 
@@ -60,11 +85,17 @@ if (!$GET_REQUEST) {
     $potential_matches = get_potential_matching_profiles();
     // Todo: check for how many users
 
-    echo 'Potential Matches: ' . count($potential_matches);
+    $num_p_matches = count($potential_matches);
+    if ($num_p_matches < 1) {
+        header('Location: ./get_a_life/');
+        exit();
+    }
+    echo 'Potential Matches: ' . $num_p_matches . '<br>';
     $this_user_profile = $potential_matches[0];
     $user_id = $this_user_profile['id'];
 } else {
     $this_user_profile = get_user_profile_for_discovery($user_id);
+
     $this_user_profile['id'] = $this_user_profile['userId'];
 }
 
@@ -110,7 +141,7 @@ function interest_card($user_profile): void
 <div class="container">
     <div class="row">
         <div class="d-none d-md-flex col-md-1 p-1 align-items-center">
-            <a href="javascript:dislikeUser(<?= 'test' ?>);">
+            <a href="javascript:dislikeUser('<?= 'test' ?>');">
                 <img src="resources/dislike_bottle.png"
                      alt="like button"
                      class="img-fluid align-middle"
@@ -155,7 +186,7 @@ function interest_card($user_profile): void
         </div>
 
         <div class="d-none d-md-flex col-md-1 p-1 align-items-center">
-            <a href="javascript:likeUser(<?= 'test' ?>);">
+            <a href="javascript:likeUser('<?= 'test' ?>');">
                 <img src="resources/like_bottle.png"
                      alt="like button"
                      class="img-fluid"

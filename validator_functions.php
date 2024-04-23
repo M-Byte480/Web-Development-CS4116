@@ -124,9 +124,9 @@ function validate_delete_parameters($POST): void
 /**
  * @throws ValidationException
  */
-function validate_user_logged_in(): void
+function validate_user_logged_in()
 {
-    require_once (__DIR__ . '/encryption/encryption.php');
+    require_once(__DIR__ . '/encryption/encryption.php');
     if (!(array_key_exists('email', $_COOKIE) && $_COOKIE['email'])) {
         throw new ValidationException('No user_email');
     }
@@ -149,6 +149,8 @@ function validate_user_logged_in(): void
     $query_result = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password']);
 
     validate_unique_result($query_result);
+
+    return $query_result->fetch_assoc();
 }
 
 /**
