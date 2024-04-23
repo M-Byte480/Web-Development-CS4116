@@ -12,12 +12,12 @@ try {
 
 require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 
-$GET_REQUEST = 1;
+$GET_REQUEST = true;
 
 if (isset($_GET['user_id'])) {
     $user_id = $_GET['user_id'];
 } else {
-    $user_id = $GET_REQUEST - 1;
+    $GET_REQUEST = false;
 }
 
 ?>
@@ -56,16 +56,17 @@ require_once(__DIR__ . '/discovery_functions.php');
 require_once(__DIR__ . '/../database/repositories/interests.php');
 require_once(__DIR__ . '/../database/repositories/profiles.php');
 
-if ($user_id != $GET_REQUEST) {
+if (!$GET_REQUEST) {
     $potential_matches = get_potential_matching_profiles();
     // Todo: check for how many users
 
     echo 'Potential Matches: ' . count($potential_matches);
     $this_user_profile = $potential_matches[0];
+    $user_id = $this_user_profile['id'];
 } else {
     $this_user_profile = get_user_profile_for_discovery($user_id);
+    $this_user_profile['id'] = $this_user_profile['userId'];
 }
-
 
 function bio_card($user_profile): void
 {
@@ -88,7 +89,7 @@ function interest_card($user_profile): void
         <div class="card-body">
             <h5 class="card-body">Interests</h5>
             <?php
-            $user_interests = get_user_interests($user_profile['userId']);
+            $user_interests = get_user_interests($user_profile['id']);
             foreach ($user_interests as $interest) {
                 ?>
                 <span class=" badge rounded-pill bg-secondary"><?= $interest ?></span>

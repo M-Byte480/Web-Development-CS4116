@@ -103,7 +103,13 @@ $completement_users = @array_diff($rows, $union_users);
         </div>
     </div>
 </div>
-
+<script>
+    function onCardClicked(user_id) {
+        // Open page with get request
+        let getRequest = "?user_id=" + user_id;
+        window.open("../discovery/" + getRequest, "_parent");
+    }
+</script>
 
 <div class="container" id="all-users">
     <div class="row">
