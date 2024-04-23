@@ -63,7 +63,7 @@ if ($user_id != $GET_REQUEST) {
     echo 'Potential Matches: ' . count($potential_matches);
     $this_user_profile = $potential_matches[0];
 } else {
-    $this_user_profile = get_user_profile($user_id);
+    $this_user_profile = get_user_profile_for_discovery($user_id);
 }
 
 
