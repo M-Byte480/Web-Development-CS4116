@@ -14,9 +14,9 @@ require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 
 $GET_REQUEST = 1;
 
-if(isset($_GET['user_id'])){
+if (isset($_GET['user_id'])) {
     $user_id = $_GET['user_id'];
-}else{
+} else {
     $user_id = $GET_REQUEST - 1;
 }
 
@@ -55,26 +55,18 @@ if(isset($_GET['user_id'])){
 require_once(__DIR__ . '/discovery_functions.php');
 require_once(__DIR__ . '/../database/repositories/interests.php');
 require_once(__DIR__ . '/../database/repositories/profiles.php');
-//$user = get_user_from_cookies()->fetch_assoc(); // Creates assoc array so we use [] accessors
 
-// todo: use this are a reference to get potential matches
-//$clicked_user = get_user_profile($user_id);
-//
-//
-//$this_user_profile = get_user_profile($user_id);
-
-if($user_id != $GET_REQUEST){
+if ($user_id != $GET_REQUEST) {
     $potential_matches = get_potential_matching_profiles();
+    // Todo: check for how many users
+
     echo 'Potential Matches: ' . count($potential_matches);
     $this_user_profile = $potential_matches[0];
-}else{
+} else {
     $this_user_profile = get_user_profile($user_id);
 }
 
-//if (sizeof($potential_matches_ids) == 0) {
-//    echo 'You beat the game';
-//    exit();
-//}
+
 function bio_card($user_profile): void
 {
     ?>
