@@ -40,25 +40,17 @@ if (isset($_GET['user_id'])) {
 </head>
 
 <script>
-    // Update the image state
-    function dislikeUser(userId) {
-        console.log(userId);
-        let postData = {
-            "discovery_action": {
-                "action": "dislike",
-                "user_id": "<?= $logged_in_user['id'] ?>",
-                "affected_user": userId
-            }
-        };
+    function post_connection(userId, postData) {
 
+        console.log(postData)
         $.ajax({
             type: "POST",
             url: "discovery_backend.php",
             data: {
-                json: JSON.stringify(postData)
+                'json': JSON.stringify(postData)
             },
             success: function (response) {
-
+                console.log(response)
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log('fuck');
@@ -67,8 +59,26 @@ if (isset($_GET['user_id'])) {
         });
     }
 
+    function dislikeUser(userId) {
+        let postData = {
+            "discovery_action": {
+                "action": "dislike",
+                "user_id": "<?= $logged_in_user['id'] ?>",
+                "affected_user": userId
+            }
+        };
+        post_connection(userId, postData);
+    }
+
     function likeUser(userId) {
-        console.log(userId);
+        let postData = {
+            "discovery_action": {
+                "action": "like",
+                "user_id": "<?= $logged_in_user['id'] ?>",
+                "affected_user": userId
+            }
+        };
+        post_connection(userId, postData);
     }
 </script>
 
@@ -104,7 +114,8 @@ function bio_card($user_profile): void
     ?>
     <div class="bio card m-2 bg-light">
         <div class="card-body ">
-            <h5 class="card-body">About <?= get_first_name_from_user_ID($user_profile['id']) ?></h5>
+            <h5 class="card-body">
+                About <?= get_first_name_from_user_ID($user_profile['id']) . ' ' . get_last_name_from_user_ID($user_profile['id']) ?></h5>
             <p class="card-text text-center">
                 <?= $user_profile['description'] ?>
             </p>
@@ -141,7 +152,7 @@ function interest_card($user_profile): void
 <div class="container">
     <div class="row">
         <div class="d-none d-md-flex col-md-1 p-1 align-items-center">
-            <a href="javascript:dislikeUser('<?= 'test' ?>');">
+            <a href="javascript:dislikeUser('<?= $user_id ?>');">
                 <img src="resources/dislike_bottle.png"
                      alt="like button"
                      class="img-fluid align-middle"
@@ -152,7 +163,7 @@ function interest_card($user_profile): void
             <div id="userImagesCarousel" class="carousel slide">
 
                 <?php
-                $images = get_images_by_user_id($user_id);
+                $images = get_images_by_user_id($user_id,);
                 $total_images = count($images);
                 if ($total_images < 1) {
                     $images = array('../resources/search/default_image.jpg');
@@ -186,7 +197,7 @@ function interest_card($user_profile): void
         </div>
 
         <div class="d-none d-md-flex col-md-1 p-1 align-items-center">
-            <a href="javascript:likeUser('<?= 'test' ?>');">
+            <a href="javascript:likeUser('<?= $user_id ?>');">
                 <img src="resources/like_bottle.png"
                      alt="like button"
                      class="img-fluid"

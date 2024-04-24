@@ -36,4 +36,35 @@ function add_dislike_by_user_ids($user_id1, $user_id2)
     mysqli_close($con);
 }
 
+function create_dislike_record($affected_id, $logged_in_user_id): void
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    $query = "INSERT INTO Dislikes (userId, dislikedUser, time)
+              VALUES (?, ?, NOW())";
+
+    $stmt = mysqli_prepare($con, $query);
+
+
+    if (!$stmt) {
+        die('Error in preparing statement: ' . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_param($stmt, 'ss', $logged_in_user_id, $affected_id);
+
+    $success = mysqli_stmt_execute($stmt);
+
+    if (!$success) {
+        die('Error in executing statement: ' . mysqli_error($con));
+    }
+
+    mysqli_stmt_close($stmt);
+
+    mysqli_close($con);
+}
+
 ?>
