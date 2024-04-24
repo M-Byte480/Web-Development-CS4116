@@ -37,3 +37,34 @@ function enter_new_ban($banned_by_email, $unban_date, $user_id, $is_permanent, $
     }
     return $success;
 }
+
+function get_most_recent_ban($user_id) : null | array
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    $query =   "SELECT ban.* 
+                FROM Bans ban 
+                INNER JOIN (
+                    SELECT MAX(time) AS max_time 
+                    FROM Bans
+                    WHERE userId = '{$user_id}' 
+                    GROUP BY userId) as recent_ban
+                WHERE ban.userId = '{$user_id}'  AND ban.time = recent_ban.max_time;";
+
+
+    $result = mysqli_query($con, $query);
+    mysqli_close($con);
+    $output = '';
+    if(mysqli_num_rows($result) == 0){
+        $output = null;
+    }else{
+        $output = $result->fetch_assoc();
+    }
+
+    return $output;
+}

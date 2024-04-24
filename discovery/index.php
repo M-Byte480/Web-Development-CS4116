@@ -1,16 +1,10 @@
 <?php
 // Validate is user logged in
+require_once (__DIR__ . '/../validate_user_logged_in.php');
 require_once(__DIR__ . '/../validator_functions.php');
 require_once(__DIR__ . '/../database/repositories/images.php');
-
-try {
-    $logged_in_user = validate_user_logged_in();
-} catch (ValidationException $e) {
-    echo 'User Credentials have expired';
-    exit();
-}
-
 require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
+$logged_in_user = validate_user_logged_in();
 
 $GET_REQUEST = true;
 
@@ -81,7 +75,6 @@ if (isset($_GET['user_id'])) {
         post_connection(postData);
     }
 </script>
-
 <body>
 <?php require_once(__DIR__ . '/../nav_bar/index.php') ?>
 

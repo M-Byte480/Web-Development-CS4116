@@ -151,4 +151,16 @@ CREATE TABLE ProfilePictures(
     ON DELETE CASCADE,
 
     PRIMARY KEY (userId)
-)
+);
+
+CREATE TABLE Reports
+(
+    reportId   INT auto_increment,
+    reporterId VARCHAR(36) NOT NULL,
+    reportedId VARCHAR(36) NOT NULL,
+    reason LONGTEXT,
+    time timestamp default CURRENT_TIMESTAMP not null,
+    CONSTRAINT uniqueIdentifier PRIMARY KEY (reportId),
+    CONSTRAINT fk_reporter FOREIGN KEY (reporterId) REFERENCES Users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_reported FOREIGN KEY (reportedId) REFERENCES Users (id) ON DELETE CASCADE
+);

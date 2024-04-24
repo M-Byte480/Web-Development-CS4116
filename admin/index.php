@@ -1,7 +1,6 @@
 <?php
 // Validate is user logged in
-require_once(__DIR__ . '/../validate_admin.php');
-
+require_once (__DIR__ . '/../validate_admin.php');
 require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 
 ?>
