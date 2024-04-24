@@ -57,7 +57,7 @@ function remove_dislike_by_user_id($user_id, $affected_user)
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "DELETE FROM Dislikes WHERE userId = '{$user_id}' AND likedUser = '{$affected_user}'";
+    $query = "DELETE FROM Dislikes WHERE userId = '{$user_id}' AND dislikedUser = '{$affected_user}'";
     mysqli_query($con, $query);
     mysqli_close($con);
 }

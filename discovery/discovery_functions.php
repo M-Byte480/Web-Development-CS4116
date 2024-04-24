@@ -56,6 +56,7 @@ function try_interact_with_another_user($user_id, $affected_user, $action): void
             //dislike here ->we good
             //dislike missing ->set it
             if (!does_dislike_exist($user_id, $affected_user)) {
+                print_r($action);
                 add_dislike_by_user_ids($user_id, $affected_user);
             }
             //like exists -> remove
@@ -70,6 +71,7 @@ function try_interact_with_another_user($user_id, $affected_user, $action): void
             //like missing ->set it
             if (!does_like_exist($user_id, $affected_user)) {
                 add_like_by_user_ids($user_id, $affected_user);
+                print_r($action);
             }
 
             if (does_dislike_exist($user_id, $affected_user)) {

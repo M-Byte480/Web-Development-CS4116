@@ -15,7 +15,7 @@ require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 $GET_REQUEST = true;
 
 if (isset($_GET['user_id'])) {
-    $user_id = $_GET['user_id'];
+    $affected_user_id = $_GET['user_id'];
 } else {
     $GET_REQUEST = false;
 }
@@ -40,7 +40,7 @@ if (isset($_GET['user_id'])) {
 </head>
 
 <script>
-    function post_connection(userId, postData) {
+    function post_connection(postData) {
 
         console.log(postData)
         $.ajax({
@@ -67,7 +67,7 @@ if (isset($_GET['user_id'])) {
                 "affected_user": userId
             }
         };
-        post_connection(userId, postData);
+        post_connection(postData);
     }
 
     function likeUser(userId) {
@@ -78,7 +78,7 @@ if (isset($_GET['user_id'])) {
                 "affected_user": userId
             }
         };
-        post_connection(userId, postData);
+        post_connection(postData);
     }
 </script>
 
@@ -102,9 +102,9 @@ if (!$GET_REQUEST) {
     }
     echo 'Potential Matches: ' . $num_p_matches . '<br>';
     $this_user_profile = $potential_matches[0];
-    $user_id = $this_user_profile['id'];
+    $affected_user_id = $this_user_profile['id'];
 } else {
-    $this_user_profile = get_user_profile_for_discovery($user_id);
+    $this_user_profile = get_user_profile_for_discovery($affected_user_id);
 
     $this_user_profile['id'] = $this_user_profile['userId'];
 }
@@ -152,7 +152,7 @@ function interest_card($user_profile): void
 <div class="container">
     <div class="row">
         <div class="d-none d-md-flex col-md-1 p-1 align-items-center">
-            <a href="javascript:dislikeUser('<?= $user_id ?>');">
+            <a href="javascript:dislikeUser('<?= $affected_user_id ?>');">
                 <img src="resources/dislike_bottle.png"
                      alt="like button"
                      class="img-fluid align-middle"
@@ -163,7 +163,7 @@ function interest_card($user_profile): void
             <div id="userImagesCarousel" class="carousel slide">
 
                 <?php
-                $images = get_images_by_user_id($user_id,);
+                $images = get_images_by_user_id($affected_user_id,);
                 $total_images = count($images);
                 if ($total_images < 1) {
                     $images = array('../resources/search/default_image.jpg');
@@ -197,7 +197,7 @@ function interest_card($user_profile): void
         </div>
 
         <div class="d-none d-md-flex col-md-1 p-1 align-items-center">
-            <a href="javascript:likeUser('<?= $user_id ?>');">
+            <a href="javascript:likeUser('<?= $affected_user_id ?>');">
                 <img src="resources/like_bottle.png"
                      alt="like button"
                      class="img-fluid"
