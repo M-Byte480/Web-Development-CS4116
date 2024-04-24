@@ -1,6 +1,6 @@
 <?php
 // Validate is user logged in
-require_once(__DIR__ . '/../validate_user.php');
+require_once(__DIR__ . '/../validate_user_logged_in.php');
 require_once(__DIR__ . '/../database/repositories/connections.php');
 
 $userId = (string)get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password'])->fetch_assoc()['id'];
