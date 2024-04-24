@@ -22,6 +22,19 @@ function is_temporary_ban_expired($ban): bool
     return $expired;
 }
 
+function is_user_banned($ban): bool
+{
+    if ($ban['permanent']) {
+        return true;
+    }
+
+    if ($ban['endDate'] !== null) {
+        return !is_temporary_ban_expired($ban);
+    }
+
+    return false;
+}
+
 function display_ban_days_duration($ban)
 {
     $today = new DateTime('now');
@@ -33,22 +46,5 @@ function display_ban_days_duration($ban)
     }
 
     $diff = date_diff($today, $endDate);
-    echo $diff->format('You are banned for: %R%a days');
-
-}
-
-
-function display_ban_time_duration($ban): void
-{
-    $time = new DateTime('now');
-    $endtime = new DateTime($ban['endDate']);
-
-    if ($ban['permanent']) {
-        exit();
-    }
-
-    $diff = $time->diff($endtime);
-    $interval = $diff->format('%h:%i:%s');
-
-    $output = list($hour, $minute, $second) = explode(':', $interval);
+    echo $diff->format('You are banned for %a days');
 }
