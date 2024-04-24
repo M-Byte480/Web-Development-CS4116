@@ -45,7 +45,7 @@ if (isset($decoded_json->getMessages)) {
 } elseif (isset($decoded_json->reportUser)) {
     if (isset($decoded_json->reportUser->userId)) {
         $userId = $decoded_json->reportUser->userId;
-        report_user($userId);
+        increment_report_count($userId);
     }
 } elseif (isset($decoded_json->unmatchUsers)) {
     if (isset($decoded_json->unmatchUsers->userId, $decoded_json->unmatchUsers->userId)) {
