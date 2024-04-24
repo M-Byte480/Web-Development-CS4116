@@ -96,17 +96,20 @@ function validate_admin($id)
  */
 function validate_ban_parameters($POST): void
 {
-//    if (array_key_exists('admin_email', $POST) && $POST['admin_email']) {
-//        if (!validate_email($POST['admin_email'])) {
-//            throw new ValidationException('Email Validation -> Ban');
-//        }
-//    }
-//
-//    if (array_key_exists('user_id', $POST) && $POST['user_id']) {
-//        if (!validate_user_id($POST['user_id'])) {
-//            throw new ValidationException('User ID Validation -> Ban');
-//        }
-//    }
+    $errors = array();
+    if (array_key_exists('admin_email', $POST) && $POST['admin_email']) {
+        require_once(__DIR__ . '/encryption/encryption.php');
+        $email = decrypt($POST['admin_email']);
+        if (!validate_email($email, $errors)) {
+            throw new ValidationException('Email Validation -> Ban');
+        }
+    }
+
+    if (array_key_exists('user_id', $POST) && $POST['user_id']) {
+        if (!validate_user_id($POST['user_id'])) {
+            throw new ValidationException('User ID Validation -> Ban');
+        }
+    }
 }
 
 /**
