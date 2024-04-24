@@ -3,6 +3,8 @@ require_once(__DIR__ . '/../database/repositories/users.php');
 require_once(__DIR__ . '/../database/repositories/likes.php');
 require_once(__DIR__ . '/../database/repositories/dislikes.php');
 require_once(__DIR__ . '/../search/search_functions.php');
+require_once(__DIR__ . '/../database/repositories/connections.php');
+
 function get_potential_matching_profiles(): array
 {
     // Todo: write the functions for these
@@ -29,7 +31,8 @@ function get_user_from_cookies()
     return get_user_profile_from_credentials($_COOKIE["email"], $_COOKIE["hashed_password"]);
 }
 
-function get_user_matching_description($this_user){
+function get_user_matching_description($this_user)
+{
     $dob = new DateTime($this_user['dateOfBirth']);
     $diff = $dob->diff(new DateTime());
     $age = $diff->y;
@@ -46,5 +49,33 @@ function get_user_matching_description($this_user){
     return get_user_by_matches($get);
 }
 
+function try_interact_with_another_user($user_id, $affected_user, $action): void
+{
+    switch ($action) {
+        case 'dislike':
+            //dislike here ->we good
+            //dislike missing ->set it
+            if (!does_dislike_exist($user_id, $affected_user)) {
+                add_dislike_by_user_ids($user_id, $affected_user);
+            }
+            //like exists -> remove
+            //like missing -> we good
+            if (does_like_exist($user_id, $affected_user)) {
+                delete_like_by_user_ids($user_id, $affected_user);
+            }
+            break;
 
-?>
+        case 'like':
+            //like here ->we good
+            //like missing ->set it
+            if (!does_like_exist($user_id, $affected_user)) {
+                add_like_by_user_ids($user_id, $affected_user);
+            }
+
+            if (does_dislike_exist($user_id, $affected_user)) {
+                remove_dislike_by_user_id($user_id, $affected_user);
+            }
+//            check_if_a_new_connection_is_formed($user_id, $affected_user);
+    };
+}
+

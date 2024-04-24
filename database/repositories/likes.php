@@ -37,7 +37,7 @@ function delete_like_by_user_ids($user_id1, $user_id2)
     mysqli_close($con);
 }
 
-function create_like_record($affected_id, $logged_in_user_id): void
+function add_like_by_user_ids($affected_id, $logged_in_user_id): void
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
@@ -66,6 +66,21 @@ function create_like_record($affected_id, $logged_in_user_id): void
     mysqli_stmt_close($stmt);
 
     mysqli_close($con);
+}
+
+function does_like_exist($user_id, $affected_user)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+    $query = "SELECT likedUser FROM Likes WHERE userId = '{$user_id}' and likedUser = '{$affected_user}'";
+    $result = mysqli_query($con, $query);
+    //like exists when mysqli_num_rows($result) >1  TRUE
+    //like missing when mysqli_num_rows($result) = 0 FALSE
+    return mysqli_num_rows($result) != 0;
+
 }
 
 ?>
