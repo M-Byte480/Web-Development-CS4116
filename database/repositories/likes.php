@@ -79,10 +79,21 @@ function does_like_exist($user_id, $affected_user)
     $result = mysqli_query($con, $query);
     //like exists when mysqli_num_rows($result) >1  TRUE
     //like missing when mysqli_num_rows($result) = 0 FALSE
-    print_r($result);
-
     return mysqli_num_rows($result) == 1;
 
+}
+
+function check_if_a_new_connection_is_formed($user_id, $affected_user)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+    $query = "SELECT * FROM Likes WHERE userId = '{$affected_user}' and likedUser = '{$user_id}'";
+    $result = mysqli_query($con, $query);
+
+    return mysqli_num_rows($result) == 1;
 }
 
 ?>

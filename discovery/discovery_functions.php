@@ -77,7 +77,9 @@ function try_interact_with_another_user($user_id, $affected_user, $action): void
             if (does_dislike_exist($user_id, $affected_user)) {
                 remove_dislike_by_user_id($user_id, $affected_user);
             }
-//            check_if_a_new_connection_is_formed($user_id, $affected_user);
+            if (check_if_a_new_connection_is_formed($user_id, $affected_user)) {
+                create_connection($user_id, $affected_user);
+            }
     };
 }
 
