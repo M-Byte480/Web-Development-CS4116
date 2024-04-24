@@ -104,10 +104,10 @@ function get_user_profile_from_credentials($email, $hashed_password)
     if (!$con) {
         die('Could not connect: ' . mysqli_error($con));
     }
-    require_once (__DIR__ . '/../../encryption/encryption.php');
+    require_once(__DIR__ . '/../../encryption/encryption.php');
     $email = decrypt($email);
 
-    $query ="SELECT *, B.name as favourite_beverage, U.id as id
+    $query = "SELECT *, B.name as favourite_beverage, U.id as id
             FROM Users as U
                 LEFT JOIN Profiles as P ON U.id = P.userId
                 LEFT JOIN UserBeverages as UB ON U.id = UB.userId
@@ -139,7 +139,6 @@ function delete_user_from_user_ID($user_ID): void
 
     mysqli_close($con);
 }
-
 
 
 function get_first_name_from_user_ID(string $user_ID): string
@@ -393,7 +392,7 @@ function is_email_taken($email)
     return 0 != mysqli_num_rows($result);
 }
 
-function report_user($userId): void
+function increment_report_count($userId): void
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
@@ -409,5 +408,6 @@ function report_user($userId): void
 
     mysqli_close($con);
 }
+
 
 ?>
