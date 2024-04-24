@@ -24,4 +24,16 @@ function get_all_disliked_user_by_user_id($user_id)
     return $disliked_users;
 }
 
+function add_dislike_by_user_ids($user_id1, $user_id2)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+    $query = "INSERT INTO Dislikes (userId, dislikedUser) VALUES ('{$user_id1}', '{$user_id2}')";
+    mysqli_query($con, $query);
+    mysqli_close($con);
+}
+
 ?>

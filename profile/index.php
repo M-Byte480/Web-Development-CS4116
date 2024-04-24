@@ -11,8 +11,10 @@ require_once(__DIR__ . "/../database/repositories/images.php");
 
 $user_ID = (string)get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password'])->fetch_assoc()['id'];
 
+$is_get_request = true;
 if (isset($_GET['user_id'])) {
     $user_ID = $_GET['user_id'];
+    $is_get_request = false;
 }
 
 function display_interests(): void
@@ -34,12 +36,13 @@ function display_drink_options(): void
 {
     global $user_ID;
     $bev_table = get_all_beverages();
-    $uesrs_current_bev = get_users_beverage_from_user_ID($user_ID);
+    $users_current_bev = get_users_beverage_from_user_ID($user_ID);
 
     foreach ($bev_table as $bev_row) {
-        if ($uesrs_current_bev == $bev_row[1])
-            echo("<option selected value=\"" . $bev_row[0] . "\">" . $bev_row[1] . "</option>");
-        echo("<option value=\"" . $bev_row[0] . "\">" . $bev_row[1] . "</option>");
+        echo("<option ");
+        if ($users_current_bev == $bev_row[1])
+            echo("selected ");
+        echo("value=\"" . $bev_row[0] . "\">" . $bev_row[1] . "</option>");
     }
 }
 
@@ -47,7 +50,7 @@ function display_interests_options(): void
 {
     global $user_ID;
     $interests_table = get_all_interests();
-    $users_current_interests = get_user_interests_from_user_ID($user_ID);
+    $users_current_interests = get_user_interests_from_user_ID($user_ID) ?? array();
 
     foreach ($interests_table as $interest_row) {
         echo("<div class=\"form-check form-check-inline m-1 p-0\">");
@@ -133,20 +136,25 @@ function display_user_pictures_in_carousel(): void
                     </button>
                 </div>
             </div>
-            <div class="position-absolute bottom-0 end-0">
-                <div class="p-1">
-                    <button type="button" name="delete_picture" class="btn btn-danger mx-1" data-bs-toggle="modal"
-                            data-bs-target="#delete_picture">
-                        <span class="me-1">Delete</span>
-                        <i class="bi bi-archive"></i>
-                    </button>
-                    <button type="button" name="add_picture" class="btn btn-success mx-1" data-bs-toggle="modal"
-                            data-bs-target="#add_picture">
-                        <span class="me-1">Add</span>
-                        <i class="bi bi-plus-circle"></i>
-                    </button>
+            <?php if ($is_get_request) {
+                ?>
+                <div class="position-absolute bottom-0 end-0">
+                    <div class="p-1">
+                        <button type="button" name="delete_picture" class="btn btn-danger mx-1" data-bs-toggle="modal"
+                                data-bs-target="#delete_picture">
+                            <span class="me-1">Delete</span>
+                            <i class="bi bi-archive"></i>
+                        </button>
+                        <button type="button" name="add_picture" class="btn btn-success mx-1" data-bs-toggle="modal"
+                                data-bs-target="#add_picture">
+                            <span class="me-1">Add</span>
+                            <i class="bi bi-plus-circle"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
+                <?php
+            }
+            ?>
         </div>
     </div>
     <div class="col-sm-6 col-12 p-0">
@@ -165,13 +173,18 @@ function display_user_pictures_in_carousel(): void
                             <?php echo get_first_name_from_user_ID($user_ID) ?? "No name :("; ?>,
                             <?php echo get_age_from_user_ID($user_ID) ?>
                         </h5>
-                        <div class="position-absolute bottom-0 end-0">
-                            <button type="button" name="edit_name_age" class="btn" data-bs-toggle="modal"
-                                    data-bs-target="#edit_name_age">
-                                <span>Edit</span>
-                                <i class="bi bi-pencil-square"></i>
-                            </button>
-                        </div>
+                        <?php if ($is_get_request) {
+                            ?>
+                            <div class="position-absolute bottom-0 end-0">
+                                <button type="button" name="edit_name_age" class="btn" data-bs-toggle="modal"
+                                        data-bs-target="#edit_name_age">
+                                    <span>Edit</span>
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                            </div>
+                            <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -185,13 +198,18 @@ function display_user_pictures_in_carousel(): void
                             <p>
                                 <?php echo get_user_description_from_user_ID($user_ID) ?? "No bio :("; ?>
                             </p>
-                            <div class="position-absolute bottom-0 end-0">
-                                <button type="button" name="edit_bio" class="btn" data-bs-toggle="modal"
-                                        data-bs-target="#edit_bio">
-                                    <span>Edit</span>
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
-                            </div>
+                            <?php if ($is_get_request) {
+                                ?>
+                                <div class="position-absolute bottom-0 end-0">
+                                    <button type="button" name="edit_bio" class="btn" data-bs-toggle="modal"
+                                            data-bs-target="#edit_bio">
+                                        <span>Edit</span>
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                </div>
+                                <?php
+                            }
+                            ?>
                         </div>
                     </div>
                     <div class="row p-0 m-0">
@@ -201,13 +219,18 @@ function display_user_pictures_in_carousel(): void
                                 <ul>
                                     <li><?= get_users_beverage_from_user_ID($user_ID) ?? "Water (boo)" ?></li>
                                 </ul>
-                                <div class="position-absolute bottom-0 end-0">
-                                    <button type="button" name="edit_drink" class="btn" data-bs-toggle="modal"
-                                            data-bs-target="#edit_drink">
-                                        <span>Edit</span>
-                                        <i class="bi bi-pencil-square"></i>
-                                    </button>
-                                </div>
+                                <?php if ($is_get_request) {
+                                    ?>
+                                    <div class="position-absolute bottom-0 end-0">
+                                        <button type="button" name="edit_drink" class="btn" data-bs-toggle="modal"
+                                                data-bs-target="#edit_drink">
+                                            <span>Edit</span>
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="col-sm-6 col-12 p-1">
@@ -215,13 +238,18 @@ function display_user_pictures_in_carousel(): void
                                 <h4>Looking For</h4>
                                 <ul> <?= get_user_seeking_from_user_ID($user_ID) ?? "Looking for help" ?>
                                 </ul>
-                                <div class="position-absolute bottom-0 end-0">
-                                    <button type="button" name="edit_looking_for" class="btn" data-bs-toggle="modal"
-                                            data-bs-target="#edit_looking_for">
-                                        <span>Edit</span>
-                                        <i class="bi bi-pencil-square"></i>
-                                    </button>
-                                </div>
+                                <?php if ($is_get_request) {
+                                    ?>
+                                    <div class="position-absolute bottom-0 end-0">
+                                        <button type="button" name="edit_looking_for" class="btn" data-bs-toggle="modal"
+                                                data-bs-target="#edit_looking_for">
+                                            <span>Edit</span>
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -233,13 +261,18 @@ function display_user_pictures_in_carousel(): void
                     <ul>
                         <?php display_interests() ?>
                     </ul>
-                    <div class="position-absolute bottom-0 end-0">
-                        <button type="button" name="edit_interests" class="btn" data-bs-toggle="modal"
-                                data-bs-target="#edit_interests">
-                            <span>Edit</span>
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-                    </div>
+                    <?php if ($is_get_request) {
+                        ?>
+                        <div class="position-absolute bottom-0 end-0">
+                            <button type="button" name="edit_interests" class="btn" data-bs-toggle="modal"
+                                    data-bs-target="#edit_interests">
+                                <span>Edit</span>
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </div>
+                        <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>
@@ -355,7 +388,31 @@ function display_user_pictures_in_carousel(): void
                         <input type="date" class="form-control" name="edit_age"
                                value="<?= get_DOB_from_user_ID($user_ID) ?>"
                                id="edit_age">
+
+                        <button type="button" name="edit_pfp" class="btn btn-primary mt-3" data-bs-toggle="modal"
+                                data-bs-target="#edit_pfp">
+                            <span>Edit Profile Picture</span>
+                        </button>
                     </div>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Exit</button>
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Save and Exit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="edit_pfp">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form method="post" action="profile_backend.php" enctype="multipart/form-data">
+                    <div class="modal-header d-flex justify-content-center">
+                        <h5 class="modal-title">Select a picture for your Profile</h5>
+                    </div>
+                    <input class="form-control mb-3" type="file" name="edit_pfp"
+                           accept=".jpg,.JPG,.jpeg,.JPEG,.png,.PNG,.gif,.GIF,.bmp,.BMP,.svg,.SVG,.webp,.WEBP">
+
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Exit</button>
                     <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Save and Exit</button>
                 </form>

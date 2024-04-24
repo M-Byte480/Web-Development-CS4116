@@ -1,15 +1,14 @@
 <?php
 require_once(__DIR__ . '/../../validator_functions.php');
 
-global $db_host, $db_username, $db_password, $db_database;
+global $db_host, $db_username, $db_password, $db_database, $db_some_secret, $secret_encryption_method, $secret_encryption_key;
 require_once(__DIR__ . '/../../secrets.settings.php');
 
 
-function get_user_from_user_ID($user_ID): array
+function get_user_from_user_ID($user_ID)
 {
     if (!validate_user_id($user_ID)) {
-        echo 'invalid ID';
-        exit();
+        return false;
     }
 
     global $db_host, $db_username, $db_password, $db_database;
@@ -58,7 +57,7 @@ function get_all_user_ids(): array
     }
 
 
-    $query = "SELECT id FROM users";
+    $query = "SELECT id FROM Users";
 
     $result = mysqli_query($con, $query);
 
@@ -70,7 +69,10 @@ function get_all_user_ids(): array
 function get_user_by_credentials($email, $hashed_password): mysqli_result
 {
     global $db_host, $db_username, $db_password, $db_database;
-    if (!validate_email($email)) {
+    require_once(__DIR__ . '/../../encryption/encryption.php');
+    $email = decrypt($email);
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo 'invalid email';
         exit();
     }
@@ -91,6 +93,32 @@ function get_user_by_credentials($email, $hashed_password): mysqli_result
 
     mysqli_close($con);
     return $result;
+}
+
+function get_user_profile_from_credentials($email, $hashed_password)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+    require_once(__DIR__ . '/../../encryption/encryption.php');
+    $email = decrypt($email);
+
+    $query = "SELECT *, B.name as favourite_beverage, U.id as id
+            FROM Users as U
+                LEFT JOIN Profiles as P ON U.id = P.userId
+                LEFT JOIN UserBeverages as UB ON U.id = UB.userId
+                LEFT JOIN Beverages as B ON UB.beverageId = B.id
+            WHERE email = '{$email}' AND hashedPassword = '{$hashed_password}'";
+
+    $result = mysqli_query($con, $query);
+
+    mysqli_close($con);
+
+    return $result->fetch_assoc();
 }
 
 
@@ -117,11 +145,9 @@ function get_first_name_from_user_ID(string $user_ID): string
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
-
     if (!$con) {
         die('Could not connect: ' . mysqli_error($con));
     }
-
     $query = "SELECT firstName FROM Users where id = '{$user_ID}'";
     $result = mysqli_query($con, $query);
 
@@ -140,7 +166,7 @@ function get_last_name_from_user_ID(string $user_ID): string
         die('Could not connect: ' . mysqli_error($con));
     }
 
-    $query = "SELECT lastName FROM users where id = '{$user_ID}'";
+    $query = "SELECT lastName FROM Users where id = '{$user_ID}'";
     $result = mysqli_query($con, $query);
 
     mysqli_close($con);
@@ -233,6 +259,10 @@ function get_user_by_id($id)
 
 function get_user_id_by_email($email)
 {
+    require_once(__DIR__ . '/../../encryption/encryption.php');
+
+    $email = decrypt($email);
+
     $id = null;
 
     global $db_host, $db_username, $db_password, $db_database;
@@ -276,14 +306,13 @@ function change_user_ban_state_by_user_id($user_id, $state): bool
 }
 
 
-function set_id_email_pw_fname_lname_dob_jd($id): void
+function add_user_to_database($id, $email, $first_name, $second_name, $password, $date_of_birth): void
 {
     global $db_host, $db_username, $db_password, $db_database;
 
 
-    $hashed_user_password = hash("sha256", ($_POST["user_password"]));
+    $hashed_user_password = hash("sha256", $password);
     $time_now = date('Y-m-d');
-    $date = date('Y-m-d', strtotime($_POST["user_dob"]));
     $mysqli = new mysqli($db_host, $db_username, $db_password, $db_database);
 
     if ($mysqli->connect_errno) {
@@ -292,8 +321,8 @@ function set_id_email_pw_fname_lname_dob_jd($id): void
 
     $stmt = $mysqli->stmt_init();
 
-    $sql = "INSERT INTO Users (id, email, hashedpassword, firstname, lastname, dateofbirth, datejoined)
-VALUES (?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO Users (id, email, hashedpassword, firstname, lastname, dateofbirth, datejoined, banned, admin, reportCount)
+VALUES (?,?,?,?,?,?,?,0,0,0)";
 
     if (!$stmt->prepare($sql)) {
         die("SQL ERROR : " . $mysqli->error);
@@ -301,22 +330,16 @@ VALUES (?,?,?,?,?,?,?)";
 
     $stmt->bind_param("sssssss",
         $id,
-        $_POST["user_email"],
+        $email,
         $hashed_user_password,
-        $_POST["user_first_name"],
-        $_POST["user_second_name"],
-        $date,
+        $first_name,
+        $second_name,
+        $date_of_birth,
         $time_now,
     );
 
-    try {
-        $stmt->execute();
-    } catch (Exception $e) {
-        $errors['errors'][] = "Email is linked to existing account \r";
-        echo json_encode($errors);
-        mysqli_close($mysqli);
-        exit();
-    }
+    $stmt->execute();
+
     mysqli_close($mysqli);
 }
 
@@ -349,6 +372,41 @@ function get_age_from_DOB($DOB): string
     }
     return "";
 
+}
+
+function is_email_taken($email)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+
+    $query = "SELECT * FROM Users where email = '{$email}'";
+    $result = mysqli_query($con, $query);
+
+    mysqli_close($con);
+
+
+    return 0 != mysqli_num_rows($result);
+}
+
+function increment_report_count($userId): void
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    $query = "SELECT reportCount FROM Users where id = '{$userId}'";
+    $result = mysqli_query($con, $query)->fetch_assoc()["reportCount"] + 1;
+
+    $query = "UPDATE Users SET reportCount = {$result} where id = '{$userId}'";
+    mysqli_query($con, $query);
+
+    mysqli_close($con);
 }
 
 

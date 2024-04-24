@@ -33,7 +33,7 @@ function ban_user_functionality($user): void
         <textarea class="form-control" id="banReasonTextBox" rows="3" name="reason"></textarea>
     </div>
     <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-    <input type="hidden" name="admin_email" value="<?= $_COOKIE['email'] ?>">
+    <input type="hidden" name="admin_email" value="<?= decrypt_admin_email($_COOKIE['email']) ?>">
     <label class="form-group" for="banExpirationDate">
         Temporary ban expiration:
     </label>
@@ -87,6 +87,12 @@ function new_entry_in_bans($POST, $is_permanent): bool
 {
     require_once(__DIR__ . '/../database/repositories/bans.php');
     return enter_new_ban($POST['admin_email'], $POST['unbanDate'], $POST['user_id'], $is_permanent, $POST['reason']);
+}
+
+function decrypt_admin_email($email): false|string
+{
+    require_once (__DIR__ . '/../encryption/encryption.php');
+    return decrypt($email);
 }
 
 ?>

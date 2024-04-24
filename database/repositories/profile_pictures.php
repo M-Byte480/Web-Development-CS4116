@@ -26,7 +26,7 @@ function get_user_pfp_from_user_ID(string $user_ID): string|null // base64
     return null;
 }
 
-function update_user_pfp_from_user_ID($user_ID, $pfp)
+function update_user_pfp_from_user_ID($user_ID, $pfp): void
 {
     global $db_host, $db_username, $db_password, $db_database;
 
@@ -35,12 +35,16 @@ function update_user_pfp_from_user_ID($user_ID, $pfp)
     if (!$con) {
         die('Could not connect: ' . mysqli_error($con));
     }
-    // Todo: Sanitize both the pfp and the bio;
 
-    // USER BEVERAGES
-    $query = "UPDATE ProfilePictures set pfp = '{$pfp}' WHERE userid = '{$user_ID}'";
+    $query = "SELECT * FROM ProfilePictures WHERE userid = '{$user_ID}'";
+    $result = mysqli_query($con, $query);
+
+    if ($result->num_rows > 0) {
+        $query = "UPDATE ProfilePictures SET pfp = '{$pfp}' WHERE userId = '{$user_ID}'";
+    } else {
+        $query = "INSERT INTO ProfilePictures (userId, pfp) VALUES ('{$user_ID}', '{$pfp}')";
+    }
     mysqli_query($con, $query);
-
 
     mysqli_close($con);
 }

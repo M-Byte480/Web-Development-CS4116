@@ -1,3 +1,4 @@
+DROP TABLE Reports;
 DROP TABLE UserBeverages;
 DROP TABLE Beverages;
 DROP TABLE ChatLogs;

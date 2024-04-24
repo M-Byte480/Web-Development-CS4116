@@ -2,11 +2,21 @@
 // We need to check if cookies are tampered with or
 // if text entered by users are SQL injections
 require_once(__DIR__ . '/exceptions/ValidationException.php');
-function validate_email($email): false|int
+function validate_email($email, &$errors): bool
 {
-    // Regex
-    $regex = '/^(?!\.)[A-Za-z0-9.]+@[A-Za-z]+[A-Za-z0-9.]*[A-Za-z]+$/';
-    return preg_match($regex, $email);
+    if (!isset($email)) {
+        $errors[] = "Email is empty \r";
+        return false;
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Invalid email format \r";
+        return false;
+    }
+    return true;
+}
+
+function validate_encrypted_email($email)
+{
+
 }
 
 function validate_uuid($uuid): false|int
@@ -28,8 +38,35 @@ function validate_hashed_password($hashed_password): false|int
     return preg_match($regex, $hashed_password);
 }
 
-function validate_password($password)
+function validate_password($password, &$errors): void
 {
+    if (strlen($password) < 8) {
+        $errors[] = "Password must be at least 8 characters \r";
+    } elseif (strlen($password) > 35) {
+        $errors[] = "Password must be less than 35 characters \r";
+    }
+
+    if (!preg_match("/[a-zA-Z]/i", $password)) {
+        $errors[] = "Password must contain at least one letter \r";
+    }
+
+    if (!preg_match("/[0-9]/", $password)) {
+        $errors[] = "Password must contain at least one number \r";
+    }
+
+    if (str_contains($password, " ")) {
+        $errors[] = "Password must not contain spaces \r";
+    }
+}
+
+function validate_name(&$name, &$errors, $name_type): void
+{
+    $regex = '/^(?!.*[0-9@£$%^!€\[\]{}~#:;\\/<>|*+]).*$/';
+
+    $name = trim($name);
+    if (!preg_match($regex, $name)) {
+        $errors[] = "Invalid {$name_type} \r";
+    }
 
 }
 
@@ -51,8 +88,7 @@ function validate_admin($id)
     }
 
     $retrieved_user = get_user_from_user_ID($id);
-    
-    return $retrieved_user['admin']; // Returns true or false attribute
+    return @$retrieved_user['admin'] == 1; // Returns true or false attribute
 }
 
 /**
@@ -60,17 +96,17 @@ function validate_admin($id)
  */
 function validate_ban_parameters($POST): void
 {
-    if (array_key_exists('admin_email', $POST) && $POST['admin_email']) {
-        if (!validate_email($POST['admin_email'])) {
-            throw new ValidationException('Email Validation -> Ban');
-        }
-    }
-
-    if (array_key_exists('user_id', $POST) && $POST['user_id']) {
-        if (!validate_user_id($POST['user_id'])) {
-            throw new ValidationException('User ID Validation -> Ban');
-        }
-    }
+//    if (array_key_exists('admin_email', $POST) && $POST['admin_email']) {
+//        if (!validate_email($POST['admin_email'])) {
+//            throw new ValidationException('Email Validation -> Ban');
+//        }
+//    }
+//
+//    if (array_key_exists('user_id', $POST) && $POST['user_id']) {
+//        if (!validate_user_id($POST['user_id'])) {
+//            throw new ValidationException('User ID Validation -> Ban');
+//        }
+//    }
 }
 
 /**
@@ -90,11 +126,13 @@ function validate_delete_parameters($POST): void
  */
 function validate_user_logged_in(): void
 {
+    require_once (__DIR__ . '/encryption/encryption.php');
     if (!(array_key_exists('email', $_COOKIE) && $_COOKIE['email'])) {
         throw new ValidationException('No user_email');
     }
 
-    if (!validate_email($_COOKIE['email'])) {
+    $email = decrypt($_COOKIE['email']);
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         throw new ValidationException('Invalid user_email');
     }
 
@@ -111,8 +149,6 @@ function validate_user_logged_in(): void
     $query_result = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password']);
 
     validate_unique_result($query_result);
-
-
 }
 
 /**
@@ -120,20 +156,18 @@ function validate_user_logged_in(): void
  */
 function validate_user_is_admin(): void
 {
-    // Validation
-    if (!isset($_COOKIE['email']) || !isset($_COOKIE['hashed_password'])) {
-        header("Location: ../login/");
-        exit();
-    }
 
     // Import users, pfp accessor
     require_once(__DIR__ . "/database/repositories/users.php");
 
+    if ((!isset($_COOKIE['email'])) || !filter_var($_COOKIE['email'], FILTER_VALIDATE_EMAIL)) {
+        throw new ValidationException("Not Admin");
+    }
     $result = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password']);
     $user = $result->fetch_assoc();
 
     // Both these need to be true
-    if ($user == null || !validate_admin($user['id'])) {
+    if ($user == null || (!validate_admin($user['id']))) {
         throw new ValidationException('Unauthorised');
     }
 

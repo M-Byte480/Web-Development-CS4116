@@ -26,7 +26,6 @@ usort($usersInDb, function ($first, $second) {
 
 ?>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 
 
@@ -279,7 +278,7 @@ function action_button($user): void
                 <li>
                     <form id="removeForm-<?= $user['id'] ?>" method="post" action="admin_backend.php">
                         <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                        <input type="hidden" name="admin_email" value="<?= $_COOKIE['email'] ?>">
+                        <input type="hidden" name="admin_email" value="<?= decrypt_admin_email($_COOKIE['email']) ?>">
                         <input type="hidden" name="action" value="delete">
                         <button type="button" class="btn btn-danger m-1" name="removeBtn" id="removeBtn" value="Delete"
                                 onclick="deleteUser('<?= $user['id'] ?>')">

@@ -86,7 +86,7 @@ function update_user_seeking_from_user_ID(string $user_ID, string $new_seeking):
     mysqli_close($con);
 }
 
-function set_id_gender($id, $gender): void
+function add_new_row_to_profile($id, $gender): void
 {
     global $db_host, $db_username, $db_password, $db_database;
 
@@ -101,17 +101,31 @@ function set_id_gender($id, $gender): void
         die("SQL ERROR : " . $mysqli->error);
     }
 
-    try {
-        $stmt->bind_param("ss",
-            $id,
-            $gender
-        );
-        $stmt->execute();
-    } catch (Exception $e) {
-        mysqli_close($mysqli);
-        exit();
-    };
+
+    $stmt->bind_param("ss",
+        $id,
+        $gender
+    );
+    $stmt->execute();
+
     mysqli_close($mysqli);
+}
+
+function get_user_profile_for_discovery($user_id)
+{
+
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+
+    $query = "SELECT * FROM Profiles WHERE userid = '{$user_id}'";
+    $result = mysqli_query($con, $query);
+
+    return $result->fetch_assoc();
 }
 
 ?>
