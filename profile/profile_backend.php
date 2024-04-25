@@ -41,7 +41,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         delete_picture_from_user_ID($user_ID, $_POST['delete_picture']);
     }
     if (array_key_exists('add_picture', $_FILES)) {
-        add_picture_from_user_ID($user_ID, base64_encode(file_get_contents($_FILES['add_picture']["tmp_name"])));
+        if ($_FILES['add_picture']["tmp_name"])
+            add_picture_from_user_ID($user_ID, base64_encode(file_get_contents($_FILES['add_picture']["tmp_name"])));
     }
     if (array_key_exists('edit_pfp', $_FILES)) {
         update_user_pfp_from_user_ID($user_ID, base64_encode(file_get_contents($_FILES['edit_pfp']["tmp_name"])));
