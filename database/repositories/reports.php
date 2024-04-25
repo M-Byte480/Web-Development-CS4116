@@ -73,3 +73,23 @@ function get_user_report_history_by_id($user_id)
 
     return $result->fetch_assoc();
 }
+
+function check_if_report_exists($user_id, $affected_user_id)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+    $stmt = $con->prepare("SELECT * FROM Reports WHERE reporterId = ? AND reportedId = ?");
+    $stmt->bind_param("ss", $user_id, $affected_user_id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $data = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+
+    mysqli_close($con);
+    return $data;
+}
