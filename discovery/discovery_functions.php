@@ -49,14 +49,15 @@ function get_user_matching_description($this_user)
     return get_user_by_matches($get);
 }
 
-function try_interact_with_another_user($user_id, $affected_user, $action): void
+function try_interact_with_another_user($user_id, $affected_user, $action): array
 {
+
+    $errors = [];
     switch ($action) {
         case 'dislike':
             //dislike here ->we good
             //dislike missing ->set it
             if (!does_dislike_exist($user_id, $affected_user)) {
-                print_r($action);
                 add_dislike_by_user_ids($user_id, $affected_user);
             }
             //like exists -> remove
@@ -71,7 +72,6 @@ function try_interact_with_another_user($user_id, $affected_user, $action): void
             //like missing ->set it
             if (!does_like_exist($user_id, $affected_user)) {
                 add_like_by_user_ids($user_id, $affected_user);
-                print_r($action);
             }
 
             if (does_dislike_exist($user_id, $affected_user)) {
@@ -79,7 +79,15 @@ function try_interact_with_another_user($user_id, $affected_user, $action): void
             }
             if (check_if_a_new_connection_is_formed($user_id, $affected_user)) {
                 create_connection($user_id, $affected_user);
+                $errors[] = "You have connected with " . get_first_name_from_user_ID($affected_user);
+
             }
-    };
+
+    }
+
+
+    return $errors;
+
+
 }
 

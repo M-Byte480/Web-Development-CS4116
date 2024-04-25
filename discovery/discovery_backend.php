@@ -12,7 +12,7 @@ $action = $postData->action;
 $user_id = $postData->user_id;
 $affected_user = $postData->affected_user;
 
-print_r(array('action' => $action, 'user_id' => $user_id, 'affected_user' => $affected_user));
 
-try_interact_with_another_user($user_id, $affected_user, $action);
+$hello = json_encode(try_interact_with_another_user($user_id, $affected_user, $action));
+echo $hello;
 ?>

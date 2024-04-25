@@ -1,6 +1,6 @@
 <?php
 // Validate is user logged in
-require_once (__DIR__ . '/../validate_user_logged_in.php');
+require_once(__DIR__ . '/../validate_user_logged_in.php');
 require_once(__DIR__ . '/../validator_functions.php');
 require_once(__DIR__ . '/../database/repositories/images.php');
 require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
@@ -34,9 +34,22 @@ if (isset($_GET['user_id'])) {
 </head>
 
 <script>
+    function getToast(msg) {
+        return `<div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Match Notification</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    ${msg}
+                </div>
+            </div>
+        </div>`
+    }
+
     function post_connection(postData) {
 
-        console.log(postData)
         $.ajax({
             type: "POST",
             url: "discovery_backend.php",
@@ -44,7 +57,12 @@ if (isset($_GET['user_id'])) {
                 'json': JSON.stringify(postData)
             },
             success: function (response) {
-                console.log(response)
+                let json = JSON.parse(response)
+                if (json.length > 0) {
+                    let toastHTML = getToast(json);
+                    $(document.body).append(toastHTML);
+                    $('.toast').toast('show');
+                }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log('fuck');
