@@ -195,7 +195,7 @@ function validate_user_is_banned()
 
     $user = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password'])->fetch_assoc();
 
-    if($user['banned'] == 1){
+    if ($user['banned'] == 1) {
         throw new ValidationException('Banned');
     }
 }

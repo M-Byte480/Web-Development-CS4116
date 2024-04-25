@@ -97,6 +97,75 @@ function decrypt_admin_email($email): false|string
     return decrypt($email);
 }
 
+function get_user_ban_history($user): void
+{
+    ?>
+    <table class="table table-dark table-hover">
+        <thread>
+            <tr>
+                <th scope="col">Banned By</th>
+                <th scope="col">Permanent</th>
+                <th scope="col">Expires</th>
+                <th scope="col">Reason</th>
+                <th scope="col">time</th>
+            </tr>
+        </thread>
+        <?php
+        require_once(__DIR__ . '/../database/repositories/bans.php');
+        $data = get_user_ban_history_by_id($user['id']);
+
+        if ($data->num_rows === 0) {
+            return;
+        }
+
+        while ($ban = $data->fetch_assoc()) {
+            ?>
+            <tr>
+                <td><?= $ban['bannedBy'] ?></td>
+                <td><?= $ban['permanent'] == 1 ? 'Yes' : 'No' ?></td>
+                <td><?= $ban['endDate'] ?></td>
+                <td><?= $ban['reason'] ?></td>
+                <td><?= $ban['time'] ?></td>
+            </tr>
+        <?php }
+        ?>
+    </table>
+    <?php
+}
+
+function get_user_report_history($user): void
+{
+    ?>
+    <table class="table table-dark table-hover">
+        <thread>
+            <tr>
+                <th scope="col">Reported By</th>
+                <th scope="col">Reason</th>
+                <th scope="col">time</th>
+            </tr>
+        </thread>
+
+        <?php
+        require_once(__DIR__ . '/../database/repositories/reports.php');
+        $data = get_user_report_history_by_id($user['id']);
+
+        if ($data == null) {
+            return;
+        }
+
+        foreach ($data as $report) {
+            ?>
+            <tr>
+                <td><?= $report['reporterId'] ?></td>
+                <td><?= $report['reason'] ?></td>
+                <td><?= $report['time'] ?></td>
+            </tr>
+        <?php }
+        ?>
+    </table>
+    <?php
+}
+
 ?>
 
 

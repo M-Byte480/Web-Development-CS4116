@@ -101,6 +101,18 @@ try {
             get_user_actions($user);
 
             exit();
+
+        case 'get-ban-history':
+            $user = get_user_by_id($_POST['id']);
+            get_user_ban_history($user);
+
+            exit();
+
+        case 'get-report-history':
+            $user = get_user_by_id($_POST['id']);
+            get_user_report_history($user);
+
+            exit();
     }
 } catch (ValidationException $e) {
     $return_array['success'] = ERROR;

@@ -1,6 +1,6 @@
 <?php
 // Validate is user logged in
-require_once (__DIR__ . '/../validate_admin.php');
+require_once(__DIR__ . '/../validate_admin.php');
 require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 
 ?>
@@ -85,6 +85,40 @@ usort($usersInDb, function ($first, $second) {
             },
             success: function (response) {
                 $('#user-modal').html(response);
+            }
+        });
+    }
+
+    /*
+    Fetches the ban History modal content based on the UUID
+    */
+    function fetchBanHistory(user_id) {
+        $.ajax({
+            type: "POST",
+            url: 'admin_backend.php',
+            data: {
+                'id': user_id,
+                'action': 'get-ban-history'
+            },
+            success: function (response) {
+                $('#history-modal').html(response);
+            }
+        });
+    }
+
+    /*
+    Fetches the report history modal content based on the UUID
+    */
+    function fetchReportLogs(user_id) {
+        $.ajax({
+            type: "POST",
+            url: 'admin_backend.php',
+            data: {
+                'id': user_id,
+                'action': 'get-report-history'
+            },
+            success: function (response) {
+                $('#history-modal').html(response);
             }
         });
     }
@@ -276,6 +310,18 @@ function action_button($user): void
                     </button>
                 </li>
                 <li>
+                    <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal"
+                            data-bs-target="#viewHistoryModal" onClick="fetchBanHistory('<?= $user['id'] ?>')">
+                        Ban History
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal"
+                            data-bs-target="#viewHistoryModal" onClick="fetchReportLogs('<?= $user['id'] ?>')">
+                        Report Log
+                    </button>
+                </li>
+                <li>
                     <form id="removeForm-<?= $user['id'] ?>" method="post" action="admin_backend.php">
                         <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
                         <input type="hidden" name="admin_email" value="<?= $_COOKIE['email'] ?>">
@@ -419,6 +465,25 @@ foreach ($usersInDb as $user) {
         </div>
     </div>
 </form>
+
+<div class="modal fade" tabindex="-1" aria-labelledby="historyId" id="viewHistoryModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="historyId">Logs</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body history-modal" id="history-modal">
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
 
