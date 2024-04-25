@@ -22,7 +22,13 @@ function display_message_thread(): void
                     <div class="col-3 p-0">
                         <div class="ratio ratio-1x1">
                             <img class="img-fluid object-fit-cover rounded-top-3"
-                                 src="data:image/png;base64,<?= $connection["pfp"] ?>"
+                                 src="<?php
+                                 if ($connection["pfp"]) {
+                                     echo("data:image/png;base64," . $connection["pfp"]);
+                                 } else {
+                                     echo("../resources/search/default_image.jgp");
+                                 }
+                                 ?>"
                                  alt="Profile picture">
                         </div>
                     </div>
