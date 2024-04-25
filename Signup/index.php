@@ -80,7 +80,6 @@
                                class="form-control"
                                title="Please enter a valid input containing only letters (a-z, A-Z) and spaces, with a length between 2 and 30 characters."
                                placeholder="Enter your first name" required maxlength="70">
-                        <!--                        <small class="text-danger">[First name must follow a-z/A-Z Format]</small>-->
                     </div>
                 </div>
 
@@ -100,7 +99,6 @@
                                id="user_second_name"
                                type="text" class="form-control"
                                placeholder="Enter your surname" required maxlength="70">
-                        <!--                        <small class="text-danger">[Surname must follow a-z/A-Z Format]</small>-->
                     </div>
                 </div>
 

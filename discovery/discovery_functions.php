@@ -77,7 +77,7 @@ function try_interact_with_another_user($user_id, $affected_user, $action): arra
             if (does_dislike_exist($user_id, $affected_user)) {
                 remove_dislike_by_user_id($user_id, $affected_user);
             }
-            if (check_if_a_new_connection_is_formed($user_id, $affected_user)) {
+            if (check_if_connection_exists($user_id, $affected_user)) {
                 create_connection($user_id, $affected_user);
                 $errors[] = "You have connected with " . get_first_name_from_user_ID($affected_user);
 

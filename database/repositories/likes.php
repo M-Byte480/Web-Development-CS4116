@@ -83,7 +83,7 @@ function does_like_exist($user_id, $affected_user)
 
 }
 
-function check_if_a_new_connection_is_formed($user_id, $affected_user)
+function check_if_connection_exists($user_id, $affected_user)
 {
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
