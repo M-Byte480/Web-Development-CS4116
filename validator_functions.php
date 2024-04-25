@@ -96,17 +96,20 @@ function validate_admin($id)
  */
 function validate_ban_parameters($POST): void
 {
-//    if (array_key_exists('admin_email', $POST) && $POST['admin_email']) {
-//        if (!validate_email($POST['admin_email'])) {
-//            throw new ValidationException('Email Validation -> Ban');
-//        }
-//    }
-//
-//    if (array_key_exists('user_id', $POST) && $POST['user_id']) {
-//        if (!validate_user_id($POST['user_id'])) {
-//            throw new ValidationException('User ID Validation -> Ban');
-//        }
-//    }
+    $errors = array();
+    if (array_key_exists('admin_email', $POST) && $POST['admin_email']) {
+        require_once(__DIR__ . '/encryption/encryption.php');
+        $email = decrypt($POST['admin_email']);
+        if (!validate_email($email, $errors)) {
+            throw new ValidationException('Email Validation -> Ban');
+        }
+    }
+
+    if (array_key_exists('user_id', $POST) && $POST['user_id']) {
+        if (!validate_user_id($POST['user_id'])) {
+            throw new ValidationException('User ID Validation -> Ban');
+        }
+    }
 }
 
 /**
@@ -124,9 +127,9 @@ function validate_delete_parameters($POST): void
 /**
  * @throws ValidationException
  */
-function validate_user_logged_in(): void
+function validate_user_logged_in()
 {
-    require_once (__DIR__ . '/encryption/encryption.php');
+    require_once(__DIR__ . '/encryption/encryption.php');
     if (!(array_key_exists('email', $_COOKIE) && $_COOKIE['email'])) {
         throw new ValidationException('No user_email');
     }
@@ -149,6 +152,8 @@ function validate_user_logged_in(): void
     $query_result = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password']);
 
     validate_unique_result($query_result);
+
+    return $query_result->fetch_assoc();
 }
 
 /**
@@ -159,8 +164,15 @@ function validate_user_is_admin(): void
 
     // Import users, pfp accessor
     require_once(__DIR__ . "/database/repositories/users.php");
+    require_once(__DIR__ . '/encryption/encryption.php');
 
-    if ((!isset($_COOKIE['email'])) || !filter_var($_COOKIE['email'], FILTER_VALIDATE_EMAIL)) {
+    if ((!isset($_COOKIE['email']))) {
+        throw new ValidationException("Not Admin");
+        exit();
+    }
+    $email = decrypt($_COOKIE['email']);
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         throw new ValidationException("Not Admin");
     }
     $result = get_user_by_credentials($_COOKIE['email'], $_COOKIE['hashed_password']);

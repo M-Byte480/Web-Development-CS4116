@@ -61,4 +61,16 @@ function delete_connection_from_user_ids($userid1, $userid2): void
     mysqli_close($con);
 }
 
+function create_connection($user_id, $affected_user): void
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+    $query = "INSERT INTO Connections (userId1, userId2) VALUES ('{$user_id}', '{$affected_user}')";
+    mysqli_query($con, $query);
+    mysqli_close($con);
+}
+
 ?>

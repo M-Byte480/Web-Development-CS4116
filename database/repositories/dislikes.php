@@ -36,4 +36,30 @@ function add_dislike_by_user_ids($user_id1, $user_id2)
     mysqli_close($con);
 }
 
+function does_dislike_exist($user_id, $affected_user)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+    $query = "SELECT dislikedUser FROM Dislikes WHERE userId = '{$user_id}' and dislikedUser = '{$affected_user}'";
+    $result = mysqli_query($con, $query);
+    return mysqli_num_rows($result) != 0;
+}
+
+
+function remove_dislike_by_user_id($user_id, $affected_user)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    $query = "DELETE FROM Dislikes WHERE userId = '{$user_id}' AND dislikedUser = '{$affected_user}'";
+    mysqli_query($con, $query);
+    mysqli_close($con);
+}
+
 ?>

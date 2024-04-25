@@ -20,7 +20,6 @@
                 url: 'signup_backend.php',
                 data: $(this).serialize(),
                 success: function (response) {
-                    console.log(response)
                     var jsonData = JSON.parse(response);
                     if (jsonData.success === 1) {
                         window.location.href = "../login/";
@@ -63,7 +62,7 @@
                         <input name="user_email" id="user_email" type="email" class="form-control"
                                placeholder="Enter email"
                                required>
-<!--                        <small class="text-danger">[Email must follow xxx@xxx.xxx Format]</small>-->
+                        <!--                        <small class="text-danger">[Email must follow xxx@xxx.xxx Format]</small>-->
                     </div>
                 </div>
 
@@ -76,11 +75,11 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <input pattern="[\w'\-,.][^0-9_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,30}" name="user_first_name" id="user_first_name" type="text"
+                        <input pattern="[\w'\-,.][^0-9_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,30}" name="user_first_name"
+                               id="user_first_name" type="text"
                                class="form-control"
                                title="Please enter a valid input containing only letters (a-z, A-Z) and spaces, with a length between 2 and 30 characters."
                                placeholder="Enter your first name" required maxlength="70">
-<!--                        <small class="text-danger">[First name must follow a-z/A-Z Format]</small>-->
                     </div>
                 </div>
 
@@ -100,7 +99,6 @@
                                id="user_second_name"
                                type="text" class="form-control"
                                placeholder="Enter your surname" required maxlength="70">
-<!--                        <small class="text-danger">[Surname must follow a-z/A-Z Format]</small>-->
                     </div>
                 </div>
 

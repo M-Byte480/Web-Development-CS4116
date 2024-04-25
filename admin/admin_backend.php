@@ -30,7 +30,7 @@ $return_array['success'] = SUCCESS;
 try {
     switch ($action) {
         case 'permanent':
-//            validate_ban_parameters($_POST);
+            validate_ban_parameters($_POST);
             if (!permanently_ban_user_with_user_ID($_POST)) {
                 $return_array['success'] = ERROR;
                 $return_array['msg'] = "Failed to ban user!";
@@ -41,7 +41,7 @@ try {
             $return_array['user_id'] = $_POST['user_id'];
             break;
         case 'temporary':
-//            validate_ban_parameters($_POST);
+            validate_ban_parameters($_POST);
 
             if (!is_value_set($_POST, 'unbanDate')) {
                 $return_array['msg'] = 'Expiration is not set';
