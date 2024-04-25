@@ -1,6 +1,6 @@
 <?php
 // Validate is user logged in
-require_once (__DIR__ . '/../validate_user_logged_in.php');
+require_once(__DIR__ . '/../validate_user_logged_in.php');
 require_once(__DIR__ . '/../validator_functions.php');
 require_once(__DIR__ . '/../database/repositories/images.php');
 require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
@@ -59,6 +59,32 @@ if (!$GET_REQUEST) {
 } else {
     $this_user_profile = get_user_profile_for_discovery($user_id);
     $this_user_profile['id'] = $this_user_profile['userId'];
+}
+
+function reportButton(): void
+{
+    ?>
+    <button href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reportModal">Report</button>
+    <!--Report Modal-->
+    <div class="modal fade" id="reportModal" role="alert">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Give a reason for reporting!</h2>
+                    <button type="button" class="exit" data-bs-dismiss="modal">&times</button>
+                </div>
+                <form class="modal-body">
+
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-target="#thanksModal">
+                        Report User
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
 }
 
 function bio_card($user_profile): void
@@ -160,6 +186,7 @@ function interest_card($user_profile): void
                 <?php
                 bio_card($this_user_profile);
                 interest_card($this_user_profile);
+                reportButton();
                 ?>
             </div>
         </div>
