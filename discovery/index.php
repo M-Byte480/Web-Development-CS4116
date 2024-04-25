@@ -120,6 +120,32 @@ if (!$GET_REQUEST) {
     $this_user_profile['id'] = $this_user_profile['userId'];
 }
 
+function reportButton(): void
+{
+    ?>
+    <button href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reportModal">Report</button>
+    <!--Report Modal-->
+    <div class="modal fade" id="reportModal" role="alert">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Give a reason for reporting!</h2>
+                    <button type="button" class="exit" data-bs-dismiss="modal">&times</button>
+                </div>
+                <form class="modal-body">
+
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-target="#thanksModal">
+                        Report User
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
 function bio_card($user_profile): void
 {
     ?>
@@ -220,6 +246,7 @@ function interest_card($user_profile): void
                 <?php
                 bio_card($this_user_profile);
                 interest_card($this_user_profile);
+                reportButton();
                 ?>
             </div>
         </div>
