@@ -39,6 +39,39 @@ if (isset($_GET['user_id'])) {
     function likeUser(userId) {
         console.log(userId);
     }
+
+
+    //function sendReportx(formData) {
+    //    $.ajax({
+    //        url: 'discovery_backend.php',
+    //        type: 'POST',
+    //        data: {"json": JSON.stringify(formData)},
+    //        success: function (data) {
+    //            console.log(data);
+    //        }
+    //    });
+    //}
+    //
+    function reportUser() {
+        $(document).ready(function () {
+            $('#submit').click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: 'discovery_backend.php',
+                    dataType: "html",
+                    data: {
+                        'report_reason': $('#report_reason').val(),
+                        'user_id': "<?= $user_id ?>",
+                        'reported_user': "<?= $_GET['user_id'] ?>"
+                    },
+                    success: function (repsonse) {
+                        $('#reportForm').html(repsonse);
+                    }
+                });
+            });
+        });
+    }
+
 </script>
 <body>
 <?php require_once(__DIR__ . '/../nav_bar/index.php') ?>
@@ -69,18 +102,16 @@ function reportButton(): void
     <div class="modal fade" id="reportModal" role="alert">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">Give a reason for reporting!</h2>
+                <form class="modal-body" method="post" action="" id="reportForm">
                     <button type="button" class="exit" data-bs-dismiss="modal">&times</button>
-                </div>
-                <form class="modal-body">
-
+                    <h2 class="modal-title">Give a reason for reporting!</h2>
+                    <div class="mb-2">
+                        <label for="report_reason" class="form-label">Reason</label>
+                        <textarea class="form-control" id="report_reason" name="report_reason"
+                                  rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Report</button>
                 </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-target="#thanksModal">
-                        Report User
-                    </button>
-                </div>
             </div>
         </div>
     </div>
