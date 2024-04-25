@@ -23,8 +23,8 @@ FROM
         pfp
     FROM
         Connections
-    JOIN Users ON Connections.userId2 = Users.id
-    JOIN ProfilePictures ON Connections.userId2 = ProfilePictures.userId
+    LEFT JOIN Users ON Connections.userId2 = Users.id
+    LEFT JOIN ProfilePictures ON Connections.userId2 = ProfilePictures.userId
     WHERE
         userId1 = '{$userId}'
 ) a
@@ -37,8 +37,8 @@ UNION (
         pfp
     FROM
         Connections
-    JOIN Users ON Connections.userId1 = Users.id
-    JOIN ProfilePictures ON Connections.userId1 = ProfilePictures.userId
+    LEFT JOIN Users ON Connections.userId1 = Users.id
+    LEFT JOIN ProfilePictures ON Connections.userId1 = ProfilePictures.userId
     WHERE
         userId2 = '{$userId}'
 )";
