@@ -74,7 +74,7 @@ function set_profile_picture_on_gender($id, $gender): void
     }
 
 
-    update_user_pfp_from_user_ID($id, encoder($image));
+    update_user_pfp_from_user_ID($id, "data:image/jpeg;base64," . encoder($image));
 }
 
 ?>

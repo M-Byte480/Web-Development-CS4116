@@ -16,6 +16,11 @@ if (isset($_POST['action']) && $_POST['action']) {
     echo json_encode(array('Success' => FAIL));
     exit();
 }
+function encoder($picture_path): string
+{
+    $imagedata = file_get_contents($picture_path);
+    return base64_encode($imagedata);
+}
 
 require_once(__DIR__ . '/../validator_functions.php');
 require_once(__DIR__ . '/../database/repositories/users.php');
@@ -77,7 +82,21 @@ try {
 
             break;
         case 'remove_pfp':
-            update_user_pfp_from_user_ID($_POST['user_id'], '');
+            $gender = get_user_gender($_POST['user_id']);
+            $image = "";
+            switch ($gender) {
+                case 'Male':
+                    $image = "../resources/search/default_image.jpg";
+                    break;
+                case 'Female':
+                    $image = "../resources/search/default_female_image.jpg";
+                    break;
+                case 'Other':
+                    $image = "../resources/search/default_other_image.jpg";
+                    break;
+            }
+
+            update_user_pfp_from_user_ID($_POST['user_id'], "data:image/jpeg;base64," . encoder($image));
             $return_array['msg'] = "Successfully removed PFP!";
 
             break;
