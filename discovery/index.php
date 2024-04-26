@@ -34,11 +34,11 @@ if (isset($_GET['user_id'])) {
 </head>
 
 <script>
-    function getToast(msg) {
+    function getToast(msg, type) {
         return `<div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
-                    <strong class="me-auto">Match Notification</strong>
+                    <strong class="me-auto">${type}</strong>
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
                 <div class="toast-body">
@@ -59,7 +59,7 @@ if (isset($_GET['user_id'])) {
             success: function (response) {
                 let json = JSON.parse(response)
                 if (json.length > 0) {
-                    let toastHTML = getToast(json);
+                    let toastHTML = getToast(json, "New Connection");
                     $(document.body).append(toastHTML);
                     $('.toast').toast('show');
                 }
@@ -112,7 +112,10 @@ if (isset($_GET['user_id'])) {
                 'json': JSON.stringify(postReportData)
             },
             success: function () {
-                alert("User has been reported successfully!");
+                let msg = "User reported sucessfully !"
+                let toastHTML = getToast(msg, "New Report");
+                $(document.body).append(toastHTML);
+                $('.toast').toast('show');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(thrownError);
@@ -162,7 +165,7 @@ if (!$GET_REQUEST) {
                     <textarea class="form-control" id="report_reason" name="report_reason"
                               rows="3"></textarea>
                 </div>
-                <button type="submit" class="btn btn-danger" onclick="reportUser('<?= $affected_user_id ?>');">
+                <button type="button" class="btn btn-danger" onclick="reportUser('<?= $affected_user_id ?>');">
                     Report
                 </button>
             </form>
