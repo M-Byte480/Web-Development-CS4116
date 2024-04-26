@@ -24,7 +24,7 @@ function validate_post_data(): array
     // Password
     if (!isset($_POST['user_password'])) {
         $errors[] = "Password field is empty \r";
-    }else{
+    } else {
         validate_password($_POST['user_password'], $errors);
     }
 
@@ -52,6 +52,30 @@ function custom_uuid(): string
     return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($bytes), 4));
 }
 
+function encoder($picture_path): string
+{
+    $imagedata = file_get_contents($picture_path);
+    return base64_encode($imagedata);
+}
+
+function set_profile_picture_on_gender($id, $gender): void
+{
+    $image = "";
+    switch ($gender) {
+        case 'Male':
+            $image = "../resources/search/default_image.jpg";
+            break;
+        case 'Female':
+            $image = "../resources/search/default_female_image.jpg";
+            break;
+        case 'Other':
+            $image = "../resources/search/default_other_image.jpg";
+            break;
+    }
+
+
+    update_user_pfp_from_user_ID($id, encoder($image));
+}
 
 ?>
 
