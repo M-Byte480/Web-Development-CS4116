@@ -1,1 +1,5 @@
-ErrorDocument 404 /error-404/
+#to be commented when put on live
+ErrorDocument 404 http://localhost/Web-Development-CS4116/error404.php
+
+#to be uncommneted when put on live
+#ErrorDocument 403 http://pub-club.infinityfreeapp.com/error404.php
