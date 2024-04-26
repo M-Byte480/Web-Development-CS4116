@@ -92,6 +92,34 @@ if (isset($_GET['user_id'])) {
         };
         post_connection(postData);
     }
+
+    function reportUser(userId) {
+        let postReportData = {
+            "report_action": {
+                "report": document.getElementById("report_reason").value,
+                "user_id": "<?= $logged_in_user['id'] ?>",
+                "affected_user": userId
+            }
+        };
+        post_report(postReportData);
+    }
+
+    function post_report(postReportData) {
+        $.ajax({
+            type: "POST",
+            url: "discovery_report_backend.php",
+            data: {
+                'json': JSON.stringify(postReportData)
+            },
+            success: function () {
+                alert("User has been reported successfully!");
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError);
+            }
+        });
+    }
+
 </script>
 <body>
 <?php require_once(__DIR__ . '/../nav_bar/index.php') ?>
@@ -118,8 +146,30 @@ if (!$GET_REQUEST) {
     $this_user_profile = get_user_profile_for_discovery($affected_user_id);
 
     $this_user_profile['id'] = $this_user_profile['userId'];
-}
+} ?>
 
+
+<button href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reportModal">Report</button>
+<!--Report Modal-->
+<div class="modal fade" id="reportModal" role="alert">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="modal-body" method="post" action="" id="reportForm">
+                <button type="button" class="exit" data-bs-dismiss="modal">&times</button>
+                <h2 class="modal-title">Give a reason for reporting!</h2>
+                <div class="mb-2">
+                    <label for="report_reason" class="form-label">Reason</label>
+                    <textarea class="form-control" id="report_reason" name="report_reason"
+                              rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-danger" onclick="reportUser('<?= $affected_user_id ?>');">
+                    Report
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<?php
 function bio_card($user_profile): void
 {
     ?>
