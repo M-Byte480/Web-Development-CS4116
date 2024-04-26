@@ -49,8 +49,10 @@ function add_new_report($reporter_id, $reported_user_id, $msg): bool
         $success = false;
     }
 
+    print_r($success);
+
     if ($success) {
-        increment_report_count($reporter_id);
+        increment_report_count($reported_user_id);
     }
 
     return $success;
@@ -71,7 +73,7 @@ function get_user_report_history_by_id($user_id)
 
     mysqli_close($con);
 
-    return $result->fetch_assoc();
+    return $result;
 }
 
 function check_if_report_exists($user_id, $affected_user_id)

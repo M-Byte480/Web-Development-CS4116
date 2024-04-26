@@ -69,7 +69,7 @@ function get_all_user_ids(): array
 function get_user_by_credentials($email, $hashed_password): mysqli_result
 {
     global $db_host, $db_username, $db_password, $db_database;
-    require_once (__DIR__ . '/../../encryption/encryption.php');
+    require_once(__DIR__ . '/../../encryption/encryption.php');
     $email = decrypt($email);
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -259,7 +259,7 @@ function get_user_by_id($id)
 
 function get_user_id_by_email($email)
 {
-    require_once (__DIR__ . '/../../encryption/encryption.php');
+    require_once(__DIR__ . '/../../encryption/encryption.php');
 
     $email = decrypt($email);
 
@@ -392,6 +392,22 @@ function is_email_taken($email)
     return 0 != mysqli_num_rows($result);
 }
 
+//function increment_report_count($userId): void
+//{
+//    global $db_host, $db_username, $db_password, $db_database;
+//    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+//    if (!$con) {
+//        die('Could not connect: ' . mysqli_error($con));
+//    }
+//
+//    $query = "SELECT reportCount FROM Users where id = '{$userId}'";
+//    $result = mysqli_query($con, $query)->fetch_assoc()["reportCount"] + 1;
+//
+//    $query = "UPDATE Users SET reportCount = {$result} where id = '{$userId}'";
+//    mysqli_query($con, $query);
+//
+//    mysqli_close($con);
+//}
 function increment_report_count($userId): void
 {
     global $db_host, $db_username, $db_password, $db_database;
@@ -405,7 +421,6 @@ function increment_report_count($userId): void
 
     $query = "UPDATE Users SET reportCount = {$result} where id = '{$userId}'";
     mysqli_query($con, $query);
-
     mysqli_close($con);
 }
 
