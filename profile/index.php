@@ -164,7 +164,14 @@ function display_user_pictures_in_carousel(): void
             <div class="col-sm-8 col-12 p-0">
                 <div class="card text-center border border-0 p-1">
                     <div class="ratio ratio-1x1">
-                        <img src="data:image/png;base64,<?= get_user_pfp_from_user_ID($user_ID) ?>"
+                        <img src="<?php
+                        $php = get_user_pfp_from_user_ID($user_ID);
+                        if ($php) {
+                            echo("data:image/png;base64," . $php);
+                        } else {
+                            echo("../resources/search/default_image.jgp");
+                        }
+                        ?>"
                              alt="Profile Picture"
                              class="img-fluid object-fit-cover rounded-top-3">
                     </div>
