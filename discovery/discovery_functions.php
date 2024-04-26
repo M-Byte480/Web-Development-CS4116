@@ -18,7 +18,7 @@ function get_potential_matching_profiles(): array
     $users_liked_by_this_user = get_all_liked_user_by_user_id($this_user['id']);
     $users_disliked_by_this_user = get_all_disliked_user_by_user_id($this_user['id']);
 
-    return array_diff($users_matching_description_assoc, $users_liked_by_this_user, $users_disliked_by_this_user);
+    return @array_diff_assoc($users_matching_description_assoc, $users_liked_by_this_user, $users_disliked_by_this_user);
 }
 
 function get_user_from_cookies()
@@ -41,7 +41,7 @@ function get_user_matching_description($this_user)
     $looking_for = $this_user['seeking'];
     $get = array(
         "age1" => $age / 2 - 7,
-        "age2" => $age + 7,
+        "age2" => $age + 12,
         "beverages" => $beverage,
         "interests" => $interests,
         "genders" => array($looking_for),

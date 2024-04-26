@@ -1,5 +1,6 @@
 <?php
 // Validate is user logged in
+header('Pragma: no-cache');
 require_once(__DIR__ . '/../validate_user_logged_in.php');
 require_once(__DIR__ . '/../validator_functions.php');
 require_once(__DIR__ . '/../database/repositories/images.php');
@@ -12,6 +13,39 @@ if (isset($_GET['user_id'])) {
     $affected_user_id = $_GET['user_id'];
 } else {
     $GET_REQUEST = false;
+}
+
+
+require_once(__DIR__ . '/discovery_functions.php');
+require_once(__DIR__ . '/../database/repositories/interests.php');
+require_once(__DIR__ . '/../database/repositories/profiles.php');
+require_once(__DIR__ . '/algorithm.php');
+
+
+if (!$GET_REQUEST) {
+    $potential_matches = get_best_fit_users();
+    // Todo: check for how many users
+
+    $ppm = array();
+    while ($pop = $potential_matches->fetch_assoc()) {
+        $ppm[] = $pop;
+    }
+
+    $num_p_matches = count($ppm);
+
+    if ($num_p_matches < 1) {
+        header('Location: ./no-more-suggestions.php');
+        exit();
+    }
+
+    echo 'Potential Matches: ' . $num_p_matches . '<br>';
+
+    $this_user_profile = array_values($ppm)[0];
+    $affected_user_id = $this_user_profile['id'];
+} else {
+    $this_user_profile = get_user_profile_for_discovery($affected_user_id);
+
+    $this_user_profile['id'] = $this_user_profile['userId'];
 }
 
 ?>
@@ -34,6 +68,8 @@ if (isset($_GET['user_id'])) {
 </head>
 
 <script>
+    var timeOut = 150;
+
     function getToast(msg) {
         return `<div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -49,20 +85,22 @@ if (isset($_GET['user_id'])) {
     }
 
     function post_connection(postData) {
-
         $.ajax({
             type: "POST",
-            url: "discovery_backend.php",
+            url: "  discovery_backend.php",
             data: {
                 'json': JSON.stringify(postData)
             },
             success: function (response) {
-                let json = JSON.parse(response)
                 if (json.length > 0) {
                     let toastHTML = getToast(json);
                     $(document.body).append(toastHTML);
                     $('.toast').toast('show');
                 }
+
+                setTimeout(() => {
+                    location.reload();
+                }, timeOut);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log('fuck');
@@ -97,28 +135,6 @@ if (isset($_GET['user_id'])) {
 <?php require_once(__DIR__ . '/../nav_bar/index.php') ?>
 
 <?php
-
-require_once(__DIR__ . '/discovery_functions.php');
-require_once(__DIR__ . '/../database/repositories/interests.php');
-require_once(__DIR__ . '/../database/repositories/profiles.php');
-
-if (!$GET_REQUEST) {
-    $potential_matches = get_potential_matching_profiles();
-    // Todo: check for how many users
-
-    $num_p_matches = count($potential_matches);
-    if ($num_p_matches < 1) {
-        header('Location: ./get_a_life/');
-        exit();
-    }
-    echo 'Potential Matches: ' . $num_p_matches . '<br>';
-    $this_user_profile = $potential_matches[0];
-    $affected_user_id = $this_user_profile['id'];
-} else {
-    $this_user_profile = get_user_profile_for_discovery($affected_user_id);
-
-    $this_user_profile['id'] = $this_user_profile['userId'];
-}
 
 function bio_card($user_profile): void
 {
