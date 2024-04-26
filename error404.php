@@ -13,7 +13,7 @@
         <img src="resources/404.jpg" alt="404" class="img-fluid col-md-12">
         <h1>404</h1>
         <h2>Page Not Found</h2>
-        <p>Sorry pal, you had a few too many creamers and this page don't exist.</p>
+        <p>Sorry pal, you had a few too many creamers and this page doesn't exist.</p>
         <a href="home" class="btn btn-primary">Go Home</a>
     </div>
 </div>
