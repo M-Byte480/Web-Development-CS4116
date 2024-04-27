@@ -69,7 +69,7 @@ function get_all_user_ids(): array
 function get_user_by_credentials($email, $hashed_password): mysqli_result
 {
     global $db_host, $db_username, $db_password, $db_database;
-    require_once (__DIR__ . '/../../encryption/encryption.php');
+    require_once(__DIR__ . '/../../encryption/encryption.php');
     $email = decrypt($email);
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -259,7 +259,7 @@ function get_user_by_id($id)
 
 function get_user_id_by_email($email)
 {
-    require_once (__DIR__ . '/../../encryption/encryption.php');
+    require_once(__DIR__ . '/../../encryption/encryption.php');
 
     $email = decrypt($email);
 
@@ -405,7 +405,6 @@ function increment_report_count($userId): void
 
     $query = "UPDATE Users SET reportCount = {$result} where id = '{$userId}'";
     mysqli_query($con, $query);
-
     mysqli_close($con);
 }
 

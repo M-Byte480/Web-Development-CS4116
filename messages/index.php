@@ -192,7 +192,7 @@ function display_message_thread(): void
                         </a>
                     </li>
                     <li>
-                        <button class="float-end dropdown-item" onclick="sendReport()">
+                        <button class="float-end dropdown-item" data-bs-toggle="modal" data-bs-target="#reportModal">
                             <h4>Report</h4>
                         </button>
                     </li>
@@ -311,7 +311,9 @@ function display_message_thread(): void
     function sendReport() {
         let postData = {
             "reportUser": {
-                "userId": document.querySelector('a[data-bs-toggle="list"].active').dataset.user_id
+                "report": document.getElementById("report_reason").value,
+                "userId": document.querySelector('a[data-bs-toggle="list"].active').dataset.user_id,
+                "affected_user": <?= $userId ?>
             }
         };
         $.ajax({
@@ -379,6 +381,26 @@ function display_message_thread(): void
         });
     });
 </script>
+
+<div class="modal fade" id="reportModal" role="alert">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="modal-body" method="post" action="" id="reportForm">
+                <button type="button" class="exit" data-bs-dismiss="modal">&times</button>
+                <h2 class="modal-title">Give a reason for reporting!</h2>
+                <div class="mb-2">
+                    <label for="report_reason" class="form-label">Reason</label>
+                    <textarea class="form-control" id="report_reason" name="report_reason"
+                              rows="3"></textarea>
+                </div>
+                <button type="button" class="btn btn-danger" onclick="sendReport();">
+                    Report
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
 

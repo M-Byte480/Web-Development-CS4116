@@ -22,6 +22,7 @@
                 success: function (response) {
                     var jsonData = JSON.parse(response);
                     if (jsonData.success === 1) {
+
                         window.location.href = "../login/";
                     } else {
                         let msg = jsonData['errors'].join(', ');
@@ -149,11 +150,22 @@
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <input name="user_dob" type="date" pattern="\d{4}-\d{2}-\d{2}"
-                               value="2006-04-04" min="1920-01-01" max="2006-04-04"
+                               value="0000-00-00"
                                required><br>
                         <small class="text-danger"> [User must be 18+]</small>
-
                     </div>
+                    <script>
+                        var maxDate = new Date();
+                        maxDate.setFullYear(maxDate.getFullYear() - 18);
+                        var formattedMaxDate = maxDate.toISOString().split('T')[0];
+                        document.querySelector('input[name="user_dob"]').setAttribute('max', formattedMaxDate);
+
+                        var minDate = new Date();
+                        minDate.setFullYear(minDate.getFullYear() - 80);
+                        var formattedMinDate = minDate.toISOString().split('T')[0];
+                        document.querySelector('input[name="user_dob"]').setAttribute('min', formattedMinDate);
+                    </script>
+
 
                     <!-- Input Gender  -->
                     <div class="col-12 col-md-6">

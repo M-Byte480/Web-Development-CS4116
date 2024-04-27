@@ -148,12 +148,13 @@ function get_user_report_history($user): void
         <?php
         require_once(__DIR__ . '/../database/repositories/reports.php');
         $data = get_user_report_history_by_id($user['id']);
-
-        if ($data == null) {
+        
+        if (mysqli_num_rows($data) === 0) {
             return;
         }
 
-        foreach ($data as $report) {
+
+        while ($report = $data->fetch_assoc()) {
             ?>
             <tr>
                 <td><?= $report['reporterId'] ?></td>

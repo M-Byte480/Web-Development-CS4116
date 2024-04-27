@@ -2,17 +2,22 @@
 require_once(__DIR__ . '/../validate_user_logged_in.php');
 require_once(__DIR__ . '/../validator_functions.php');
 require_once(__DIR__ . "/../database/repositories/users.php");
+require_once(__DIR__ . "/../database/repositories/reports.php");
 
 $json = filter_input(INPUT_POST, 'json');
 $decoded_json = json_decode($json);
 
-$postData = $decoded_json->discovery_action;
+$postData = $decoded_json->report_action;
 
-$action = $postData->action;
+$report = $postData->report;
+
 $user_id = $postData->user_id;
+
 $affected_user = $postData->affected_user;
 
 
-$hello = json_encode(try_interact_with_another_user($user_id, $affected_user, $action));
-echo $hello;
+if (sizeof(check_if_report_exists($user_id, $affected_user)) == 0) {
+    add_new_report($user_id, $affected_user, $report);
+}
+
 ?>
