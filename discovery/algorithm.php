@@ -21,20 +21,20 @@ function get_best_fit_users($user)
     $user_bev = get_users_beverage_from_user_ID($user_id);
 
     $query = <<<SQL
-WITH DislikedUserIDs as (SELECT dislikes.dislikedUser as ID
-                         FROM USERS
-                                  LEFT JOIN dislikes ON USERS.id = dislikes.userId
-                         WHERE dislikes.userId = '{$user_id}'),
+WITH DislikedUserIDs as (SELECT Dislikes.dislikedUser as ID
+                         FROM Users
+                                  LEFT JOIN Dislikes ON Users.id = Dislikes.userId
+                         WHERE Dislikes.userId = '{$user_id}'),
 
-     LikedUserIDs as (SELECT likes.likedUser as ID
-                      FROM USERS
-                               LEFT JOIN Likes ON USERS.id = Likes.userId
+     LikedUserIDs as (SELECT Likes.likedUser as ID
+                      FROM Users
+                               LEFT JOIN Likes ON Users.id = Likes.userId
                       WHERE Likes.userId = '{$user_id}'),
 
-     ReportedUsers as (SELECT reports.reportedId as ID
+     ReportedUsers as (SELECT Reports.reportedId as ID
                        FROM Reports
-                       WHERE reports.reporterId = '{$user_id}'
-                       GROUP BY reports.reportedId),
+                       WHERE Reports.reporterId = '{$user_id}'
+                       GROUP BY Reports.reportedId),
 
      FilteredUsers AS (SELECT DISTINCT *
                        FROM Users
@@ -57,9 +57,9 @@ WITH DislikedUserIDs as (SELECT dislikes.dislikedUser as ID
      SortedUsers AS (SELECT *
                      FROM (SELECT FilteredUsers.id, COUNT(*) as matchingInterestCount
                            FROM FilteredUsers
-                                    LEFt JOIN userinterests ON FilteredUsers.id = userinterests.userId
-                                    LEFt JOIN interests ON userinterests.interestId = interests.id
-                           WHERE interests.name IN
+                                    LEFt JOIN UserInterests ON FilteredUsers.id = UserInterests.userId
+                                    LEFt JOIN Interests ON UserInterests.interestId = Interests.id
+                           WHERE Interests.name IN
                                  ({$user_interests})
                            GROUP BY FilteredUsers.id
                            HAVING COUNT(*) != 0
@@ -67,9 +67,9 @@ WITH DislikedUserIDs as (SELECT dislikes.dislikedUser as ID
                      UNION
                      (SELECT FilteredUsers.id AS exclude_id, 0 as matchingInterestCount
                       FROM FilteredUsers
-                               LEFt JOIN userinterests ON FilteredUsers.id = userinterests.userId
-                               LEFt JOIN interests ON userinterests.interestId = interests.id
-                      WHERE interests.name NOT IN
+                               LEFt JOIN UserInterests ON FilteredUsers.id = UserInterests.userId
+                               LEFt JOIN Interests ON UserInterests.interestId = Interests.id
+                      WHERE Interests.name NOT IN
                             ({$user_interests}))),
      PreservedOrder AS (SELECT *, ROW_NUMBER() OVER () AS original_order
                         FROM SortedUsers)
@@ -81,14 +81,14 @@ FROM PreservedOrder
                     FROM UserBeverages
                              LEFT JOIN Beverages ON UserBeverages.beverageId = Beverages.id) AS beverages
                    ON Users.id = beverages.userId
-         LEFT JOIN Profiles ON users.id = Profiles.userId
-WHERE profiles.seeking = '{$user_gender}' 
+         LEFT JOIN Profiles ON Users.id = Profiles.userId
+WHERE Profiles.seeking = '{$user_gender}' 
 ORDER BY CASE
-             WHEN Beverages.name = '{$user_bev}' THEN PreservedOrder.matchingInterestCount
+             WHEN favouriteBeverage = '{$user_bev}' THEN PreservedOrder.matchingInterestCount
              ELSE 0
              END DESC,
          CASE
-             WHEN Beverages.name = '{$user_bev}' THEN original_order
+             WHEN favouriteBeverage = '{$user_bev}' THEN original_order
              ELSE PreservedOrder.matchingInterestCount
              END DESC;
 SQL;

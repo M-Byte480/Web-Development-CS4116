@@ -77,8 +77,8 @@ function get_user_interests($user_id): array
     }
 
     $query = "SELECT name
-                FROM userinterests JOIN interests ON userinterests.interestId = interests.id
-                where userid = '{$user_id}'";
+                FROM UserInterests JOIN Interests ON UserInterests.interestId = Interests.id
+                where userId = '{$user_id}'";
 
     $result = mysqli_query($con, $query);
     mysqli_close($con);
