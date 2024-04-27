@@ -12,7 +12,7 @@ function get_profile_card(array $user, int $interest_flag): void
 {
     ?>
     <div id="<?= $user['id'] ?>" onclick="onCardClicked('<?= $user['id'] ?>')"
-         class="bg-dark text-white border border-2 border-dark rounded-4 user_card my-card m-1">
+         class="bg-dark text-white border border-2 border-dark rounded-4 user_card  m-1">
         <?php
 
         require_once(__DIR__ . '/../database/repositories/images.php');

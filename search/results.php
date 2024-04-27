@@ -1,7 +1,7 @@
 <?php
 // Validate is user logged in
 require_once(__DIR__ . '/../validator_functions.php');
-require_once (__DIR__ . '/../validate_user_logged_in.php');
+require_once(__DIR__ . '/../validate_user_logged_in.php');
 
 
 require_once(__DIR__ . '/../database/repositories/likes.php');
@@ -113,7 +113,7 @@ $completement_users = @array_diff($rows, $union_users);
         foreach ($rows as $row) {
             ?>
 
-            <div class="col-12 col-md-3 user_card profiles">
+            <div class="col-12 col-md-3 user_card profiles my-card">
                 <?php get_profile_card($row, $interest_flag) ?>
             </div>
             <?php
