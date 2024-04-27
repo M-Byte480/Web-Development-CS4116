@@ -38,7 +38,7 @@ if (isset($decoded_json->getMessages)) {
     if (isset($decoded_json->sentMessage->connectionId, $decoded_json->sentMessage->userId, $decoded_json->sentMessage->content)) {
         $connectionId = $decoded_json->sentMessage->connectionId;
         $sentUserId = $decoded_json->sentMessage->userId;
-        $content = $decoded_json->sentMessage->content;
+        $content = htmlspecialchars($decoded_json->sentMessage->content);
 
         add_chatlog($connectionId, $sentUserId, $content);
     }

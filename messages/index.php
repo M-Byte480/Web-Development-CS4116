@@ -77,6 +77,8 @@ function display_message_thread(): void
         margin-top: 5px;
         margin-bottom: 5px;
         display: inline-block;
+        max-width: 90%;
+        overflow-wrap: break-word;
     }
 
     .yours {
@@ -314,7 +316,7 @@ function display_message_thread(): void
             "reportUser": {
                 "report": document.getElementById("report_reason").value,
                 "userId": document.querySelector('a[data-bs-toggle="list"].active').dataset.user_id,
-                "affected_user": <?= $userId ?>
+                "affected_user": "<?= $userId ?>"
             }
         };
         $.ajax({
