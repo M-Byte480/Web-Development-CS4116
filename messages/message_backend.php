@@ -43,10 +43,14 @@ if (isset($decoded_json->getMessages)) {
         add_chatlog($connectionId, $sentUserId, $content);
     }
 } elseif (isset($decoded_json->reportUser)) {
-    if (isset($decoded_json->reportUser->userId)) {
-        $userId = $decoded_json->reportUser->userId;
-        increment_report_count($userId);
+    $report = $decoded_json->reportUser->report;
+    $user_id = $decoded_json->reportUser->userId;
+    $affected_user = $decoded_json->reportUser->affected_user;
+
+    if (sizeof(check_if_report_exists($user_id, $affected_user)) == 0) {
+        add_new_report($user_id, $affected_user, $report);
     }
+
 } elseif (isset($decoded_json->unmatchUsers)) {
     if (isset($decoded_json->unmatchUsers->userId, $decoded_json->unmatchUsers->userId)) {
         $userId = $decoded_json->unmatchUsers->userId;
