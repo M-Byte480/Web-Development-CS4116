@@ -2,8 +2,8 @@
 
 function get_best_fit_users($user)
 {
-    require_once(__DIR__ . '/../database/repositories/Profiles.php');
-    require_once(__DIR__ . '/../database/repositories/Beverages.php');
+    require_once(__DIR__ . '/../database/repositories/profiles.php');
+    require_once(__DIR__ . '/../database/repositories/beverages.php');
     global $db_host, $db_username, $db_password, $db_database;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
     if (!$con) {
