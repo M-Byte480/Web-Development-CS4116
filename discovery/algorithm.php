@@ -41,8 +41,6 @@ WITH DislikedUserIDs as (SELECT Dislikes.dislikedUser as ID
                                 LEFT JOIN Profiles
                                           on Users.id = Profiles.userId
                        WHERE gender = '{$user_seeking}'
-                         AND dateOfBirth >= '1980-12-12'
-                         AND dateOfBirth <= '2020-12-12'
                          AND Users.id NOT IN (SELECT ID
                                               FROM ReportedUsers
                                               UNION
