@@ -203,6 +203,8 @@ if (!$SEARCH) {
     }
 
     function post_report(postReportData) {
+        disableButtons();
+
         $.ajax({
             type: "POST",
             url: "discovery_report_backend.php",
@@ -214,6 +216,10 @@ if (!$SEARCH) {
                 let toastHTML = getToast(msg, "New Report");
                 $(document.body).append(toastHTML);
                 $('.toast').toast('show');
+
+                setTimeout(() => {
+                    location.reload();
+                }, 750);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(thrownError);
@@ -224,7 +230,6 @@ if (!$SEARCH) {
 </script>
 <body>
 <?php require_once(__DIR__ . '/../nav_bar/index.php') ?>
-<button href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reportModal">Report</button>
 <!--Report Modal-->
 <div class="modal fade" id="reportModal" role="alert">
     <div class="modal-dialog">
@@ -387,8 +392,13 @@ function interest_card($user_profile): void
                 interest_card($this_user_profile);
                 ?>
             </div>
+
         </div>
+
     </div>
+    <button href="#" class="btn btn-danger float-end" data-bs-toggle="modal" data-bs-target="#reportModal">Report
+    </button>
+
 </div>
 
 <div class="position-absolute text-center align-middle border d-flex align-items-center justify-content-center h-100 w-100 start-0 top-0 d-none"
