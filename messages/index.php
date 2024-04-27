@@ -272,7 +272,7 @@ function display_message_thread(): void
             },
             success: function (response) {
                 document.querySelector('#sendMessageInput').value = "";
-                updateMessageView();
+                updateMessageView(false);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(thrownError);
@@ -280,7 +280,7 @@ function display_message_thread(): void
         });
     }
 
-    function updateMessageView() {
+    function updateMessageView(startLoop = true) {
         if (document.querySelector('a[data-bs-toggle="list"].active') == null)
             return;
         let postData = {
@@ -305,7 +305,8 @@ function display_message_thread(): void
         });
         if (document.querySelector('a[data-bs-toggle="list"].active') == null)
             return;
-        setTimeout(updateMessageView, 5000);
+        if (startLoop)
+            setTimeout(updateMessageView, 5000);
     }
 
     function sendReport() {
@@ -376,7 +377,7 @@ function display_message_thread(): void
                     document.getElementById("topLevelMessageThread").classList.add("d-none");
                     document.getElementById("topLevelMessageThread").classList.remove("d-block");
                 }
-                updateMessageView();
+                updateMessageView(true);
             });
         });
     });
