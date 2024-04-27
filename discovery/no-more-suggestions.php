@@ -27,7 +27,7 @@ require_once(__DIR__ . '/../nav_bar/index.php');
             <p class="display-5 ">There are no matches available for you at this time. Might I suggest updating
                 your
                 profile?</p>
-            <a href="/profile/" class="btn btn-primary ">Update Profile</a>
+            <a href="../profile/" class="btn btn-primary ">Update Profile</a>
         </div>
     </div>
 </body>
