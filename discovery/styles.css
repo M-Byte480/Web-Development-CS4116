@@ -1,3 +1,42 @@
 .max-height {
     max-height: 600px;
 }
+
+.disabled {
+    filter: grayscale(50%);
+}
+
+.like-button {
+    color: forestgreen;
+    font-weight: bolder;
+    font-style: italic;
+    font-size: 5rem;
+    text-shadow: orange 12px -14px;
+    backdrop-filter: blur(0.5px);
+}
+
+.dislike-button {
+    color: #ff0000;
+    font-weight: bolder;
+    font-style: italic;
+    font-size: 5rem;
+    text-shadow: #3d0020 -10px -10px;
+    backdrop-filter: blur(0.5px);
+}
+
+.bottle {
+    transition: transform 0.3s;
+}
+
+.bottle:hover {
+    transform: scale(1.25) rotate(-800deg);
+    rotate: 35deg;
+}
+
+.bottle::after {
+    content: "";
+}
+
+.bottle-small {
+    height: 75px;
+}

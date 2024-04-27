@@ -311,6 +311,20 @@ function display_message_thread(): void
             setTimeout(updateMessageView, 5000);
     }
 
+    function getToast(msg, type) {
+        return `<div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">${type}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    ${msg}
+                </div>
+            </div>
+        </div>`
+    }
+
     function sendReport() {
         let postData = {
             "reportUser": {
@@ -326,6 +340,10 @@ function display_message_thread(): void
                 json: JSON.stringify(postData)
             },
             success: function (response) {
+                let msg = "User reported sucessfully !"
+                let toastHTML = getToast(msg, "New Report");
+                $(document.body).append(toastHTML);
+                $('.toast').toast('show');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(thrownError);
