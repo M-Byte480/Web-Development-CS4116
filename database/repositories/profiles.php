@@ -127,4 +127,20 @@ function get_user_profile_for_discovery($user_id)
     return $result->fetch_assoc();
 }
 
+function get_user_profile_for_discovery_better($user_id)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+
+    $query = "SELECT * FROM Profiles LEFT JOIN Users ON Profiles.userId = Users.id WHERE userid = '{$user_id}'";
+    $result = mysqli_query($con, $query);
+
+    return $result->fetch_assoc();
+}
+
 ?>

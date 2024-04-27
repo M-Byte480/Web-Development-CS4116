@@ -57,11 +57,11 @@ input[type="checkbox"] {
 }
 
 .my-card {
-    /*transition: 0.5s;*/
+    transition: 0.5s;
 }
 
 .my-card:hover {
-    transform: scale(4.075);
+    transform: scale(1.15);
     z-index: 800;
 }
 
