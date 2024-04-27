@@ -11,7 +11,7 @@ require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
     <?php
     require_once(__DIR__ . "/../imports.php");
     ?>
-    <title>No Matches</title>
+    <title>No More Suggested Users</title>
 </head>
 <body>
 <?php
@@ -24,7 +24,8 @@ require_once(__DIR__ . '/../nav_bar/index.php');
 
             <h1 class="display-1 ">No Matches Found</h1>
             <img src="../resources/no_match/drinking-alone.jpg" alt="sad man" class="img-fluid col-10">
-            <p class="display-5 ">There are no matches available for you at this time. Might I suggest updating
+            <p class="display-5 ">There are no suggested users are available for you at this time. Might I suggest
+                updating
                 your
                 profile?</p>
             <a href="../profile/" class="btn btn-primary ">Update Profile</a>
