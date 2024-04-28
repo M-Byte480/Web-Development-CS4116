@@ -3,12 +3,6 @@
 require_once(__DIR__ . '/../validator_functions.php');
 require_once(__DIR__ . '/../validate_user_logged_in.php');
 
-
-require_once(__DIR__ . '/../database/repositories/likes.php');
-require_once(__DIR__ . '/../database/repositories/dislikes.php');
-require_once(__DIR__ . '/profile_card.php');
-require_once(__DIR__ . '/search_functions.php');
-
 $interest_flag = isset($_GET['interests']);
 ?>
 
@@ -26,76 +20,17 @@ $interest_flag = isset($_GET['interests']);
     <title>Search</title>
 </head>
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <?php
-
 require_once(__DIR__ . '/../nav_bar/index.php');
-
-$searched_profiles = get_user_by_matches($_GET);
-$user_count = mysqli_num_rows($searched_profiles);
-
-// Get the email variable from the frontend (assuming it's passed via cookie)
-$email_variable = $_COOKIE['email'];
-
-
-$user_id = get_user_id_by_email($email_variable);
-
-$liked_users = get_all_liked_user_by_user_id($user_id);
-
-$disliked_users = get_all_disliked_user_by_user_id($user_id);
-
-$union_users = array_merge($liked_users, $disliked_users);
-
-
-$rows = [];
-
-while ($row = mysqli_fetch_assoc($searched_profiles)) {
-    $rows[] = $row;
-}
-
-$completement_users = @array_diff($rows, $union_users);
-
 ?>
-
-<script>
-    let showAllUsersFlag = true;
-
-    function newMatchesOnly() {
-        console.log("click");
-        showAllUsersFlag = !showAllUsersFlag;
-
-        if (showAllUsersFlag) {
-            (document).getElementById('searchBar').disabled = false;
-
-            (document).querySelector('#switch-state').innerHTML = "See all Users";
-
-            (document).getElementById('all-users').style.display = 'block';
-            (document).getElementById('complement-users').style.display = 'none';
-        } else {
-            (document).getElementById('searchBar').disabled = true;
-
-            (document).querySelector('#switch-state').innerHTML = "New Matches Only";
-
-            (document).getElementById('all-users').style.display = 'none';
-            (document).getElementById('complement-users').style.display = 'block';
-        }
-
-    }
-</script>
 
 <div class="container">
     <div class="row">
         <div class="d-flex align-items-center justify-content-center " style="height: 75px;">
-            <div class="m-2">
-                <input id="searchBar" size="30" type="text" class="search-bar" placeholder="Search Users...">
+            <div class="form-floating m-2">
+                <input id="searchBar" size=30 type="text" class="form-control search-bar" placeholder="Search Users">
+                <label for="searchBar">Search Users</label>
             </div>
-
-            <div class="form-check form-switch ml-2">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
-                       onclick="newMatchesOnly()">
-
-            </div>
-            <div id="switch-state" style="width: 150px;">All users</div>
         </div>
     </div>
 </div>
@@ -107,51 +42,66 @@ $completement_users = @array_diff($rows, $union_users);
     }
 </script>
 
-<div class="container" id="all-users">
-    <div class="row">
-        <?php
-        foreach ($rows as $row) {
-            ?>
-
-            <div class="col-12 col-md-3 user_card profiles my-card">
-                <?php get_profile_card($row, $interest_flag) ?>
-            </div>
-            <?php
-        }
-        ?>
+<div class="container mb-3 pb-3">
+    <div class="row mb-3 pb-3" id="users_container">
     </div>
 </div>
-
-<div class="container" id="complement-users" style="display: none;">
-    <div class="row">
-        <?php
-        require_once(__DIR__ . '/profile_card.php');
-        foreach ($completement_users as $row) {
-            ?>
-            <div class="col-12 col-md-3 user-card">
-                <?php get_profile_card($row, $interest_flag) ?>
-            </div>
-            <?php
-        }
-        ?>
-    </div>
-</div>
-
 
 <script>
+    let stop_displaying_users = false;
+    let update_at_end = false;
+
+    function display_users(row_num, resetDiv) {
+        if (stop_displaying_users) {
+            update_at_end = true;
+            return;
+        }
+        stop_displaying_users = true;
+        update_at_end = false;
+        setTimeout(() => {
+            stop_displaying_users = false;
+            if (update_at_end)
+                display_users(row_num, resetDiv);
+        }, 500);
+
+        let searchText = $("#searchBar").val().toLowerCase().trim();
+
+        let postData = {
+            "name": searchText,
+            "interestFlag": "<?= $interest_flag ?>",
+            "getRequest": <?= json_encode($_GET) ?>,
+            "row_num": row_num
+        };
+        $.ajax({
+            type: "POST",
+            url: "search_result_backend.php",
+            data: {
+                json: JSON.stringify(postData)
+            },
+            success: function (response) {
+                if (resetDiv)
+                    document.getElementById("users_container").innerHTML = "";
+                document.getElementById("users_container").innerHTML += response;
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError);
+            }
+        });
+    }
+
     $(document).ready(function () {
+        let row_num = 0
+        display_users(row_num, false);
         $('#searchBar').on('input', function () {
-            let searchText = $(this).val().toLowerCase();
+            row_num = 0;
+            display_users(row_num, true);
+        });
 
-            $('.profiles').each(function () {
-                var userName = $(this).find('.user-name').text().toLowerCase();
-
-                if (userName.includes(searchText)) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
+        $(window).scroll(function () {
+            if ($(window).scrollTop() + $(window).height() === $(document).height()) {
+                row_num += 8;
+                display_users(row_num, false);
+            }
         });
     });
 </script>

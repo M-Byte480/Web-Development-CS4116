@@ -47,25 +47,6 @@ function get_all_users(): array
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
-function get_all_user_ids(): array
-{
-    global $db_host, $db_username, $db_password, $db_database;
-    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
-
-    if (!$con) {
-        die('Could not connect: ' . mysqli_error($con));
-    }
-
-
-    $query = "SELECT id FROM Users";
-
-    $result = mysqli_query($con, $query);
-
-    mysqli_close($con);
-
-    return array_column($result->fetch_all(), 0);
-}
-
 function get_user_by_credentials($email, $hashed_password): mysqli_result
 {
     global $db_host, $db_username, $db_password, $db_database;
@@ -408,5 +389,18 @@ function increment_report_count($userId): void
     mysqli_close($con);
 }
 
+function get_users_by_name($search_name)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+    $query = "SELECT * FROM Users where firstName like '%{$search_name}%' OR lastName like '%{$search_name}%'";
+    $result = mysqli_query($con, $query);
+    mysqli_close($con);
+
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
 
 ?>

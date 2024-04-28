@@ -6,6 +6,9 @@ require_once(__DIR__ . '/../secrets.settings.php');
  * @param $get
  * pass the $_GET request directly in here
  *
+ * @param $name
+ * give a name to filter the search by
+ *
  * Finds the years difference from today for the two ranges
  *
  * Then joins the user, profiles, user interests and user beverages with their names together
@@ -18,7 +21,7 @@ require_once(__DIR__ . '/../secrets.settings.php');
  *
  * @return bool|mysqli_result|null
  */
-function get_user_by_matches($get): bool|mysqli_result|null
+function get_user_by_matches($get, $name, $row_number): bool|mysqli_result|null
 {
     global $db_host, $db_username, $db_password, $db_database, $db_some_secret, $secret_encryption_method, $secret_encryption_key;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
@@ -30,8 +33,13 @@ function get_user_by_matches($get): bool|mysqli_result|null
     // Todo: Sanitize the incoming $get attributes
 
     // Age
-    $min_age = (int)$get['age1'];
-    $max_age = (int)$get['age2'];
+    if (!isset($get['age1'], $get['age2'])) {
+        $min_age = 18;
+        $max_age = 99;
+    } else {
+        $min_age = (int)filter_var($get['age1'], FILTER_VALIDATE_INT, array('default' => 18));
+        $max_age = (int)filter_var($get['age2'], FILTER_VALIDATE_INT, array('default' => 99));
+    }
 
     if ($min_age > $max_age) {
         $temp = $min_age;
@@ -82,14 +90,23 @@ function get_user_by_matches($get): bool|mysqli_result|null
                 i.name IN ('" . implode("', '", $get['interests']) . "') 
                 ";
     }
+    if ($name != "") {
+        $name = filter_var($name, FILTER_SANITIZE_ADD_SLASHES);
+        $query .= "AND CONCAT(firstName, ' ', lastName) LIKE '%$name%'";
+    }
 
-    $query .= " GROUP BY u.id ORDER BY matching_interests DESC";
+    $query .= " GROUP BY u.id ORDER BY matching_interests DESC, firstName ASC, lastName ASC
+    LIMIT 8 OFFSET {$row_number}";
 
     $result = mysqli_query($con, $query);
 
     mysqli_close($con);
 
-    return $result;
+    if (mysqli_num_rows($result) > 0) {
+        return $result;
+    }
+    return false;
+
 }
 
 ?>
