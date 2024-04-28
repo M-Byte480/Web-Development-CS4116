@@ -121,6 +121,22 @@ function delete_user_from_user_ID($user_ID): void
     mysqli_close($con);
 }
 
+function get_gender_from_user_ID(string $user_ID): string
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+
+    $query = "SELECT gender FROM Profiles where userId = '{$user_ID}'";
+    $result = mysqli_query($con, $query);
+
+    if ($result->num_rows > 0)
+        return $result->fetch_array()[0];
+    return "";
+}
+
 
 function get_first_name_from_user_ID(string $user_ID): string
 {
