@@ -167,5 +167,9 @@ CREATE TABLE Reports
 CREATE TABLE Notifications
 (
     userId VARCHAR(36) NOT NULL,
-    reason LONGTEXT
+    reason VARCHAR(256) ,
+     FOREIGN KEY (userId) REFERENCES Users(id)
+     ON DELETE CASCADE,
+         PRIMARY KEY (userId, reason)
+
 );
