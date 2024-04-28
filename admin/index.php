@@ -21,7 +21,7 @@ require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 $usersInDb = get_all_users();
 
 usort($usersInDb, function ($first, $second) {
-    return $first['reportCount'] - $second['reportCount'];
+    return $second['reportCount'] - $first['reportCount'];
 });
 
 ?>
