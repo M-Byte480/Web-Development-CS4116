@@ -164,3 +164,8 @@ CREATE TABLE Reports
     CONSTRAINT fk_reporter FOREIGN KEY (reporterId) REFERENCES Users (id) ON DELETE CASCADE,
     CONSTRAINT fk_reported FOREIGN KEY (reportedId) REFERENCES Users (id) ON DELETE CASCADE
 );
+CREATE TABLE Notifications
+(
+    userId VARCHAR(36) NOT NULL,
+    reason LONGTEXT
+);

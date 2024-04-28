@@ -4,6 +4,8 @@ require_once(__DIR__ . '/../database/repositories/likes.php');
 require_once(__DIR__ . '/../database/repositories/dislikes.php');
 require_once(__DIR__ . '/../search/search_functions.php');
 require_once(__DIR__ . '/../database/repositories/connections.php');
+require_once(__DIR__ . '/../database/repositories/notifications.php');
+
 
 function get_potential_matching_profiles(): array
 {
@@ -49,10 +51,9 @@ function get_user_matching_description($this_user)
     return get_user_by_matches($get);
 }
 
-function try_interact_with_another_user($user_id, $affected_user, $action): array
+function try_interact_with_another_user($user_id, $affected_user, $action): string
 {
-
-    $errors = [];
+    $msg = "";
     switch ($action) {
         case 'dislike':
             //dislike here ->we good
@@ -79,14 +80,14 @@ function try_interact_with_another_user($user_id, $affected_user, $action): arra
             }
             if (check_if_connection_exists($user_id, $affected_user)) {
                 create_connection($user_id, $affected_user);
-                $errors[] = "You have connected with " . get_first_name_from_user_ID($affected_user);
-
+                $msg = "You have connected with " . get_first_name_from_user_ID($affected_user);
+                create_notifcation_for_user($affected_user, $msg);
             }
 
     }
 
 
-    return $errors;
+    return ($msg);
 
 
 }

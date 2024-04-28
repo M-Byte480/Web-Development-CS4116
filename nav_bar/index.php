@@ -35,7 +35,9 @@ try {
 } catch (ValidationException $e) {
     $user_is_admin = false;
 }
-
+if ($user_logged_in) {
+    require_once(__DIR__ . "/../notifications/notification_check.php");
+}
 ?>
 
 <nav class="navbar navbar-expand-sm navbar-light" id="topLevelNavBar">
@@ -56,6 +58,12 @@ try {
                 <?php
                 if ($user_logged_in) {
                     ?>
+                    <li class="nav-item p-2">
+                        <a class="nav-link float-end" href="../notifications">
+                            <h2 class="collapse" id="collapsibleNavbar">Start Matching</h2>
+                            <i class="bi bi-bell"></i>
+                        </a>
+                    </li>
                     <li class="nav-item p-2">
                         <a class="nav-link float-end" href="../discovery">
                             <h2 class="collapse" id="collapsibleNavbar">Start Matching</h2>

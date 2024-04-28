@@ -14,5 +14,5 @@ $user_id = $postData->user_id;
 $affected_user = $postData->affected_user;
 
 
-echo json_encode(try_interact_with_another_user($user_id, $affected_user, $action));
+echo try_interact_with_another_user($user_id, $affected_user, $action);
 ?>

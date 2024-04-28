@@ -113,10 +113,8 @@ if (!$SEARCH) {
                 'json': JSON.stringify(postData)
             },
             success: function (response) {
-                let json = JSON.parse(response);
-
-                if (json.length > 0) {
-                    let toastHTML = getToast(json, "New Connection");
+                if (response !== "") {
+                    let toastHTML = getToast(response, "New Connection");
                     $(document.body).append(toastHTML);
                     $('.toast').toast('show');
                 }
