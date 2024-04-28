@@ -6,6 +6,9 @@ require_once(__DIR__ . '/../secrets.settings.php');
  * @param $get
  * pass the $_GET request directly in here
  *
+ * @param $name
+ * give a name to filter the search by
+ *
  * Finds the years difference from today for the two ranges
  *
  * Then joins the user, profiles, user interests and user beverages with their names together
@@ -18,7 +21,7 @@ require_once(__DIR__ . '/../secrets.settings.php');
  *
  * @return bool|mysqli_result|null
  */
-function get_user_by_matches($get): bool|mysqli_result|null
+function get_user_by_matches($get, $name): bool|mysqli_result|null
 {
     global $db_host, $db_username, $db_password, $db_database, $db_some_secret, $secret_encryption_method, $secret_encryption_key;
     $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
@@ -81,6 +84,9 @@ function get_user_by_matches($get): bool|mysqli_result|null
                 AND 
                 i.name IN ('" . implode("', '", $get['interests']) . "') 
                 ";
+    }
+    if ($name != "") {
+        $query .= "AND firstName LIKE '%$name%' or lastName LIKE '%$name%'";
     }
 
     $query .= " GROUP BY u.id ORDER BY matching_interests DESC";
