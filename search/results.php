@@ -50,8 +50,9 @@ require_once(__DIR__ . '/../nav_bar/index.php');
 <script>
     let stop_displaying_users = false;
     let update_at_end = false;
+    let row_num = 0
 
-    function display_users(row_num, resetDiv) {
+    function display_users(resetDiv) {
         if (stop_displaying_users) {
             update_at_end = true;
             return;
@@ -61,7 +62,7 @@ require_once(__DIR__ . '/../nav_bar/index.php');
         setTimeout(() => {
             stop_displaying_users = false;
             if (update_at_end)
-                display_users(row_num, resetDiv);
+                display_users(resetDiv);
         }, 500);
 
         let searchText = $("#searchBar").val().toLowerCase().trim();
@@ -90,17 +91,16 @@ require_once(__DIR__ . '/../nav_bar/index.php');
     }
 
     $(document).ready(function () {
-        let row_num = 0
-        display_users(row_num, false);
+        display_users(false);
         $('#searchBar').on('input', function () {
             row_num = 0;
-            display_users(row_num, true);
+            display_users(true);
         });
 
         $(window).scroll(function () {
             if ($(window).scrollTop() + $(window).height() === $(document).height()) {
                 row_num += 8;
-                display_users(row_num, false);
+                display_users(false);
             }
         });
     });

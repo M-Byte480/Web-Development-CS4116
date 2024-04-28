@@ -16,16 +16,6 @@ require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 </head>
 <body>
 
-<?php
-// Query Database
-$usersInDb = get_all_users();
-
-usort($usersInDb, function ($first, $second) {
-    return $second['reportCount'] - $first['reportCount'];
-});
-
-?>
-
 <script>
 
 
@@ -167,22 +157,16 @@ usort($usersInDb, function ($first, $second) {
                                 button3.disabled = false;
                             }, 1000);
 
+                            let toastHTML = getToast(jsonData['msg']);
+                            $(document.body).append(toastHTML);
+                            $('.toast').toast('show');
                             // Check for what the backend returned value is
                             if (jsonData.success == "1") {
-                                let toastHTML = getToast(jsonData['msg']);
-                                $(document.body).append(toastHTML);
-                                $('.toast').toast('show');
-
                                 if (jsonData['msg'].includes("unbanned")) {
                                     changeRowColour(jsonData['user_id'], 'unbanned');
                                 } else {
                                     changeRowColour(jsonData['user_id'], 'banned');
                                 }
-
-                            } else {
-                                let toastHTML = getToast(jsonData['msg']);
-                                $(document.body).append(toastHTML);
-                                $('.toast').toast('show');
                             }
                         }
                 });
@@ -275,127 +259,21 @@ require_once(__DIR__ . "/../nav_bar/index.php");
     <div class="row">
         <div class="col-12 d-flex justify-content-center">
             <div class="search-bar-container m-2">
-                <input id="searchBar" size="35" type="text" class="search-bar" placeholder="Search User..."
-                       style="line-height: 30px">
+                <div class="form-floating m-2">
+                    <input id="searchBar" size=50 type="text" class="form-control search-bar"
+                           placeholder="Search Users">
+                    <label for="searchBar">Search Users</label>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-
-<?php
-
-function action_button($user): void
-{
-    ?>
-    <div class="dropdown">
-        <div class="mobile-menu-toggle">
-            <button class="btn <?= $user['banned'] ? 'btn-light' : 'btn-dark' ?> dropdown-toggle mobile-toggle-btn btn-sm"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                <i class="bi bi-three-dots-vertical"></i>
-            </button>
-            <ul class="dropdown-menu p-2">
-                <li>
-                    <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" value="<?= $user['id'] ?>"
-                            data-bs-target="#banModal" onclick="fetchBanUser('<?= $user['id'] ?>')">
-                        Ban Options
-                    </button>
-                </li>
-                <li>
-                    <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal"
-                            data-bs-target="#editUserModal" onClick="fetchUserActions('<?= $user['id'] ?>')">
-                        User Options
-                    </button>
-                </li>
-                <li>
-                    <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal"
-                            data-bs-target="#viewHistoryModal" onClick="fetchBanHistory('<?= $user['id'] ?>')">
-                        Ban History
-                    </button>
-                </li>
-                <li>
-                    <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal"
-                            data-bs-target="#viewHistoryModal" onClick="fetchReportLogs('<?= $user['id'] ?>')">
-                        Report Log
-                    </button>
-                </li>
-                <li>
-                    <form id="removeForm-<?= $user['id'] ?>" method="post" action="admin_backend.php">
-                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                        <input type="hidden" name="admin_email" value="<?= $_COOKIE['email'] ?>">
-                        <input type="hidden" name="action" value="delete">
-                        <button type="button" class="btn btn-danger m-1" name="removeBtn" id="removeBtn" value="Delete"
-                                onclick="deleteUser('<?= $user['id'] ?>')">
-                            Delete
-                        </button>
-                    </form>
-                </li>
-            </ul>
-
-        </div>
+<div class="container mb-3 pb-3">
+    <div class="row mb-3 pb-3" id="users_container">
     </div>
-    <?php
-}
+</div>
 
-function pfp($user): void
-{
-    ?>
-    <img src="<?= get_user_pfp_from_user_ID($user['id']) ?>"
-         alt="Profile Picture"
-         class="img-fluid rounded-circle"
-         style="width: 100px; height: 100px; object-fit: cover;"
-    >
-    <?php
-}
-
-include_once(__DIR__ . '/admin_functions.php');
-
-function user_information($user): void
-{
-    ?>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <h4>
-                    <a href="<?= '../profile/' . "?user_id=" . $user['id'] ?>"
-                       target="_blank"
-                       style="color: inherit;"><?= get_user_name($user) ?></a> <?= get_user_age($user) ?>
-                </h4>
-            </div>
-            <div class="col-md-6">Reports: <?= $user['reportCount'] === null ? 0 : $user['reportCount'] ?>
-            </div>
-        </div>
-    </div>
-    <?php
-}
-
-
-foreach ($usersInDb as $user) {
-    ?>
-    <div class="container list-item" id="<?= $user['id'] ?>">
-        <div style="display: none;" class="list-flag">
-            <?= get_user_name($user) . ' ' . get_user_age($user) ?></div>
-        <div style="display: none;" class="list-id"><?= $user['id'] ?></div>
-        <div id="<?= 'row-' . $user['id'] ?>"
-             class=" row align-items-center height-100px mt-3 border curve-100 <?= $user['banned'] ? 'bg-red' : 'bg-gray' ?>">
-            <div class="col-2 col-sm-2 col-md-2 p-1 width-100px">
-                <?php pfp($user) ?>
-            </div>
-            <div class="col-6 col-sm-8 col-md-8">
-                <?php user_information($user) ?>
-            </div>
-            <div class="col-2 col-sm-2 col-md-2 text-md-right">
-                <?php action_button($user) ?>
-            </div>
-        </div>
-    </div>
-
-
-    <?php
-}
-?>
 <form method="post" action="admin_backend.php" class="banForm" id="banForm">
     <!-- BAN MODAL -->
     <div class="modal fade" tabindex="-1" aria-labelledby="banModalLabel" id="banModal"
@@ -486,29 +364,57 @@ foreach ($usersInDb as $user) {
 </div>
 
 <script>
-
-    // Search bar filer
     $(document).ready(function () {
+        let stop_displaying_users = false;
+        let update_at_end = false;
+        let row_num = 0;
+
+        function display_users(resetDiv) {
+            if (stop_displaying_users) {
+                update_at_end = true;
+                return;
+            }
+            stop_displaying_users = true;
+            update_at_end = false;
+            setTimeout(() => {
+                stop_displaying_users = false;
+                if (update_at_end)
+                    display_users(resetDiv);
+            }, 500);
+            let searchText = $("#searchBar").val().toLowerCase().trim();
+            let postData = {
+                "searchText": searchText,
+                "row_number": row_num
+            };
+            $.ajax({
+                type: "POST",
+                url: "admin_backend.php",
+                data: {
+                    "action": "get-users",
+                    json: JSON.stringify(postData)
+                },
+                success:
+                    function (response) {
+                        if (resetDiv)
+                            document.getElementById("users_container").innerHTML = "";
+                        document.getElementById("users_container").innerHTML += response;
+                    },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                }
+            });
+        }
+
+        display_users(false);
         $('#searchBar').on('input', function () {
-            let searchText = $(this).val().toLowerCase();
-            if (searchText.length === 36) {
-                $('.list-item').each(function () {
-                    var uuid = $(this).find('.list-id').text();
-                    if (searchText.includes(uuid)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
-            } else {
-                $('.list-item').each(function () {
-                    var userName = $(this).find('.list-flag').text().toLowerCase();
-                    if (userName.includes(searchText)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
+            row_num = 0;
+            display_users(true);
+        });
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() + $(window).height() === $(document).height()) {
+                row_num += 8;
+                display_users(false);
             }
         });
     });
