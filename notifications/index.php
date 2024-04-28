@@ -6,7 +6,7 @@ require_once(__DIR__ . "/../database/repositories/notifications.php");
 <html>
 <head>
 
-
+    <link rel="stylesheet" href="styles.css">
     <title>Notifications</title>
 </head>
 <body>
@@ -45,16 +45,14 @@ $notifications = get_all_notifcations($userId);
     }
 
 </script>
-
 <button onclick="home_clear()">Return to home</button>
-
-
-<?php while ($notification = $notifications->fetch_assoc()): ?>
-    <div>
-        <p2><?php echo($notification['reason']) ?></p2>
-    </div>
-<?php endwhile; ?>
-
+<div style="margin-top: 20px">
+    <?php while ($notification = $notifications->fetch_assoc()): ?>
+        <div class="notification-container">
+            <p class="notification-text"><?php echo($notification['reason']) ?></p>
+        </div>
+    <?php endwhile; ?>
+</div>
 
 </body>
 </html>
