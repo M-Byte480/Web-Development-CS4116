@@ -11,35 +11,41 @@ function display_message_thread(): void
     global $userId, $connections;
     $connections = get_all_connections_from_userId($userId);
 
-    foreach ($connections as $connection) {
-        ?>
-        <a href="#"
-           class="list-group-item list-group-item-action border-0 bg-secondary p-0 rounded-3 zoom"
-           data-bs-toggle="list" data-user_id="<?= $connection['userId'] ?>"
-           data-connection_id="<?= $connection['connectionId'] ?>">
-            <div class="p-2 m-0">
-                <div class="row p-2 m-0">
-                    <div class="col-3 p-0">
-                        <div class="ratio ratio-1x1">
-                            <img class="img-fluid object-fit-cover rounded-top-3"
-                                 src="<?php
-                                 if ($connection["pfp"]) {
-                                     echo("data:image/png;base64," . $connection["pfp"]);
-                                 } else {
-                                     echo("../resources/search/default_image.jgp");
-                                 }
-                                 ?>"
-                                 alt="Profile picture">
+    if (!empty($connections)) {
+        foreach ($connections as $connection) {
+            ?>
+            <a href="#"
+               class="list-group-item list-group-item-action border-0 bg-secondary p-0 rounded-3 zoom"
+               data-bs-toggle="list" data-user_id="<?= $connection['userId'] ?>"
+               data-connection_id="<?= $connection['connectionId'] ?>">
+                <div class="p-2 m-0">
+                    <div class="row p-2 m-0">
+                        <div class="col-3 p-0">
+                            <div class="ratio ratio-1x1">
+                                <img class="img-fluid object-fit-cover rounded-top-3"
+                                     src="<?php
+                                     if ($connection["pfp"]) {
+                                         echo("data:image/png;base64," . $connection["pfp"]);
+                                     } else {
+                                         echo("../resources/search/default_image.jgp");
+                                     }
+                                     ?>"
+                                     alt="Profile picture">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-9 p-0 ps-3 pt-1">
-                        <div>
-                            <h5 id="listgroup-name"><?= $connection["firstname"] . " " . $connection["lastname"] ?></h5>
+                        <div class="col-9 p-0 ps-3 pt-1">
+                            <div>
+                                <h5 id="listgroup-name"><?= $connection["firstname"] . " " . $connection["lastname"] ?></h5>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </a>
+            </a>
+            <?php
+        }
+    } else {
+        ?>
+        <h2 class="mt-5 pt-5 text-center"> No Connections :( </h2>
         <?php
     }
 }

@@ -18,7 +18,7 @@ require_once(__DIR__ . "/../database/repositories/profile_pictures.php");
 require_once(__DIR__ . '/../nav_bar/index.php');
 ?>
 
-<div class="container">
+<div class="container mb-5 pb-5">
     <div class="row">
         <div class="col-md-12 text-center">
 
