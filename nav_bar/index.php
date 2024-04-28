@@ -60,7 +60,7 @@ if ($user_logged_in) {
                     ?>
                     <li class="nav-item p-2">
                         <a class="nav-link float-end" href="../notifications">
-                            <h2 class="collapse" id="collapsibleNavbar">Start Matching</h2>
+                            <h2 class="collapse" id="collapsibleNavbar">Notifications</h2>
                             <i class="bi bi-bell"></i>
                         </a>
                     </li>
