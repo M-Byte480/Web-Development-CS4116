@@ -25,7 +25,7 @@ if (empty($errors)) {
     $second_name = $_POST["user_second_name"];
     $id = custom_uuid();
     $date_of_birth = date('Y-m-d', strtotime($_POST["user_dob"]));
-    
+
     add_user_to_database($id, $email, $first_name, $second_name, $password, $date_of_birth);
     add_new_row_to_profile($id, $gender);
     set_profile_picture_on_gender($id, $gender);

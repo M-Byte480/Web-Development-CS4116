@@ -1,1 +1,10 @@
+* {
+    font-family: Bahnschrift, serif;
+}
 
+
+@media (min-width: 1025px) {
+    .h-custom-2 {
+        height: 100%;
+    }
+}
