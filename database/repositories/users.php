@@ -419,4 +419,21 @@ function get_users_by_name($search_name)
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
+function get_users_for_admin_page($search_name, $row_number)
+{
+    global $db_host, $db_username, $db_password, $db_database;
+    $con = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+    if (!$con) {
+        die('Could not connect: ' . mysqli_error($con));
+    }
+    $search_name = filter_var($search_name, FILTER_SANITIZE_ADD_SLASHES);
+
+    $query = "SELECT * FROM Users WHERE CONCAT(firstName, ' ', lastName) LIKE '%$search_name%' 
+                    ORDER BY reportCount DESC, firstName ASC, lastName ASC, id DESC
+                    LIMIT 8 OFFSET $row_number";
+    $result = mysqli_query($con, $query);
+    mysqli_close($con);
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
 ?>

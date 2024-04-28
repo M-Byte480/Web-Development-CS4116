@@ -27,6 +27,97 @@ require_once(__DIR__ . '/admin_functions.php');
 $return_array = array();
 $return_array['success'] = SUCCESS;
 
+function pfp($user): void
+{
+    ?>
+    <img src="<?php
+    $pfp = get_user_pfp_from_user_ID($user['id']);
+    if ($pfp) {
+        echo("data:image/png;base64," . $pfp);
+    } else {
+        echo("../resources/search/default_image.jgp");
+    }
+    ?>"
+         alt="Profile Picture"
+         class="img-fluid rounded-circle"
+         style="width: 100px; height: 100px; object-fit: cover;"
+    >
+    <?php
+}
+
+function user_information($user): void
+{
+    ?>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>
+                    <a href="<?= '../profile/' . "?user_id=" . $user['id'] ?>"
+                       target="_blank"
+                       style="color: inherit;"><?= get_user_name($user) ?></a> <?= get_user_age($user) ?>
+                </h4>
+            </div>
+            <div class="col-md-6">Reports: <?= $user['reportCount'] === null ? 0 : $user['reportCount'] ?>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function action_button($user): void
+{
+    ?>
+    <div class="dropdown">
+        <div class="mobile-menu-toggle">
+            <button class="btn <?= $user['banned'] ? 'btn-light' : 'btn-dark' ?> dropdown-toggle mobile-toggle-btn btn-sm"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <ul class="dropdown-menu p-2">
+                <li>
+                    <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" value="<?= $user['id'] ?>"
+                            data-bs-target="#banModal" onclick="fetchBanUser('<?= $user['id'] ?>')">
+                        Ban Options
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal"
+                            data-bs-target="#editUserModal" onClick="fetchUserActions('<?= $user['id'] ?>')">
+                        User Options
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal"
+                            data-bs-target="#viewHistoryModal" onClick="fetchBanHistory('<?= $user['id'] ?>')">
+                        Ban History
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal"
+                            data-bs-target="#viewHistoryModal" onClick="fetchReportLogs('<?= $user['id'] ?>')">
+                        Report Log
+                    </button>
+                </li>
+                <li>
+                    <form id="removeForm-<?= $user['id'] ?>" method="post" action="admin_backend.php">
+                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                        <input type="hidden" name="admin_email" value="<?= $_COOKIE['email'] ?>">
+                        <input type="hidden" name="action" value="delete">
+                        <button type="button" class="btn btn-danger m-1" name="removeBtn" id="removeBtn" value="Delete"
+                                onclick="deleteUser('<?= $user['id'] ?>')">
+                            Delete
+                        </button>
+                    </form>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <?php
+}
+
 try {
     switch ($action) {
         case 'permanent':
@@ -115,11 +206,37 @@ try {
             get_user_report_history($user);
 
             exit();
+
+        case 'get-users':
+            $json = filter_input(INPUT_POST, 'json');
+            $decoded_json = json_decode($json, true);
+
+            $usersInDb = get_users_for_admin_page($decoded_json["searchText"], $decoded_json["row_number"]);
+            foreach ($usersInDb as $user) {
+                ?>
+                <div class="container list-item" id="<?= $user['id'] ?>">
+                    <div style="display: none;" class="list-flag">
+                        <?= get_user_name($user) . ' ' . get_user_age($user) ?></div>
+                    <div style="display: none;" class="list-id"><?= $user['id'] ?></div>
+                    <div id="<?= 'row-' . $user['id'] ?>"
+                         class=" row align-items-center height-100px mt-3 border curve-100 <?= $user['banned'] ? 'bg-red' : 'bg-gray' ?>">
+                        <div class="col-2 col-sm-2 col-md-2 p-1 width-100px">
+                            <?php pfp($user) ?>
+                        </div>
+                        <div class="col-6 col-sm-8 col-md-8">
+                            <?php user_information($user) ?>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-2 text-md-right">
+                            <?php action_button($user) ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+            exit();
     }
 } catch (ValidationException $e) {
     $return_array['success'] = ERROR;
-    echo json_encode($return_array);
-    exit();
 }
 
 echo json_encode($return_array);
