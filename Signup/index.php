@@ -35,20 +35,20 @@
     });
 </script>
 
-<div class="vh-100" style="background-color: orange">
+<div class="vh-100" style="background-image: linear-gradient(to bottom right, orangered, yellow)">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-6 px-0 d-none d-sm-block text-black">
-                <img src="../resources/signup/bubbles.gif" alt="Sign-up gif" class="w-100 vh-100"
+            <div class="col-sm-5 px-0 d-none d-sm-block text-black">
+                <img src="../resources/signup/signup.gif" alt="Sign-up gif" class="w-100 vh-100"
                      style="object-fit: cover; object-position: left;">
             </div>
-            <div class="col-sm-6 text-black">
-                <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5">
+            <div class="clearfix col-sm-7 text-black">
+                <div class="d-flex justify-content-center align-items-center h-custom-3  ms-xl-4 mt-5 pt-5">
                     <form class="form" action="signup_backend.php" method="post" id="signup" style="width: 23rem;">
-                        <h2 class="display-3 mb-3 pb-3">Sign-Up</h2>
+                        <h2 class="display-2 mb-3 pb-3">Sign-Up</h2>
                         <div class="row">
                             <div class="col-12">
-                                <p class="text-danger font-weight-bold" style="background:black">* Required Field </p>
+                                <p class="text-danger font-weight-bold">* Required Field </p>
                             </div>
                         </div>
 
@@ -140,17 +140,16 @@
 
                         <!-- Input Date of Birth -->
                         <div class="row">
-                            <div class="col-12 col-md-6">
+                            <div class="col-6">
                                 <p class="text-dark">Enter your birthday<small class="text-danger"> *</small></p>
                             </div>
-
-                            <div class="col-12 col-md-6">
+                            <div class="col-6">
                                 <p class="text-dark">Sex<span class="text-danger"> *</span></p>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-12 col-md-6">
+                            <div class="col-6">
                                 <input name="user_dob" type="date" pattern="\d{4}-\d{2}-\d{2}"
                                        value="0000-00-00"
                                        required><br>
@@ -170,7 +169,7 @@
 
 
                             <!-- Input Gender  -->
-                            <div class="col-12 col-md-6">
+                            <div class="col-6">
                                 <input type="radio" id="Male" name="gender" value="Male">
                                 <label for="Male" class="text-dark">Male</label>
                                 <input type="radio" id="Female" name="gender" value="Female">
