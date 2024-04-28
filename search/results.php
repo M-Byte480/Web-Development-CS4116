@@ -42,26 +42,35 @@ require_once(__DIR__ . '/../nav_bar/index.php');
     }
 </script>
 
-<div class="container" id="users_container">
+<div class="container mb-3 pb-3">
+    <div class="row mb-3 pb-3" id="users_container">
+    </div>
 </div>
 
 <script>
     let stop_displaying_users = false;
+    let update_at_end = false;
 
-    function display_users() {
-        if (stop_displaying_users)
+    function display_users(row_num, resetDiv) {
+        if (stop_displaying_users) {
+            update_at_end = true;
             return;
+        }
         stop_displaying_users = true;
+        update_at_end = false;
         setTimeout(() => {
             stop_displaying_users = false;
-        }, 250);
+            if (update_at_end)
+                display_users(row_num, resetDiv);
+        }, 500);
 
-        let searchText = $("#searchBar").val().toLowerCase();
+        let searchText = $("#searchBar").val().toLowerCase().trim();
 
         let postData = {
             "name": searchText,
             "interestFlag": "<?= $interest_flag ?>",
-            "getRequest": <?= json_encode($_GET) ?>
+            "getRequest": <?= json_encode($_GET) ?>,
+            "row_num": row_num
         };
         $.ajax({
             type: "POST",
@@ -70,7 +79,9 @@ require_once(__DIR__ . '/../nav_bar/index.php');
                 json: JSON.stringify(postData)
             },
             success: function (response) {
-                document.getElementById("users_container").innerHTML = response
+                if (resetDiv)
+                    document.getElementById("users_container").innerHTML = "";
+                document.getElementById("users_container").innerHTML += response;
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(thrownError);
@@ -79,9 +90,18 @@ require_once(__DIR__ . '/../nav_bar/index.php');
     }
 
     $(document).ready(function () {
-        display_users();
+        let row_num = 0
+        display_users(row_num, false);
         $('#searchBar').on('input', function () {
-            display_users();
+            row_num = 0;
+            display_users(row_num, true);
+        });
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() + $(window).height() === $(document).height()) {
+                row_num += 8;
+                display_users(row_num, false);
+            }
         });
     });
 </script>
