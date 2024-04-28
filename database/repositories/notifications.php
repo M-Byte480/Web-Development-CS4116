@@ -24,7 +24,7 @@ function get_all_notifcations($affected_user)
     if (!$con) {
         die('Could not connect: ' . mysqli_error($con));
     }
-    $query = "SELECT * FROM notifications WHERE userId = '$affected_user'";
+    $query = "SELECT * FROM Notifications WHERE userId = '$affected_user'";
 
     $result = mysqli_query($con, $query);
     mysqli_close($con);
