@@ -1,7 +1,7 @@
 <?php
 require_once("../imports.php");
+require_once(__DIR__ . "/../validate_user_logged_in.php");
 require_once(__DIR__ . "/../database/repositories/notifications.php");
-
 ?>
 <html>
 <head>
