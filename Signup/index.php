@@ -174,6 +174,7 @@
                                 <label for="Male" class="text-dark">Male</label>
                                 <input type="radio" id="Female" name="gender" value="Female">
                                 <label for="Female" class="text-dark">Female</label>
+                                <br>
                                 <input type="radio" id="Other" name="gender" value="Other">
                                 <label for="Other" class="text-dark">Other</label>
                             </div>
