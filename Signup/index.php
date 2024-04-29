@@ -39,7 +39,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-5 px-0 d-none d-sm-block text-black">
-                <img src="../resources/signup/signup.gif" alt="Sign-up gif" class="w-100 vh-100"
+                <img src="../resources/signup/bubbles.gif" alt="Sign-up gif" class="w-100 vh-100"
                      style="object-fit: cover; object-position: left;">
             </div>
             <div class="clearfix col-sm-7 text-black">
