@@ -143,7 +143,7 @@
             <span>Find us on Social Media!</span>
         </div>
         <div>
-            <a href="https://github.com/M-Byte480/Web-Development-CS4116.git" class="me-4 text-reset">
+            <a href="https://github.com/M-Byte480/Web-Development-CS4116.git" class="me-4 text-reset" target="_blank">
                 <i class="bi bi-github"></i>
             </a>
         </div>
