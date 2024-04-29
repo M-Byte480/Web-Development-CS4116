@@ -37,7 +37,7 @@ function try_interact_with_another_user($user_id, $affected_user, $action): stri
             if (check_if_connection_exists($user_id, $affected_user)) {
                 create_connection($user_id, $affected_user);
                 $msg = "You have connected with " . get_first_name_from_user_ID($affected_user);
-                create_notifcation_for_user($affected_user, $msg);
+                create_notifcation_for_user($affected_user, "You have connected with " . get_first_name_from_user_ID($user_id));
             }
 
     }

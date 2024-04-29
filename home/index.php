@@ -115,8 +115,7 @@
                             <h2>Milan Kovacs</h2>
                             <hr>
                             <p class="title">Supreme Pint Enjoyer</p>
-                            <p>My name is Milan and I love coding and Beer</p>
-                            <p>Add a little spice to your life</p>
+                            <p>My name is Milan and I love coding and Beer. Add a little spice to your life</p>
                             <p>milan.test@example.com</p>
                         </div>
                     </div>
