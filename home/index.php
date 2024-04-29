@@ -140,13 +140,16 @@
 <footer id="footer" class="text-center text-lg-start text-white bg-dark">
     <section class="d-flex justify-content-center p-4 border-bottom">
         <div class="me-5 d-none d-lg-block">
-            <span>Find us on Social Media!</span>
-        </div>
-        <div>
-            <a href="https://github.com/M-Byte480/Web-Development-CS4116.git" class="me-4 text-reset">
-                <i class="fab fa-github"></i>
+            <a href="https://github.com/M-Byte480/Web-Development-CS4116.git" target="_blank">
+
+                <span>Find us on Social Media!</span>
             </a>
+
         </div>
+
+        <!--        <div class="me-4 text-reset">-->
+        <!--            <i class="fab fa-github"></i>-->
+        <!--        </div>-->
     </section>
 </footer>
 
