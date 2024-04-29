@@ -84,7 +84,8 @@ function get_user_by_matches($get, $name, $row_number): bool|mysqli_result|null
                 ";
     }
 
-    if (isset($get['interests'])) {
+    $interestFound = isset($get['interests']);
+    if ($interestFound) {
         $query .= "
                 AND 
                 i.name IN ('" . implode("', '", $get['interests']) . "') 
@@ -95,8 +96,13 @@ function get_user_by_matches($get, $name, $row_number): bool|mysqli_result|null
         $query .= "AND CONCAT(firstName, ' ', lastName) LIKE '%$name%'";
     }
 
-    $query .= " GROUP BY u.id ORDER BY matching_interests DESC, firstName ASC, lastName ASC
-    LIMIT 8 OFFSET {$row_number}";
+    $query .= " GROUP BY u.id ORDER BY";
+
+    if ($interestFound) {
+        $query .= " matching_interests DESC, ";
+    }
+
+    $query .= " firstName ASC, lastName ASC LIMIT 8 OFFSET {$row_number}";
 
     $result = mysqli_query($con, $query);
 

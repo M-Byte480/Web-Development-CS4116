@@ -30,7 +30,7 @@ if (isset($decoded_json["name"], $decoded_json["interestFlag"], $decoded_json["g
     foreach ($rows as $row) {
         ?>
         <div class="col-12 col-md-3 user_card profiles my-card">
-            <?php get_profile_card($row, $interestFlag) ?>
+            <?php get_profile_card($row, !$interestFlag) ?>
         </div>
         <?php
     }
